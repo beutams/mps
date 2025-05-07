@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c3b522b4390484e8f47d144cdf015b, type: 3}
+  m_Name: UnitStats
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: d6524ef0f849e94439deefe03735d01b, type: 2}
+  healthPerfab: {fileID: 5865935096257579933, guid: df3fbe2277ff51f4eb2d46f791df7d57, type: 3}
+  maxHealth: 100
+  defense: 1
+  radius: 0.5
+  searchRadius: 12
+  canMove: 1
+  canAttack: 1
