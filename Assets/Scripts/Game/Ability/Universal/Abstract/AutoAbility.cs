@@ -51,5 +51,4 @@ public abstract class AutoAbility : Ability
         position = Vector3.zero;
         target = null;
     }
-
 }

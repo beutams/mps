@@ -1,65 +1,103 @@
-using Mirror;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : SingletonNetBehaviour<InputManager>
 {
-    private float speed = 6;
-    private List<UnitController> allUnits => RoomController.instance.localPlayer.soldierList;
+    public InputActionAsset asset;
+    private InputAction gatherAction;
+    private InputAction shopAction;
+    private InputAction skill1Action;
+    private InputAction skill2Action;
+    private InputAction skill3Action;
+    private InputAction skill4Action;
+    private InputAction fireAction;
+    private InputAction moveAction;
+    private InputAction lockAction;
+    private InputAction weapen1Action;
+    private InputAction weapen2Action;
+    private InputAction weapen3Action;
+    private InputAction weapen4Action;
+    private InputAction weapen5Action;
+    private InputAction weapen6Action;
+    private InputAction weapen7Action;
+    private InputAction weapen8Action;
+    private InputAction weapen9Action;
+    private InputAction weapenSwitchAuto1Action;
+    private InputAction weapenSwitchAuto2Action;
+    private InputAction weapenSwitchAuto3Action;
+    private InputAction weapenSwitchAuto4Action;
+    private InputAction weapenSwitchAuto5Action;
+    private InputAction weapenSwitchAuto6Action;
+    private InputAction weapenSwitchAuto7Action;
+    private InputAction weapenSwitchAuto8Action;
+    private InputAction weapenSwitchAuto9Action;
+    private void Start()
+    {
+        gatherAction = asset.FindAction("Gather");
+        shopAction = asset.FindAction("Shop");
+        skill1Action = asset.FindAction("Skill1");
+        skill2Action = asset.FindAction("Skill2");
+        skill3Action = asset.FindAction("Skill3");
+        skill4Action = asset.FindAction("Skill4");
+        fireAction = asset.FindAction("Fire");
+        moveAction = asset.FindAction("Move");
+        lockAction = asset.FindAction("Lock");
+        weapen1Action = asset.FindAction("Weapen1");
+        weapen2Action = asset.FindAction("Weapen2");
+        weapen3Action = asset.FindAction("Weapen3");
+        weapen4Action = asset.FindAction("Weapen4");
+        weapen5Action = asset.FindAction("Weapen5");
+        weapen6Action = asset.FindAction("Weapen6");
+        weapen7Action = asset.FindAction("Weapen7");
+        weapen8Action = asset.FindAction("Weapen8");
+        weapen9Action = asset.FindAction("Weapen9");
+        weapenSwitchAuto1Action = asset.FindAction("WeapenSwitchAuto1");
+        weapenSwitchAuto2Action = asset.FindAction("WeapenSwitchAuto2");
+        weapenSwitchAuto3Action = asset.FindAction("WeapenSwitchAuto3");
+        weapenSwitchAuto4Action = asset.FindAction("WeapenSwitchAuto4");
+        weapenSwitchAuto5Action = asset.FindAction("WeapenSwitchAuto5");
+        weapenSwitchAuto6Action = asset.FindAction("WeapenSwitchAuto6");
+        weapenSwitchAuto7Action = asset.FindAction("WeapenSwitchAuto7");
+        weapenSwitchAuto8Action = asset.FindAction("WeapenSwitchAuto8");
+        weapenSwitchAuto9Action = asset.FindAction("WeapenSwitchAuto9");
+    }
     private HeroController hero => RoomController.instance.localPlayer.hero;
-    public bool LeftClick() => Input.GetMouseButton(0);
-    public bool GClick() => Input.GetKeyDown(KeyCode.G);
 
-    private void Update()
+    public bool GetGather() => gatherAction.IsPressed();
+    public bool GetShop() => shopAction.IsPressed();
+    public bool GetSkill1() => skill1Action.IsPressed();
+    public bool GetSkill2() => skill2Action.IsPressed();
+    public bool GetSkill3() => skill3Action.IsPressed();
+    public bool GetSkill4() => skill4Action.IsPressed();
+    public bool GetFire() => fireAction.IsPressed();
+    public bool GetMove() => moveAction.IsPressed();
+    public bool GetLock() => lockAction.IsPressed();
+    public int GetWeapen()
     {
-        Gather();
-        Fire();
-        CameraMove();
+        if (weapen1Action.IsPressed()) return 1;
+        if (weapen2Action.IsPressed()) return 2;
+        if (weapen3Action.IsPressed()) return 3;
+        if (weapen4Action.IsPressed()) return 4;
+        if (weapen5Action.IsPressed()) return 5;
+        if (weapen6Action.IsPressed()) return 6;
+        if (weapen7Action.IsPressed()) return 7;
+        if (weapen8Action.IsPressed()) return 8;
+        if (weapen9Action.IsPressed()) return 9;
+        return -1;
     }
-    private void CameraMove()
+    public int GetWeapenSwitch()
     {
-        Vector2 axis = Vector2.zero;
-        if (Input.GetKey(KeyCode.A))
-        {
-            axis += new Vector2(-speed, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            axis += new Vector2(speed, 0);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            axis += new Vector2(0, speed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            axis += new Vector2(0, -speed);
-        }
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + axis.x * Time.deltaTime, Camera.main.transform.position.y, Camera.main.transform.position.z + axis.y * Time.deltaTime);
-    }
-    private void Fire()
-    {
-        if(LeftClick() && hero != null)
-        {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-            {
-                hero.OnFindVector3(new Vector3(hit.point.x, 0, hit.point.z));
-            }
-        }
-    }
-
-    public void Gather()
-    {
-        if (GClick())
-        {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-            {
-                foreach (var unit in allUnits)
-                {
-                    unit.SetMoveTarget(null, new Vector3(hit.point.x, 0, hit.point.z));
-                }
-            }
-        }
+        if (weapenSwitchAuto1Action.IsPressed()) return 1;
+        if (weapenSwitchAuto2Action.IsPressed()) return 2;
+        if (weapenSwitchAuto3Action.IsPressed()) return 3;
+        if (weapenSwitchAuto4Action.IsPressed()) return 4;
+        if (weapenSwitchAuto5Action.IsPressed()) return 5;
+        if (weapenSwitchAuto6Action.IsPressed()) return 6;
+        if (weapenSwitchAuto7Action.IsPressed()) return 7;
+        if (weapenSwitchAuto8Action.IsPressed()) return 8;
+        if (weapenSwitchAuto9Action.IsPressed()) return 9;
+        return -1;
     }
 }

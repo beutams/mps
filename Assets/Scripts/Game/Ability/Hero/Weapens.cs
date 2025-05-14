@@ -6,11 +6,11 @@ public class Weapens : Ability
     public List<WeapenBase> weapens;
     public override bool CanDo(Vector3 target)
     {
-        return InputManager.instance.LeftClick();
+        return InputManager.instance.GetFire();
     }
     public override bool CanDo(GameObjectController target)
     {
-        return InputManager.instance.LeftClick();
+        return InputManager.instance.GetFire();
     }
     public override void Do(Vector3 target)
     {

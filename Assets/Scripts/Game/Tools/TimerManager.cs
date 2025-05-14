@@ -56,10 +56,6 @@ public class Timer
         else
             currentTime = time;
     }
-    public void AutoReset()
-    {
-        currentTime = time;
-    }
     public void Lanuch()
     {
         enable = true;
@@ -98,5 +94,9 @@ public class Timer
     public bool isRun()
     {
         return enable;
+    }
+    private void AutoReset()
+    {
+        currentTime = time;
     }
 }

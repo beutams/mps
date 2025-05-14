@@ -326,6 +326,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  asset: {fileID: -944628639613478452, guid: 6ff6ef9bf321a5a48a5d4aa0a32ae1b3, type: 3}
 --- !u!1 &299512955
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,7 +826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 000640f539598b6488eed3294d60b258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allAgents: []
 --- !u!1 &1572663949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,14 +1187,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  initList:
-  - {fileID: 5865935096257579933, guid: df3fbe2277ff51f4eb2d46f791df7d57, type: 3}
-  - {fileID: 5587949120119088470, guid: e7ac926cc0b1ab44791a9b887d20d283, type: 3}
-  - {fileID: 636397898312157364, guid: 2140ed325432eb04eb473600f6e021bb, type: 3}
-  - {fileID: 5865935096257579933, guid: f055509ddea27744e836d9d56ec113a7, type: 3}
-  - {fileID: 2572688857462976151, guid: e7cc6db8206c7864caf9da11fa63dbdf, type: 3}
-  - {fileID: 9136386095382912480, guid: d4cbb0b5c9a6b3e4bac86517e6966698, type: 3}
-  - {fileID: 193299127927635927, guid: 287f9cd988138044d9f77f1fa0deaf18, type: 3}
 --- !u!1 &1923480964
 GameObject:
   m_ObjectHideFlags: 0

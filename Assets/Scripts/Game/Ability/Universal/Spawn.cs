@@ -55,25 +55,3 @@ public class AutoSpawn : AutoAbility
         intervalTimer.Reset();
     }
 }
-public class SpawnOnce : Ability
-{
-    public Vector3 spawnPosition;
-    public GameObject perfab;
-    private bool start;
-    public override bool CanDo()
-    {
-        return !start;
-    }
-    public override void Do()
-    {
-        base.Do();
-        start = true;
-    }
-    private void Spawn()
-    {
-        GameObject obj = ObjectPool.instance.Get(perfab.name);
-        obj.transform.position = spawnPosition;
-        obj.transform.rotation = Quaternion.identity;
-        obj.GetComponent<GameObjectController>().events.onSpawn?.Invoke(owner.player);
-    }
-}
