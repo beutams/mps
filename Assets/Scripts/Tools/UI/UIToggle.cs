@@ -4,31 +4,23 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class UIToggle : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class UIToggle : UIGroup, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    protected static Dictionary<string, List<UIToggle>> globalDic = new Dictionary<string, List<UIToggle>>();
     protected List<GameObject> status = new List<GameObject>();
-    [SerializeField] public string group;
     [SerializeField] public bool isSwitch;
     [SerializeField] public GameObject Stay;
     [SerializeField] public GameObject Default;
     [SerializeField] public GameObject Select;
 
-    [SerializeField] public UnityEvent onEnter;
-    [SerializeField] public UnityEvent onExit;
-    [SerializeField] public UnityEvent onClick;
+    [SerializeField] public UnityEvent<UIToggle> onEnter;
+    [SerializeField] public UnityEvent<UIToggle> onExit;
+    [SerializeField] public UnityEvent<UIToggle> onClick;
     protected bool isOn;
-    protected void Awake()
+    protected override void Awake()
     {
         status.Add(Stay);
         status.Add(Default);
         status.Add(Select);
-        if (!globalDic.ContainsKey(group))
-        {
-            globalDic.Add(group, new List<UIToggle>());
-            globalDic[group].Add(this);
-        }
-        globalDic[group].Add(this);
         if(Default != null)
         {
             Refresh(Default);
@@ -50,11 +42,11 @@ public class UIToggle : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             {
                 foreach(var ui in globalDic[group])
                 {
-                    ui.isOn = false;
-                    ui.Refresh(Default);
+                    //ui.isOn = false;
+                    //ui.Refresh(Default);
                 }
                 isOn = true;
-                onClick?.Invoke();
+                onClick?.Invoke(this);
                 Refresh(Select);
             }
         }
@@ -63,7 +55,7 @@ public class UIToggle : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             if(isSwitch || !isOn)
             {
                 isOn = !isOn;
-                onClick?.Invoke();
+                onClick?.Invoke(this);
                 Refresh(isOn ? Select : Stay);
             }
         }
@@ -72,20 +64,22 @@ public class UIToggle : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("Enter");
         if (Stay == null) return;
         if (!isOn)
         {
-            onEnter?.Invoke();
+            onEnter?.Invoke(this);
             Refresh(Stay);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("Exit");
         if (Default == null) return;
         if (!isOn)
         {
-            onExit?.Invoke();
+            onExit?.Invoke(this);
             Refresh(Default);
         }
     }
