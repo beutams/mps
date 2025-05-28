@@ -63,7 +63,7 @@ public class InputManager : SingletonNetBehaviour<InputManager>
         weapenSwitchAuto8Action = asset.FindAction("WeapenSwitchAuto8");
         weapenSwitchAuto9Action = asset.FindAction("WeapenSwitchAuto9");
     }
-    private HeroController hero => RoomController.instance.localPlayer.hero;
+    private HeroController hero => OnlineRoomController.instance.localPlayer.hero;
 
     public bool GetGather() => gatherAction.IsPressed();
     public bool GetShop() => shopAction.IsPressed();

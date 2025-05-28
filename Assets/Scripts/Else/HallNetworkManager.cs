@@ -51,6 +51,6 @@ public class HallNetworkManager : NetworkManager
     public override void OnClientSceneChanged()
     {
         base.OnClientSceneChanged();
-        RoomController.instance.OnReady();
+        //OnlineRoomController.instance.OnReady();
     }
 }

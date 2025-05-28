@@ -62,9 +62,9 @@ public class ORCAAgent
                 neighborObstacles.Add(obs);
         }*/
         neighborAgents.Clear();
-        foreach(var player in RoomController.instance.playerDic.Values)
+        foreach(var player in OnlineRoomController.instance.playerDic.Values)
         {
-            foreach (var agent in player.soldierList)
+            foreach (var agent in player.unitList)
             {
                 if (Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius)
                 {

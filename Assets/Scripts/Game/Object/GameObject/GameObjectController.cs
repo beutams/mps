@@ -147,19 +147,19 @@ public abstract class GameObjectController : NetworkBehaviour
     public virtual void GetNearestTarget()
     {
         GameObjectController result = null;
-        foreach (var player in RoomController.instance.playerDic.Values)
+        foreach (var player in OnlineRoomController.instance.playerDic.Values)
         {
             if(player == this.player) continue;
-            if (player.soldierList.Count > 0)
+            if (player.unitList.Count > 0)
             {
-                GameObjectController min = Tools.GetNearestGameObject(player.soldierList.ToArray(), this) as UnitController;
+                GameObjectController min = Tools.GetNearestGameObject(player.unitList.ToArray(), this) as UnitController;
                 if (min == null || Tools.GetDistance(min.transform.position, transform.position) > stats.searchRadius) continue;
                 if (result == null) result = min;
                 if(min != null) result = Tools.GetDistance(result.transform.position, transform.position) > Tools.GetDistance(min.transform.position, transform.position) ? min : result;
             }
             if(player.constructionList.Count > 0)
             {
-                GameObjectController min = Tools.GetNearestGameObject(player.soldierList.ToArray(), this) as ConstructionController;
+                GameObjectController min = Tools.GetNearestGameObject(player.unitList.ToArray(), this) as ConstructionController;
                 if (min == null || Tools.GetDistance(min.transform.position, transform.position) > stats.searchRadius) continue;
                 if (result == null) result = min;
                 result = Tools.GetDistance(result.transform.position, transform.position) > Tools.GetDistance(min.transform.position, transform.position) ? min : result;

@@ -1587,6 +1587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1414508021}
+  roomConntroller: {fileID: 8631566490245839157, guid: bac09d7c47723b94590d04c36ce50921, type: 3}
   chapterInfo: {fileID: 375465299}
   enter: {fileID: 1894007642}
   exit: {fileID: 1155774710}

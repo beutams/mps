@@ -114,7 +114,7 @@ public class UnitController : GameObjectController
 
     protected override void Logout()
     {
-        player.soldierList.Remove(this);
+        player.unitList.Remove(this);
     }
     #endregion
 }

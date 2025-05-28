@@ -17,7 +17,7 @@ public class InputReceiver : NetworkBehaviour
         {
             if(hit.collider != null)
             {
-                foreach (var unit in RoomController.instance.localPlayer.soldierList)
+                foreach (var unit in OnlineRoomController.instance.localPlayer.unitList)
                 {
                     unit.SetMoveTarget(null, hit.point);
                 }

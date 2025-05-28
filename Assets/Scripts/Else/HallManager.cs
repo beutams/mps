@@ -214,7 +214,7 @@ public class HallManager : MonoBehaviour
         {
             GameObject roomControllerObj = Instantiate(roomControllerPerfab);
 
-            RoomController roomController = roomControllerObj.GetComponent<RoomController>();
+            OnlineRoomController roomController = roomControllerObj.GetComponent<OnlineRoomController>();
             roomController.GetComponent<NetworkMatch>().matchId = roomId;
 
             Player noCamp = Instantiate(roomController.noCampPlayer).GetComponent<Player>();

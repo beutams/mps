@@ -4,21 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(NetworkMatch))]
-public class RoomController : SingletonNetBehaviour<RoomController>
+public class OnlineRoomController : RoomController
 {
     public Guid roomId;
-    public Dictionary<PlayerSite, Player> playerDic;
     public Dictionary<Player, bool> ready = new Dictionary<Player, bool>();
-    public Player localPlayer;
-    public GameObject noCampPlayer;
-    private void Awake()
-    {
-        playerDic = new Dictionary<PlayerSite, Player>();
-        DontDestroyOnLoad(gameObject);
-    }
     public void OnReady()
     {
-        localPlayer.OnGameStart();
+        //localPlayer.OnGameStart();
     }
     #region Init
     [ClientRpc]

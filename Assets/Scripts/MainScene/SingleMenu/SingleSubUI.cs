@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class SingleSubUI : SubUIBase
 {
+    public GameObject roomConntroller;
     public GameObject chapterInfo;
     public Button enter;
     public Button exit;
@@ -48,6 +49,8 @@ public class SingleSubUI : SubUIBase
     }
     protected virtual void OnEnterClick()
     {
+        Instantiate(roomConntroller);
+        SceneManager.sceneLoaded += RoomController.instance.OnSceneLoadedSingle;
         SceneManager.LoadScene("GameScene");
     }
 }
