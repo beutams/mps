@@ -17,56 +17,56 @@ public class CamerSwitch : MonoBehaviour {
 
 	void setCamera01 (){
 		onActiveFalse ();
-		camera1.active=true;
+		camera1.SetActive(true);
 	}
 	void setCamera02 (){
 		onActiveFalse ();
-		camera2.active=true;
-	}
+		camera2.SetActive(true);
+    }
 	void setCamera03 (){
 		onActiveFalse ();
-		camera3.active=true;
-	}
+		camera3.SetActive(true);
+    }
 	void setCamera04 (){
 		onActiveFalse ();
-		camera4.active=true;
-	}
+		camera4.SetActive(true);
+    }
 	void setCamera05 (){
 		onActiveFalse ();
-		camera5.active=true;
-	}
+		camera5.SetActive(true);
+    }
 	void setCamera06 (){
 		onActiveFalse ();
-		camera6.active=true;
-	}
+		camera6.SetActive(true);
+    }
 	void setCamera07 (){
 		onActiveFalse ();
-		camera7.active=true;
-	}
+		camera7.SetActive(true);
+    }
 	void setCamera08 (){
 		onActiveFalse ();
-		camera8.active=true;
-	}
+		camera8.SetActive(true);
+    }
 	void setCamera09 (){
 		onActiveFalse ();
-		camera9.active=true;
-	}
+		camera9.SetActive(true);
+    }
 	void setCamera10 (){
 		onActiveFalse ();
-		camera10.active=true;
-	}
+		camera10.SetActive(true);
+    }
 
 	void onActiveFalse()
 	{
-		camera1.active=false;
-		camera2.active=false;
-		camera3.active=false;
-		camera4.active=false;
-		camera5.active=false;
-		camera6.active=false;
-		camera7.active=false;
-		camera8.active=false;
-		camera9.active=false;
-		camera10.active=false;
-	}
+		camera1.SetActive(false);
+		camera2.SetActive(false);
+        camera3.SetActive(false);
+        camera4.SetActive(false);
+        camera5.SetActive(false);
+        camera6.SetActive(false);
+        camera7.SetActive(false);
+        camera8.SetActive(false);
+        camera9.SetActive(false);
+        camera10.SetActive(false);
+    }
 }

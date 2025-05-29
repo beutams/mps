@@ -13,7 +13,11 @@ public class UIGroup : MonoBehaviour
             globalDic.Add(group, new List<UIGroup>());
             globalDic[group].Add(this);
         }
-        globalDic[group].Add(this);
+        else
+        {
+            globalDic[group].Add(this);
+        }
+
     }
     public string GetGroup()
     {

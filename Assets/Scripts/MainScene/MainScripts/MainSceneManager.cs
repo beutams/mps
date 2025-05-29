@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MainSceneManager : MonoBehaviour
 {
-    public void Awake()
+    public void Start()
     {
         foreach(var ui in UIGroup.globalDic["TitleMenu"])
         {

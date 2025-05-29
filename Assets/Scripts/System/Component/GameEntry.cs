@@ -14,9 +14,20 @@ public class GameEntry : SingletonNetBehaviour<GameEntry>
     public static SettingComponent SettingComponent { get; private set; }
     public static UIComponent UIComponent { get; private set; }
     public static SceneComponent SceneComponent { get; private set; }
+    public static WebComponent WebComponent { get; private set; }
 
     private void Awake()
     {
-        
+        ChapterComponent = transform.GetComponentInChildren<ChapterComponent>();
+        UserComponent = transform.GetComponentInChildren<UserComponent>();
+        EventComponent = transform.GetComponentInChildren<EventComponent>();
+        ObjectPoolComponent = transform.GetComponentInChildren<ObjectPoolComponent>();
+        ProcedureComponent = transform.GetComponentInChildren<ProcedureComponent>();
+        ResourceComponent = transform.GetComponentInChildren<ResourceComponent>();
+        SaveDataComponent = transform.GetComponentInChildren<SaveDataComponent>();
+        SettingComponent = transform.GetComponentInChildren<SettingComponent>();
+        UIComponent = transform.GetComponentInChildren<UIComponent>();
+        SceneComponent = transform.GetComponentInChildren<SceneComponent>();
+        WebComponent = transform.GetComponentInChildren<WebComponent>();
     }
 }

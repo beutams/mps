@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EventComponent : SingletonNetBehaviour<EventComponent>
+public class EventComponent : BaseComponent
 {
     public void Subscribe(GameEvent arg, UnityAction<object> action)
     {

@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingComponent : MonoBehaviour
+public class SettingComponent : BaseComponent
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Camera")]
+    public float CameraMoveSpeed = 6f;
+    [Header("QuadTree")]
+    public int maxDepth = 5;
+    public int maxObject = 5;
 }

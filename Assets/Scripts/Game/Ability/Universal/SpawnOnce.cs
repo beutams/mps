@@ -30,7 +30,7 @@ public class SpawnOnce : Ability
     {
         foreach(var item in perfabs)
         {
-            GameObject obj = ObjectPool.instance.Get(item.name);
+            GameObject obj = GameEntry.ObjectPoolComponent.Get(item.name);
             obj.transform.position = spawnPosition;
             obj.transform.rotation = Quaternion.identity;
             obj.GetComponent<GameObjectController>().events.onSpawn?.Invoke(owner.player);

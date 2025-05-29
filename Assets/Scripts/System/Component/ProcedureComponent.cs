@@ -1,14 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProcedureComponent : BaseComponent
 {
-    public static List<ProcedureBase> allProcedures = new List<ProcedureBase>();
+    public string firstProcedure;
+    public List<string> allProceduresName;
+    public List<ProcedureBase> allProcedures = new List<ProcedureBase>();
     public ProcedureBase currentProcedure { get; set; }
     private void Awake()
     {
-        currentProcedure = allProcedures[0];
+        foreach (string procedure in allProceduresName)
+        {
+            Type t = Type.GetType(procedure);
+            try
+            {
+                var obj = t.Instantiate() as ProcedureBase;
+                allProcedures.Add(obj);
+            }
+            catch(Exception e)
+            {
+                Debug.LogError($"Type {t} Add Exception, Exception {e}");
+            }
+        }
+        currentProcedure = allProcedures.Find((s) => s.GetType().Name == firstProcedure);
     }
     private void Update()
     {
@@ -27,9 +45,9 @@ public class ProcedureComponent : BaseComponent
         }
     }
 }
-public abstract class ProcedureBase
+public class ProcedureBase
 {
-    public abstract void OnEnter(string data);
-    public abstract void OnStep();
-    public abstract void OnExit(string data);
+    public virtual void OnEnter(string data) { }
+    public virtual void OnStep() { }
+    public virtual void OnExit(string data) { }
 }

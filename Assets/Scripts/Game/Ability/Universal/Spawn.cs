@@ -37,7 +37,7 @@ public class AutoSpawn : AutoAbility
     {
         if (index < perfabs.Count)
         {
-            GameObject obj = ObjectPool.instance.Get(perfabs[index].name);
+            GameObject obj = GameEntry.ObjectPoolComponent.Get(perfabs[index].name);
             obj.transform.position = spawnPosition;
             obj.transform.rotation = Quaternion.identity;
             obj.GetComponent<GameObjectController>().events.onSpawn?.Invoke(owner.player);

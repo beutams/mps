@@ -23,13 +23,13 @@ public class UIManager : SingletonNetBehaviour<UIManager>
     }
     public void AddHealthBar(GameObjectController obj, string name)
     {
-        GameObject img = ObjectPool.instance.Get(name);
+        GameObject img = GameEntry.ObjectPoolComponent.Get(name);
         healthImages.Add(obj, img.GetComponent<HealthImage>());
         img.transform.SetParent(healthBarCanvas);
     }
     public void RemoveHealthBar(GameObjectController obj)
     {
-        ObjectPool.instance.Release(obj.gameObject);
+        GameEntry.ObjectPoolComponent.Release(obj.gameObject);
         healthImages.Remove(obj);
     }
 }

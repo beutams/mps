@@ -44,7 +44,7 @@ public abstract class WeapenBase : ScriptableObject
     }
     public void FireInner(GameObjectController self,GameObjectController target, Vector3 targetPosition)
     {
-        Bullet obj = ObjectPool.instance.Get(bullet).GetComponent<Bullet>();
+        Bullet obj = GameEntry.ObjectPoolComponent.Get(bullet).GetComponent<Bullet>();
         obj.Init(self.transform.position, self.transform.rotation);
         obj.SetTarget(target, targetPosition, player);
     }

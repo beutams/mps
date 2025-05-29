@@ -6,10 +6,18 @@ using UnityEngine;
 public abstract class SubUIBase : MonoBehaviour
 {
     public static Dictionary<UIGroup, SubUIBase> allTitles = new Dictionary<UIGroup, SubUIBase> ();
+    public static SubUIBase current;
     public UIGroup button;
     private void Awake()
     {
         allTitles.Add(button,this);
+    }
+    private void Update()
+    {
+        if (current == this)
+        {
+            OnStep();
+        }
     }
     public static void ChangeUI(UIGroup button)
     {
@@ -19,6 +27,7 @@ public abstract class SubUIBase : MonoBehaviour
             {
                 kv.Value.gameObject.SetActive(true);
                 kv.Value.OnOpen();
+                current = kv.Value;
             }
 
             else
@@ -31,4 +40,9 @@ public abstract class SubUIBase : MonoBehaviour
     }
     protected abstract void OnOpen();
     protected abstract void OnClose();
+    protected virtual void OnStep()
+    {
+
+    }
+
 }

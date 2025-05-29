@@ -26,7 +26,7 @@ public class QuadTreeNode
     public void Insert(GameObjectController obj)
     {
         if (!Overlaps(obj.transform.position, obj.stats.radius)) return;
-        if((!isDivide && objList.Count < GameSetting.instance.maxObject )|| CrossSplitLine(obj.transform.position,obj.stats.radius) || depth == GameSetting.instance.maxDepth)
+        if((!isDivide && objList.Count < GameEntry.SettingComponent.maxObject )|| CrossSplitLine(obj.transform.position,obj.stats.radius) || depth == GameEntry.SettingComponent.maxDepth)
         {
             if (!objList.Contains(obj))
             {
