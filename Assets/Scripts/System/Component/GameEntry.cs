@@ -18,6 +18,7 @@ public class GameEntry : SingletonNetBehaviour<GameEntry>
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         ChapterComponent = transform.GetComponentInChildren<ChapterComponent>();
         UserComponent = transform.GetComponentInChildren<UserComponent>();
         EventComponent = transform.GetComponentInChildren<EventComponent>();

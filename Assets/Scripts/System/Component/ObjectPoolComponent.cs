@@ -5,7 +5,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-public class ObjectPoolComponent : BaseComponent
+public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
 {
     private Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
     private Dictionary<string, GameObject> perfabDic = new Dictionary<string, GameObject>();

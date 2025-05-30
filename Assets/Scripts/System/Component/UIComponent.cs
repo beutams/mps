@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIComponent : BaseComponent
+public class UIComponent : BaseComponent<UIComponent>
 {
     // Start is called before the first frame update
     void Start()

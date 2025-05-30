@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WebComponent : BaseComponent
+public class WebComponent : BaseComponent<WebComponent> 
 {
     public GameDiscover gameDiscover;
     public GameNetworkManager gameNetworkManager;

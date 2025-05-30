@@ -4,7 +4,7 @@ using Michsky.UI.Shift;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ChapterComponent : BaseComponent
+public class ChapterComponent : BaseComponent<ChapterComponent>
 {
     public static Dictionary<int, ChapterData> allChapter = new Dictionary<int, ChapterData>();
     public ChapterData currentChapter { get; private set; }

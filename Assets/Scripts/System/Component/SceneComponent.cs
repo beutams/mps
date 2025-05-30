@@ -2,21 +2,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneComponent : BaseComponent
+public class SceneComponent : BaseComponent<SceneComponent>
 {
-    public static List<SceneBase> allScenes = new List<SceneBase>();
-    public SceneBase currentScene { get; private set; }
     public AsyncOperation LoadScene(string name)
     {
-        SceneBase scene = allScenes.Find(s => s.name == name);
-        if (scene != null)
+        if (SceneManager.GetSceneByName(name) != null)
         {
-            return SceneManager.LoadSceneAsync(scene.name, LoadSceneMode.Single);
+            return SceneManager.LoadSceneAsync(name);
         }
         return null;
     }
-}
-public class SceneBase
-{
-    public string name;
 }

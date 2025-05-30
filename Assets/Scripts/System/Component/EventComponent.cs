@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EventComponent : BaseComponent
+public class EventComponent : BaseComponent<EventComponent>
 {
     public void Subscribe(GameEvent arg, UnityAction<object> action)
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingComponent : BaseComponent
+public class SettingComponent : BaseComponent<SettingComponent>
 {
     [Header("Camera")]
     public float CameraMoveSpeed = 6f;

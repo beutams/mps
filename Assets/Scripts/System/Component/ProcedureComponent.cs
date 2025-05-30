@@ -5,7 +5,7 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ProcedureComponent : BaseComponent
+public class ProcedureComponent : BaseComponent<ProcedureComponent>
 {
     public string firstProcedure;
     public List<string> allProceduresName;
