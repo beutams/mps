@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameEntry : SingletonNetBehaviour<GameEntry>
+public class GameEntry : SingletonMonoBehaviour<GameEntry>
 {
     public static ChapterComponent ChapterComponent {  get; private set; }
     public static UserComponent UserComponent { get; private set; }

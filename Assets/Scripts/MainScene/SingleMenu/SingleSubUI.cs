@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Michsky.UI.Shift;
+using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -47,10 +48,11 @@ public class SingleSubUI : SubUIBase
     {
         OnClose();
     }
-    protected virtual void OnEnterClick()
+    public virtual void OnEnterClick()
     {
         Instantiate(roomConntroller);
-        SceneManager.sceneLoaded += RoomController.instance.OnSceneLoadedSingle;
+        SceneManager.sceneLoaded += OfflineRoomController.instance.OnSceneLoaded;
         SceneManager.LoadScene("GameScene");
+        //NetworkManager.singleton.StartHost();
     }
 }

@@ -1,22 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ORCAManager : MonoBehaviour
+public class ORCAManager : SingletonMonoBehaviour<ORCAManager>
 {
-    private static ORCAManager instance;
-    public static ORCAManager Instance
-    {
-        get
-        {
-            if(instance == null) 
-                instance = FindObjectOfType<ORCAManager>();
-            return instance;
-        }
-    }
     public List<Obstacle> allObstacles = new List<Obstacle>();
     public Dictionary<GameObject, List<Obstacle>> obstaclesDic;
 
-    private void Start()
+    private void Awake()
     {
         obstaclesDic = new Dictionary<GameObject, List<Obstacle>>();
         GenerateVerticesList();

@@ -2,7 +2,7 @@ using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : SingletonNetBehaviour<UIManager>
+public class UIManager : SingletonMonoBehaviour<UIManager>
 {
     private Transform healthBarCanvas;
     private Dictionary<GameObjectController, HealthImage> healthImages = new Dictionary<GameObjectController, HealthImage>();

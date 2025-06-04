@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameObjectStatus : NetworkBehaviour
+public class GameObjectStatus : MonoBehaviour
 {
     #region 设定
     public List<string> statusList;

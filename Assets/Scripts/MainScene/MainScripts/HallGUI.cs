@@ -1,4 +1,4 @@
-using Mirror;
+/*using Mirror;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -180,9 +180,4 @@ public class HallGUI : MonoBehaviour
     }
     #endregion
 }
-public enum PlayerSite : byte
-{
-    NoCamp = 0,
-    Left = 1,
-    Right = 2,
-}
+*/

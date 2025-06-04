@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameObjectInit : NetworkBehaviour
+public class GameObjectInit : MonoBehaviour
 {
     public PlayerSite site;
     public List<GameObjectController> objList;

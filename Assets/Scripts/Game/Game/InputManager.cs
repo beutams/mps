@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : SingletonNetBehaviour<InputManager>
+public class InputManager : SingletonMonoBehaviour<InputManager>
 {
     public InputActionAsset asset;
     private InputAction gatherAction;
@@ -63,7 +63,7 @@ public class InputManager : SingletonNetBehaviour<InputManager>
         weapenSwitchAuto8Action = asset.FindAction("WeapenSwitchAuto8");
         weapenSwitchAuto9Action = asset.FindAction("WeapenSwitchAuto9");
     }
-    private HeroController hero => OnlineRoomController.instance.localPlayer.hero;
+    private HeroController hero => IRoomController.Instance().localPlayer.hero;
 
     public bool GetGather() => gatherAction.IsPressed();
     public bool GetShop() => shopAction.IsPressed();

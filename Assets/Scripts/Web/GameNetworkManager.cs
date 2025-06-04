@@ -9,11 +9,11 @@ public class GameNetworkManager : NetworkManager
         public NetworkConnectionToClient conn;
         public GameObject roomPlayer;
     }
-    public OnlineRoomController roomController;
+    public IRoomController roomController;
     public string roomScene;
     public string gameScene;
     public HashSet<PendingPlayer> pendingPlayers = new HashSet<PendingPlayer>();
-    public HashSet<OnlineRoomController> roomControllers = new HashSet<OnlineRoomController>();
+    public HashSet<IRoomController> roomControllers = new HashSet<IRoomController>();
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
         base.OnServerConnect(conn);

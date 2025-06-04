@@ -8,11 +8,11 @@ public abstract class SubUIBase : MonoBehaviour
     public static Dictionary<UIGroup, SubUIBase> allTitles = new Dictionary<UIGroup, SubUIBase> ();
     public static SubUIBase current;
     public UIGroup button;
-    private void Awake()
+    protected virtual void Awake()
     {
         allTitles.Add(button,this);
     }
-    private void Update()
+    protected virtual void Update()
     {
         if (current == this)
         {
