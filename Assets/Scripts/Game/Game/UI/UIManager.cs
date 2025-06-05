@@ -18,7 +18,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         foreach(var obj in healthImages)
         {
-            //bj.Value.Locate(obj.Key.transform.position, obj.Key.GetHealth(), obj.Key.stats.maxHealth);
+            obj.Value.Locate(obj.Key.transform.position, obj.Key.GetHealth(), obj.Key.stats.maxHealth);
         }
     }
     public void AddHealthBar(GameObjectController obj, string name)

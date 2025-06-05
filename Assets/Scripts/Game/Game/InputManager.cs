@@ -65,7 +65,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     }
     private HeroController hero => IRoomController.Instance().localPlayer.hero;
 
-    public bool GetGather() => gatherAction.IsPressed();
+    public bool GetGather() => gatherAction.WasPerformedThisFrame();
     public bool GetShop() => shopAction.IsPressed();
     public bool GetSkill1() => skill1Action.IsPressed();
     public bool GetSkill2() => skill2Action.IsPressed();
@@ -99,5 +99,16 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         if (weapenSwitchAuto8Action.IsPressed()) return 8;
         if (weapenSwitchAuto9Action.IsPressed()) return 9;
         return -1;
+    }
+    public void CameraMove()
+    {
+        float x = Input.mousePosition.x / Screen.width;
+        float y = Input.mousePosition.y / Screen.height;
+        float xDir = x < 0.05f ? -1 : 0;
+        xDir = x > 0.95f ? 1 : xDir;
+        float yDir = y < 0.05f ? -1 : 0;
+        yDir = y > 0.95f ? 1 : yDir;
+        Vector2 direction = new Vector2(xDir, yDir);
+        Camera.main.transform.position = Camera.main.transform.position + Tools.V2ToV3(direction) * GameEntry.SettingComponent.CameraMoveSpeed * Time.deltaTime;
     }
 }

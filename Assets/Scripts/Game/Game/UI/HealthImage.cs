@@ -2,7 +2,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthImage : NetworkBehaviour
+public class HealthImage : MonoBehaviour
 {
     private Image health;
     private float maxWidth;
@@ -13,7 +13,7 @@ public class HealthImage : NetworkBehaviour
     }
     public void Locate(Vector3 objPosition,float curHealth, float maxHealth)
     {
-        Camera.main.WorldToScreenPoint(objPosition);
-        health.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, curHealth / maxHealth * maxWidth);
+        transform.position = Camera.main.WorldToScreenPoint(objPosition + Vector3.up * 3);
+        health.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, curHealth / maxHealth * maxWidth);
     }
 }
