@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: AutoSpawn
   m_EditorClassIdentifier: 
   time: 45
-  spawnPosition: {x: 5, y: 0, z: 5}
+  spawnPosition: {x: 11, y: 0, z: 11}
   perfabs:
   - {fileID: 5587949120119088470, guid: e7ac926cc0b1ab44791a9b887d20d283, type: 3}
   - {fileID: 5587949120119088470, guid: e7ac926cc0b1ab44791a9b887d20d283, type: 3}
   - {fileID: 5587949120119088470, guid: e7ac926cc0b1ab44791a9b887d20d283, type: 3}
-  targetPoint: {x: 10, y: 0, z: 10}
+  targetPoint: {x: 51, y: 0, z: 51}
   intevalTime: 0.5

@@ -22,8 +22,6 @@ public class Attack : AutoAbility
         base.OnTimerCompleteGameObject();
         if(target != null)
         {
-            Color color = new Color((int)Random.Range(0, 255), (int)Random.Range(0, 255), (int)Random.Range(0, 255));
-            target.GetComponent<MeshRenderer>().material.color = color;
             target.UnderAttack(atk);
         }
     }

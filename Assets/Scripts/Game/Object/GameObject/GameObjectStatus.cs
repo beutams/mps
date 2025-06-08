@@ -49,7 +49,6 @@ public class GameObjectStatus : MonoBehaviour
         currentStatu.OnEnter(this);
         onEnter?.Invoke();
 
-        Debug.Log($"{controller.gameObject.name} Change To {currentStatu}");
         return true;
     }
     public AGameObjectStatu<GameObjectStatus> GetStatu()
