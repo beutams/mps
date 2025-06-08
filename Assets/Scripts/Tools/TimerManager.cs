@@ -2,7 +2,7 @@ using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-public class TimerManager : SingletonNetBehaviour<TimerManager>
+public class TimerManager : SingletonMonoBehaviour<TimerManager>
 {
     public List<Timer> timers = new List<Timer>();
     public void AddTimer(Timer timer)

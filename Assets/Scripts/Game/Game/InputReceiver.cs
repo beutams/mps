@@ -1,11 +1,12 @@
 using Mirror;
 using UnityEngine;
 
-public class InputReceiver : NetworkBehaviour
+public class InputReceiver : SingletonMonoBehaviour<InputReceiver> 
 {
 
     private void Update()
     {
+        InputManager.instance.CameraMove();
         ReceiverGather();
         ReceiverShop();
         ReceiverMove();
@@ -17,7 +18,7 @@ public class InputReceiver : NetworkBehaviour
         {
             if(hit.collider != null)
             {
-                foreach (var unit in OnlineRoomController.instance.localPlayer.unitList)
+                foreach (var unit in IRoomController.Instance().localPlayer.unitList)
                 {
                     unit.SetMoveTarget(null, hit.point);
                 }

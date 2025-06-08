@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class QuadTreeManager : SingletonNetBehaviour<QuadTreeManager>
+public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
 {
     private QuadTreeNode root;
 

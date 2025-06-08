@@ -2,7 +2,7 @@ using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : SingletonNetBehaviour<UIManager>
+public class UIManager : SingletonMonoBehaviour<UIManager>
 {
     private Transform healthBarCanvas;
     private Dictionary<GameObjectController, HealthImage> healthImages = new Dictionary<GameObjectController, HealthImage>();
@@ -18,7 +18,7 @@ public class UIManager : SingletonNetBehaviour<UIManager>
     {
         foreach(var obj in healthImages)
         {
-            //bj.Value.Locate(obj.Key.transform.position, obj.Key.GetHealth(), obj.Key.stats.maxHealth);
+            obj.Value.Locate(obj.Key.transform.position, obj.Key.GetHealth(), obj.Key.stats.maxHealth);
         }
     }
     public void AddHealthBar(GameObjectController obj, string name)

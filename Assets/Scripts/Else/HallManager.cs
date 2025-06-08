@@ -1,4 +1,4 @@
-using Mirror;
+/*using Mirror;
 using Mirror.Examples.Basic;
 using System;
 using System.Collections;
@@ -214,7 +214,7 @@ public class HallManager : MonoBehaviour
         {
             GameObject roomControllerObj = Instantiate(roomControllerPerfab);
 
-            OnlineRoomController roomController = roomControllerObj.GetComponent<OnlineRoomController>();
+            IRoomController roomController = roomControllerObj.GetComponent<IRoomController>();
             roomController.GetComponent<NetworkMatch>().matchId = roomId;
 
             Player noCamp = Instantiate(roomController.noCampPlayer).GetComponent<Player>();
@@ -456,3 +456,4 @@ public class HallManager : MonoBehaviour
     
     #endregion
 }
+*/

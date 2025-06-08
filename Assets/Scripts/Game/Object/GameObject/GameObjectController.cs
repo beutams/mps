@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.UI.GridLayoutGroup;
 
-public abstract class GameObjectController : NetworkBehaviour
+public abstract class GameObjectController : MonoBehaviour
 {
     public GameObjectStats stats;
     protected bool isSelect;
@@ -147,7 +147,7 @@ public abstract class GameObjectController : NetworkBehaviour
     public virtual void GetNearestTarget()
     {
         GameObjectController result = null;
-        foreach (var player in OnlineRoomController.instance.playerDic.Values)
+        foreach (var player in IRoomController.Instance().playerDic.Values)
         {
             if(player == this.player) continue;
             if (player.unitList.Count > 0)

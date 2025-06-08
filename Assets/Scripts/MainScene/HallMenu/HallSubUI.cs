@@ -12,8 +12,9 @@ public class HallSubUI : SubUIBase
     public Transform roomUI;
     protected RoomItem itemPerfab;
     protected Dictionary<ServerResponse, RoomItem> rooms;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         itemPerfab = content.GetChild(0).GetComponent<RoomItem>();
         itemPerfab.gameObject.SetActive(false);
     }
@@ -35,8 +36,8 @@ public class HallSubUI : SubUIBase
     }
     protected void Find()
     {
-        GameEntry.WebComponent.gameDiscover.Discovery();
-        RefreshRoomList();
+/*        GameEntry.WebComponent.gameDiscover.Discovery();
+        RefreshRoomList();*/
     }
     protected void RefreshRoomList()
     {

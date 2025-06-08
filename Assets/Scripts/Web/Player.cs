@@ -5,18 +5,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : NetworkBehaviour
+public class Player : MonoBehaviour
 {
     #region 设定
     public Transform playerItem;
     #endregion
 
     #region 字段
-    public Transform units;
-    public Transform constructions;
+
     #endregion
 
     #region 属性
+    public Transform units { get; set; }
+    public Transform constructions { get; set; }
     public PlayerSite site {  get; set; }
     public List<UnitController> unitList {  get; private set; }
     public List<ConstructionController> constructionList {  get; private set; }

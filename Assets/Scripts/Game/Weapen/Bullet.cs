@@ -2,7 +2,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Bullet : NetworkBehaviour
+public class Bullet : MonoBehaviour
 {
     public BulletData data;
     private GameObjectController target;

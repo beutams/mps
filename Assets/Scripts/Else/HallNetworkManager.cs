@@ -1,4 +1,4 @@
-using Mirror;
+/*using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,3 +54,4 @@ public class HallNetworkManager : NetworkManager
         //OnlineRoomController.instance.OnReady();
     }
 }
+*/

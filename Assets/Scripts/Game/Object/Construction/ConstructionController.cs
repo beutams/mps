@@ -7,14 +7,14 @@ public class ConstructionController : GameObjectController
     {
         base.OnObjectSpawn(player);
         UIManager.instance.AddHealthBar(this, constructionHealthBar);
-        ORCAManager.Instance.AddObstacle(gameObject, true);
+        ORCAManager.instance.AddObstacle(gameObject, true);
     }
 
     protected override void OnObjectDead()
     {
         base.OnObjectDead();
         UIManager.instance.RemoveHealthBar(this);
-        ORCAManager.Instance.RemoveObstacle(gameObject);
+        ORCAManager.instance.RemoveObstacle(gameObject);
     }
 
     protected override void Logout()

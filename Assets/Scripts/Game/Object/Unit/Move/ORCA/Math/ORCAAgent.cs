@@ -62,7 +62,7 @@ public class ORCAAgent
                 neighborObstacles.Add(obs);
         }*/
         neighborAgents.Clear();
-        foreach(var player in OnlineRoomController.instance.playerDic.Values)
+        foreach(var player in IRoomController.Instance().playerDic.Values)
         {
             foreach (var agent in player.unitList)
             {

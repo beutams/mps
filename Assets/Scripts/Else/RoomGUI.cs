@@ -1,4 +1,4 @@
-using Mirror;
+/*using Mirror;
 using System;
 using TMPro;
 using UnityEngine;
@@ -30,3 +30,4 @@ public class RoomGUI : MonoBehaviour
         this.roomId = roomId;
     }
 }
+*/
