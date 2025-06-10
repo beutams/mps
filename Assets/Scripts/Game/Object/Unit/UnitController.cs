@@ -88,6 +88,8 @@ public class UnitController : GameObjectController
     private void DoMove()
     {
         if (pathPoint == null ||pathPoint.Length <= 0) return;
+        Vector3 turnForward = Vector3.RotateTowards(transform.forward, velocity, unitStats.rotateForce * Time.deltaTime, 0f);
+        transform.rotation = Quaternion.LookRotation(turnForward);
         transform.position += velocity * Time.deltaTime;
     }
     private void EndMove()
@@ -117,4 +119,12 @@ public class UnitController : GameObjectController
         player.unitList.Remove(this);
     }
     #endregion
+    private void OnDrawGizmos()
+    {
+        if (pathPoint == null || pathPoint.Count() == 0) return;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, pathPoint[0]);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + velocity);
+    }
 }

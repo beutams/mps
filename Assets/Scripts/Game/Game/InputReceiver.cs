@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class InputReceiver : SingletonMonoBehaviour<InputReceiver> 
 {
-
     private void Update()
     {
         InputManager.instance.CameraMove();

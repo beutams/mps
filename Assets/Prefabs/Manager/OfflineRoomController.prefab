@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e1c131a95c94294682588003abd9266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   localPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
   noCampPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
+  heroPrefab: {fileID: 193299127927635927, guid: 287f9cd988138044d9f77f1fa0deaf18, type: 3}

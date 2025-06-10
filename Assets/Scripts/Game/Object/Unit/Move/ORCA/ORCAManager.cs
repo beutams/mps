@@ -23,22 +23,19 @@ public class ORCAManager : SingletonMonoBehaviour<ORCAManager>
     public void AddObstacle(GameObject item, bool reg)
     {
         var coll = item.GetComponent<BoxCollider>();
-        var angle = item.transform.rotation.eulerAngles.y;
-        float minX = coll.transform.position.x -
-         coll.size.x * coll.transform.lossyScale.x * 0.5f;
-        float minZ = coll.transform.position.z -
-                     coll.size.z * coll.transform.lossyScale.z * 0.5f;
-        float maxX = coll.transform.position.x +
-                     coll.size.x * coll.transform.lossyScale.x * 0.5f;
-        float maxZ = coll.transform.position.z +
-                     coll.size.z * coll.transform.lossyScale.z * 0.5f;
+        float pointX = coll.transform.position.x;
+        float pointY = coll.transform.position.z;
+        float halfX = coll.size.x * coll.transform.lossyScale.x * 0.5f;
+        float halfY = coll.size.z * coll.transform.lossyScale.z * 0.5f;
+        Vector2 self = new Vector2(pointX, pointY);
+        Vector2 p1 = Tools.V3ToV2(item.transform.rotation * (new Vector3(pointX - halfX, 0, pointY - halfY) - Tools.V2ToV3(self))) + self;
+        Vector2 p2 = Tools.V3ToV2(item.transform.rotation * (new Vector3(pointX - halfX, 0, pointY + halfY) - Tools.V2ToV3(self))) + self;
+        Vector2 p3 = Tools.V3ToV2(item.transform.rotation * (new Vector3(pointX + halfX, 0, pointY + halfY) - Tools.V2ToV3(self))) + self;
+        Vector2 p4 = Tools.V3ToV2(item.transform.rotation * (new Vector3(pointX + halfX, 0, pointY - halfY) - Tools.V2ToV3(self))) + self;
 
         List<Vector2> obstacle = new List<Vector2>
             {
-                new Vector2(maxX, maxZ),
-                new Vector2(minX, maxZ),
-                new Vector2(minX, minZ),
-                new Vector2(maxX, minZ)
+                p1,p2,p3,p4
             };
         AddObstacle(item ,obstacle, reg);
     }
@@ -87,6 +84,15 @@ public class ORCAManager : SingletonMonoBehaviour<ORCAManager>
             }
             obstaclesDic.Remove(obj);
         }
+    }
+    private void OnDrawGizmos()
+    {
+        if(allObstacles != null)
+            foreach (var item in allObstacles)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(new Vector3(item.point.x,2f,item.point.y), new Vector3(item.previous.point.x, 2f, item.previous.point.y));
+            }
     }
     #endregion
 }

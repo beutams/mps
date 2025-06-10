@@ -7,4 +7,7 @@ public class UnitStats : GameObjectStats
     public static float obsTimeHorizon = 5f;
     public static float speed = 2f;
     public static float findDistance = 1.5f;
+    [Header("Rotate")]
+    public float rotateForce;
+    public float accelerateForce;
 }

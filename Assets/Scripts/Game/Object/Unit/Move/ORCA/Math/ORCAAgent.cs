@@ -55,12 +55,12 @@ public class ORCAAgent
     #region Math
     private void CountNeighbors()
     {
-/*        neighborObstacles.Clear();
-        foreach (var obs in ORCAManager.Instance.allObstacles)
+        neighborObstacles.Clear();
+        foreach (var obs in ORCAManager.instance.allObstacles)
         {
             if (Tools.GetIntersectionPoint(position, position + velocity, obs.point, obs.next.point) != Vector2.zero || Tools.PointToLineDistance(position, obs.point, obs.next.point) < 2f)
                 neighborObstacles.Add(obs);
-        }*/
+        }
         neighborAgents.Clear();
         foreach(var player in IRoomController.Instance().playerDic.Values)
         {
