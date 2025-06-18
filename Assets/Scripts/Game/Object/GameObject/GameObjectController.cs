@@ -32,6 +32,10 @@ public abstract class GameObjectController : MonoBehaviour
         InitStats();
         InitAbility();
     }
+    protected virtual void Start()
+    {
+        QuadTreeManager.instance.Insert(this);
+    }
     protected virtual void InitStats()
     {
         status = GetComponent<GameObjectStatus>();
@@ -82,6 +86,7 @@ public abstract class GameObjectController : MonoBehaviour
     {
         StopAbility();
         Logout();
+        QuadTreeManager.instance.Delete(this);
         Destory();
     }
     protected virtual void SpawnInit()

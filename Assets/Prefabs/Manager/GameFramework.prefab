@@ -44,9 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a738349da222b4099d6b030f960727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &704532684783545117
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,9 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933a189029bd32b49a463283c1899d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &955656720456622280
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,9 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006cac82391eab84f971b373b4753850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &2236044677261675227
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,9 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4f52a6dbfff344ebd33c9b60916294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &3431448494075518880
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,9 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250e551ab8b70064eb557320609fa19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   firstProcedure: 
   allProceduresName: []
 --- !u!1 &4511180142771536978
@@ -281,12 +266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab213b9be263deb4cb2e646f39e1a8b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   CameraMoveSpeed: 6
   maxDepth: 5
   maxObject: 5
+  mapSize: 102
 --- !u!1 &4527564024810447360
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,9 +314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5574952033d5b354f9c24c727b4acc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &4696060586675465192
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,9 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b14675b14c59d49a5361b58b959077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &4986904941322790767
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,9 +413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf41b89634dbf842817b7df1af3596e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &5758872104680873960
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +513,6 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  roomController: {fileID: 0}
   roomScene: 
   gameScene: 
 --- !u!114 &6370031589983666484
@@ -615,9 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55f9f3b184ac023419e496bf99b53cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!1 &8831490770984640345
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +632,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed15becc7de9244888da491255067cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0

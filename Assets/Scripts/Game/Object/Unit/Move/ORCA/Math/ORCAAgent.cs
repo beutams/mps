@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Services.Analytics.Internal;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ORCAAgent 
 {
@@ -62,17 +64,16 @@ public class ORCAAgent
                 neighborObstacles.Add(obs);
         }
         neighborAgents.Clear();
-        foreach(var player in IRoomController.Instance().playerDic.Values)
+        List<GameObjectController> list = new List<GameObjectController>();
+        QuadTreeManager.instance.Find(new Vector2(position.x - unitController.stats.searchRadius, position.y - unitController.stats.searchRadius)
+            , new Vector2(position.x + unitController.stats.searchRadius, position.y + unitController.stats.searchRadius), ref list);
+        foreach(var agent in list)
         {
-            foreach (var agent in player.unitList)
+            if (agent is UnitController && Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius)
             {
-                if (Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius)
-                {
-                    neighborAgents.Add(agent.orcaAgent);
-                }
+                neighborAgents.Add(((UnitController)agent).orcaAgent);
             }
         }
-
     }
     public void ComputeNewVelocity()
     {

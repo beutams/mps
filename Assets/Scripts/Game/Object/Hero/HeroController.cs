@@ -8,8 +8,9 @@ public class HeroController : UnitController
     public Dictionary<int, List<WeapenBase>> weapenGroup = new Dictionary<int, List<WeapenBase>>();
     protected int currentGroup = 1;
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         RefreshWeapens();
     }
     protected virtual void RefreshWeapens()

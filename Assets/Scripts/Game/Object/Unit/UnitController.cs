@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class UnitController : GameObjectController
 {
     public static string unitHealthBar = "UnitHealthBar";
-    protected NavMeshPath path;
     protected Vector3[] pathPoint;
+    protected NavMeshPath path;
 
     public ORCAAgent orcaAgent;
     protected Vector3 velocity;
