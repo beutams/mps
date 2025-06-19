@@ -18,7 +18,7 @@ public static class Tools
     }
     public static float Pow2(Vector2 input)
     {
-        return (input * input).magnitude;
+        return input.magnitude * input.magnitude;
     }
     public static float CosRectToAngle(float rectSide, float hypotenuse)
     {
@@ -38,6 +38,7 @@ public static class Tools
     }
     public static float Det(Vector2 form,Vector2 to)
     {
+        float det = form.x * to.y - form.y * to.x;
         return form.x * to.y - form.y * to.x;
     }
     public static float GetDistance(Vector2 v1, Vector2 v2)
@@ -50,7 +51,8 @@ public static class Tools
     }
     public static bool LeftOf(Vector2 a, Vector2 b, Vector2 c)
     {
-        return Det(a - c, b - a) >= 0f;
+        float aa = Det(a - c, b - a);
+        return Det(a - c, b - a) <= 0f;
     }
     public static Vector2 GetIntersectionPoint(Vector2 a, Vector2 b, Vector2 c, Vector2 d)
     {

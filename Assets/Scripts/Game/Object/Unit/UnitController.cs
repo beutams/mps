@@ -119,12 +119,18 @@ public class UnitController : GameObjectController
         player.unitList.Remove(this);
     }
     #endregion
+
     private void OnDrawGizmos()
     {
         if (pathPoint == null || pathPoint.Count() == 0) return;
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, pathPoint[0]);
         Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + velocity);
+
+        Gizmos.color = Color.blue;
+        orcaAgent.OnDrawGizmos();
+        Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + velocity);
     }
 }

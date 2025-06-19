@@ -12,9 +12,11 @@ public abstract class GameObjectController : MonoBehaviour
     #region 设定
 
     #endregion
+
     #region 字段
     protected float currentHealth;
     #endregion
+
     #region 属性
     public List<Ability> abilities;
     public GameObjectEvents events { get; protected set; }

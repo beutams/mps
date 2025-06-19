@@ -92,9 +92,9 @@ public class ORCAAgent
             float relativePostion2Sq = Tools.Pow2(relativePosition2);
             float radiusSq = Tools.Pow2(radius);
             Vector2 obsVector = obs2.point - obs1.point;
-            float projRP1ToObsVector = Vector2.Dot(-relativePosition1, obsVector);
-            float projRP1ToObsVectorPercent = projRP1ToObsVector / Tools.Pow2(obsVector);
-            float positionToObsLineDistane = Tools.PointToLineDistance(position, obs1.point, obs2.point);
+            float projRP1ToObsVector = Vector2.Dot(-relativePosition1, obsVector);//p1 -> pos 到obs的投影
+            float projRP1ToObsVectorPercent = projRP1ToObsVector / Tools.Pow2(obsVector); //投影和obs长度的比例
+            float positionToObsLineDistane = Tools.PointToLineDistance(position, obs1.point, obs2.point); //pos 到 obs的距离
 
             Line line;
             #region 已经碰撞
@@ -408,6 +408,13 @@ public class ORCAAgent
         }
     }
     #endregion
+    public void OnDrawGizmos()
+    {
+        foreach(var item in orcaLines)
+        {
+            Gizmos.DrawLine(Tools.V2ToV3(position + item.point + item.direction.normalized * 10), Tools.V2ToV3(position + item.point - item.direction.normalized * 10));
+        }
+    }
 }
 #region Help
 public struct Line

@@ -38,7 +38,6 @@ public class QuadTreeNode
             if (!objList.Contains(obj))
             {
                 objList.Add(obj);
-                Debug.Log(obj.name + "Add to" + center);
             }
         }
         else if(stat == 1)
@@ -106,7 +105,6 @@ public class QuadTreeNode
     {
         QuadTreeNode node = FindObj(obj);
         if (node == null) return;
-        Debug.Log(obj.name + "Delete from" + node.center);
         node.objList.Remove(obj);
         node.parent?.TryCombine();
     }
@@ -120,7 +118,6 @@ public class QuadTreeNode
                 {
                     foreach (var cobj in child.objList)
                     {
-                        Debug.Log(cobj + "combine add to" + center);
                         objList.Add(cobj);
                     }
                 }
@@ -165,9 +162,8 @@ public class QuadTreeNode
             if (isDivide)
                 foreach (var child in children)
                     child.Find(minObj, maxObj, ref list);
-            else
-                foreach (var obj in objList)
-                    list.Add(obj);
+            foreach (var obj in objList)
+                list.Add(obj);
         }
     }
     public QuadTreeNode FindObj(GameObjectController obj)
@@ -206,7 +202,6 @@ public class QuadTreeNode
             foreach(var obj in controllers)
             {
                 QuadTreeNode node = QuadTreeManager.instance.FindTarget(obj);
-                Debug.Log(obj.name + "from" + center + "move to " + node.center);
                 objList.Remove(obj);
                 node.objList.Add(obj);
                 if(!node.isDivide && node.objList.Count > GameEntry.SettingComponent.maxObject)
