@@ -56,4 +56,8 @@ public class CoverAbility : Ability
     {
         isReady = true;
     }
+    public virtual float GetProgress()
+    {
+        return timer.GetProgress();
+    }
 }

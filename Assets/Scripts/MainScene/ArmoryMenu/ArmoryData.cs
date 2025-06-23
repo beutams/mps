@@ -7,4 +7,5 @@ public class ArmoryData
     public int unit;
     public int aircraft;
     public int scout;
+    public List<string> globalSkills;
 }

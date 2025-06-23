@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArmorySubUI : SubUIBase
 {
     public Dictionary<string, int> selectedItem;
+    protected ArmoryData data;
     protected override void OnClose()
     {
         

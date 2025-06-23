@@ -71,8 +71,8 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     public bool GetSkill2() => skill2Action.IsPressed();
     public bool GetSkill3() => skill3Action.IsPressed();
     public bool GetSkill4() => skill4Action.IsPressed();
-    public bool GetFire() => fireAction.IsPressed();
-    public bool GetMove() => moveAction.IsPressed();
+    public bool GetFire() => fireAction.WasPressedThisFrame();
+    public bool GetMove() => moveAction.WasPressedThisFrame();
     public bool GetLock() => lockAction.IsPressed();
     public int GetWeapen()
     {
