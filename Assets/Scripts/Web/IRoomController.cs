@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public interface IRoomController
 {
+    public ArmoryData armoryData { get; set; }
     public Player localPlayer { get; }
     public Player noCampPlayer { get; }
     public Dictionary<PlayerSite, Player> playerDic { get; }

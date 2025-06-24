@@ -10,4 +10,6 @@ public class SettingComponent : BaseComponent<SettingComponent>
     public int maxDepth = 5;
     public int maxObject = 2;
     public float mapSize = 102;
+    [Header("Path")]
+    public string settingPath = Application.streamingAssetsPath + "/SaveData/Setting.json";
 }

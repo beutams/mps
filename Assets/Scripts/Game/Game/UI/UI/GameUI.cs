@@ -18,5 +18,18 @@ public class GameUI : MonoBehaviour
     [SerializeField] protected Image health;
     [SerializeField] protected Image icon;
     //[Header("WeapenPanel")]
-
+    private void Start()
+    {
+        Init();
+    }
+    public void Init()
+    {
+        List<GlobalSkillData> list = new List<GlobalSkillData>();
+        foreach(var skill in IRoomController.Instance().armoryData.globalSkills)
+        {
+            list.Add(GameEntry.ResourceComponent.GetResource<GlobalSkillData>(skill));
+        }
+        GlobalSkill globalSkill = mainSkill.GetComponent<GlobalSkill>();
+        globalSkill.InitAbilities(list);
+    }
 }

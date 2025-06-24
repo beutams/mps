@@ -1,0 +1,13 @@
+Ability|{"time":45.0,"spawnPosition":{"x":11.0,"y":0.0,"z":11.0},"perfabs":[{"instanceID":29818},{"instanceID":29818},{"instanceID":29818}],"targetPoint":{"x":51.0,"y":0.0,"z":51.0},"intevalTime":0.5}
+Ability|{"time":0.0,"atk":0.0,"attackSpeed":0.0,"attackDistance":0.0,"enable":false}
+Ability|{"weapens":[{"instanceID":28022}]}
+Ability|{"time":0.0,"atk":2.0,"attackSpeed":1.0,"attackDistance":10.0,"enable":true}
+DamageDate|{"type":2,"damageMultiplier":[{"v1":0,"v2":2.0},{"v1":1,"v2":0.10000000149011612},{"v1":2,"v2":0.20000000298023225}]}
+DamageDate|{"type":0,"damageMultiplier":[{"v1":0,"v2":0.30000001192092898},{"v1":1,"v2":0.10000000149011612},{"v1":2,"v2":2.0}]}
+DamageDate|{"type":0,"damageMultiplier":[{"v1":0,"v2":1.5},{"v1":1,"v2":0.5},{"v1":2,"v2":1.0}]}
+DamageDate|{"type":0,"damageMultiplier":[{"v1":0,"v2":1.0},{"v1":1,"v2":1.5},{"v1":2,"v2":1.0}]}
+GameObjectStats|{"abilities":[{"instanceID":28042}],"healthPerfab":{"instanceID":29868},"maxHealth":100.0,"defense":1.0,"radius":1.0,"searchRadius":12.0,"canMove":true,"canAttack":true,"rotateForce":5.0,"accelerateForce":5.0}
+GameObjectStats|{"abilities":[{"instanceID":28064}],"healthPerfab":{"instanceID":29868},"maxHealth":100.0,"defense":1.0,"radius":0.5,"searchRadius":0.0,"canMove":true,"canAttack":true,"rotateForce":0.0,"accelerateForce":0.0}
+GameObjectStats|{"abilities":[{"instanceID":28610}],"healthPerfab":{"instanceID":29868},"maxHealth":100.0,"defense":5.0,"radius":3.0,"searchRadius":10.0,"canMove":false,"canAttack":true}
+Weapen|{"weapon":"","bullet":"Bullet","maxBulletCount":8,"fireInterval":0.05000000074505806,"loadTime":1.0,"autoLoad":true}
+BulletData|{"liveTime":5.0,"startSpeed":3.0,"accelerateSpeed":1.0,"tail":false,"turnSpeed":0.0}

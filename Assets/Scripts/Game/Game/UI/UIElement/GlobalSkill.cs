@@ -8,12 +8,12 @@ public class GlobalSkill : MonoBehaviour
     public GlobalSkillItem item;
     public Transform content;
     public Transform info;
-    public void InitAbilities(List<CoverAbility> abilities)
+    public void InitAbilities(List<GlobalSkillData> datas)
     {
-        foreach (var ability in abilities)
+        foreach (var data in datas)
         {
             GlobalSkillItem globalItem = Instantiate(item);
-            globalItem.Init(Instantiate(ability));
+            globalItem.Init(data);
             globalItem.transform.parent = content;
             items.Add(globalItem);
         }

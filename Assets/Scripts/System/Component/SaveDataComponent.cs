@@ -1,18 +1,16 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SaveDataComponent : BaseComponent<SaveDataComponent>
 {
-    // Start is called before the first frame update
-    void Start()
+    public static void Save<T>(T data, string path)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        string datas = JsonConvert.SerializeObject(data);
+        if (File.Exists(path))
+            File.Delete(path);
+        File.WriteAllText(path, datas);
     }
 }

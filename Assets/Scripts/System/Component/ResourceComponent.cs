@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class ResourceComponent : BaseComponent<ResourceComponent>
 {
-    // Start is called before the first frame update
-    void Start()
+    public T GetResource<T>(string name) where T : class
     {
-        
+        return null;
     }
-
-    // Update is called once per frame
-    void Update()
+    public Sprite GetImage(string path)
     {
-        
+        return null;
     }
 }
