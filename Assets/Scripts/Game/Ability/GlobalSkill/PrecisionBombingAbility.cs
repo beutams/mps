@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[CreateAssetMenu(fileName = "PrecisionBombingAbility", menuName = "ScriptableObject/GlobalSkill/PrecisionBombingAbility")]
 public class PrecisionBombingAbility : CoverAbility
 {
     public GameObject spawnObject;

@@ -9,15 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c448a4794a9e8741838a22d43c717e8, type: 3}
-  m_Name: Explode
+  m_Script: {fileID: 11500000, guid: 90525c3343d877e4c8a4e02b03f1a8ec, type: 3}
+  m_Name: ParadropAbility
   m_EditorClassIdentifier: 
-  type: 0
-  damageMultiplier:
-  - v1: 0
-    v2: 1.5
-  - v1: 1
-    v2: 0.5
-  - v1: 2
-    v2: 1
-  id: 1
+  time: 120
+  spawnObject: {fileID: 0}

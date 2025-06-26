@@ -6,15 +6,10 @@ using UnityEngine;
 public class ArmoryData
 {
     public int hero;
-    public int unit;
-    public int aircraft;
-    public int scout;
-    public List<string> globalSkills;
+    public List<int> globalSkills;
     public ArmoryData() 
     {
         hero = 1;
-        unit = 1;
-        aircraft = 1;
-        globalSkills = new List<string>() { "FireSupportAbility", "ParadropAbility", "PrecisionBombingAbility" };
+        globalSkills = new List<int>() { 0 };
     }
 }

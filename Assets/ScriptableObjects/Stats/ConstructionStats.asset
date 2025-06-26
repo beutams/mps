@@ -15,9 +15,12 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: 9d5c4b89aa0761c43b06869992efeeec, type: 2}
   healthPerfab: {fileID: 5865935096257579933, guid: df3fbe2277ff51f4eb2d46f791df7d57, type: 3}
+  imgPath: 
   maxHealth: 100
   defense: 5
   radius: 3
   searchRadius: 10
   canMove: 0
   canAttack: 1
+  id: 1
+  type: 0
