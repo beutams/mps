@@ -9,15 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c448a4794a9e8741838a22d43c717e8, type: 3}
-  m_Name: Explode
+  m_Script: {fileID: 11500000, guid: 5e0256d3631035d41b5b8aed4b9d6a90, type: 3}
+  m_Name: FireSupportSkill
   m_EditorClassIdentifier: 
-  type: 0
-  damageMultiplier:
-  - v1: 0
-    v2: 1.5
-  - v1: 1
-    v2: 0.5
-  - v1: 2
-    v2: 1
-  id: 1
+  imgPath: Assets\Dependency\ScienceFictionGUI\Textures\icons\Resources_Icon_01.png
+  ability: {fileID: 11400000, guid: 7268834cd8aa981448ce0dbb40572019, type: 2}
+  id: 0

@@ -1,5 +1,5 @@
 using UnityEngine;
-public abstract class WeapenBase : ScriptableObject
+public abstract class WeapenBase : ScriptableObject, ID
 {
     public string weapon = "Weapen";
     public string bullet = "Bullet";
@@ -9,7 +9,9 @@ public abstract class WeapenBase : ScriptableObject
     public Timer fireTimer;
     public Timer loadTimer;
     public bool autoLoad;
-
+    [Header("ID")]
+    [SerializeField] protected int id;
+    public int ID => id;
     protected Player player;
     protected int bulletCount;
     public void Init(Player player)

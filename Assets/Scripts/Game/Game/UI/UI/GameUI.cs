@@ -25,9 +25,10 @@ public class GameUI : MonoBehaviour
     public void Init()
     {
         List<GlobalSkillData> list = new List<GlobalSkillData>();
-        foreach(var skill in IRoomController.Instance().armoryData.globalSkills)
+        foreach(var id in IRoomController.Instance().armoryData.globalSkills)
         {
-            list.Add(GameEntry.ResourceComponent.GetResource<GlobalSkillData>(skill));
+            GlobalSkillData data = Instantiate(GameEntry.ResourceComponent.dataDic["GlobalSkillData"][id]) as GlobalSkillData;
+            list.Add(data);
         }
         GlobalSkill globalSkill = mainSkill.GetComponent<GlobalSkill>();
         globalSkill.InitAbilities(list);

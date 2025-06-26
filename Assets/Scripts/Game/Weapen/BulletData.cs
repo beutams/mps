@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BulletData", menuName = "ScriptableObject/Bullet")]
-public class BulletData : ScriptableObject
+public class BulletData : ScriptableObject, ID
 {
     public float liveTime = 5f;
 
@@ -10,4 +10,8 @@ public class BulletData : ScriptableObject
 
     public bool tail;
     public float turnSpeed;
+
+    [Header("ID")]
+    [SerializeField]protected int id;
+    public int ID => id;
 }

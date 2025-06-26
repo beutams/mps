@@ -15,9 +15,14 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: 8c2cfd2b12c2554459e75c37a6758a15, type: 2}
   healthPerfab: {fileID: 5865935096257579933, guid: df3fbe2277ff51f4eb2d46f791df7d57, type: 3}
+  imgPath: Assets\Dependency\ScienceFictionGUI\Textures\icons\Resources_Icon_01.png
   maxHealth: 100
   defense: 1
   radius: 0.5
   searchRadius: 0
   canMove: 1
   canAttack: 1
+  id: 0
+  type: 1
+  rotateForce: 0
+  accelerateForce: 0

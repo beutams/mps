@@ -6,15 +6,17 @@ public class GlobalSkill : MonoBehaviour
 {
     protected List<GlobalSkillItem> items = new List<GlobalSkillItem>();
     public GlobalSkillItem item;
-    public Transform content;
     public Transform info;
+    
     public void InitAbilities(List<GlobalSkillData> datas)
     {
+        int index = 0;
         foreach (var data in datas)
         {
+            index++;
             GlobalSkillItem globalItem = Instantiate(item);
-            globalItem.Init(data);
-            globalItem.transform.parent = content;
+            globalItem.Init(data, index);
+            globalItem.transform.parent = transform;
             items.Add(globalItem);
         }
     }

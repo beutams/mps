@@ -54,6 +54,5 @@ public class SingleSubUI : SubUIBase
         room.armoryData = ArmorySubUI.data == null ? new ArmoryData() : ArmorySubUI.data;
         SceneManager.sceneLoaded += OfflineRoomController.instance.OnSceneLoaded;
         SceneManager.LoadScene("GameScene");
-        //NetworkManager.singleton.StartHost();
     }
 }
