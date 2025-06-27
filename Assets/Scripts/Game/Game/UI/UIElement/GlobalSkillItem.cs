@@ -31,6 +31,7 @@ public class GlobalSkillItem : MonoBehaviour
     }
     public void DoSkill(GameObjectController obj, Vector3 targetPosition)
     {
+
         if (data.ability.CanDo())
             data.ability.Do();
         else if (data.ability.CanDo(obj))
