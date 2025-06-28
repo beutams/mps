@@ -7,6 +7,7 @@ public class ShopUI : MonoBehaviour
     public Transform info;
 
     public Transform weapenContent;
+
     protected List<Weapen> productList = new List<Weapen>();
 
 }

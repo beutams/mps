@@ -21,5 +21,7 @@ MonoBehaviour:
   searchRadius: 12
   canMove: 1
   canAttack: 1
+  id: 0
+  type: 2
   rotateForce: 5
   accelerateForce: 5

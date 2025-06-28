@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class SingleSubUI : SubUIBase
 {
-    public GameObject roomConntroller;
+    public GameObject roomController;
     public GameObject chapterInfo;
     public Button enter;
     public Button exit;
@@ -50,9 +50,9 @@ public class SingleSubUI : SubUIBase
     }
     public virtual void OnEnterClick()
     {
-        Instantiate(roomConntroller);
+        IRoomController room = Instantiate(roomController).GetComponent<IRoomController>();
+        room.armoryData = ArmorySubUI.data == null ? new ArmoryData() : ArmorySubUI.data;
         SceneManager.sceneLoaded += OfflineRoomController.instance.OnSceneLoaded;
         SceneManager.LoadScene("GameScene");
-        //NetworkManager.singleton.StartHost();
     }
 }

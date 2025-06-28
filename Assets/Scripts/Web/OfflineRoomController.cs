@@ -2,15 +2,18 @@ using Mirror;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System;
 
 public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomController>, IRoomController
 {
     public Player localPlayer;
     public Player noCampPlayer;
     public GameObject heroPrefab;
+    public ArmoryData armoryData;
     public Dictionary<PlayerSite, Player> playerDic { get; set; }
     Player IRoomController.localPlayer { get => localPlayer; }
     Player IRoomController.noCampPlayer { get => noCampPlayer; }
+    ArmoryData IRoomController.armoryData { get => armoryData; set => armoryData = value; }
 
     protected virtual void Awake()
     {
