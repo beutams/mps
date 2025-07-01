@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     public List<UnitController> unitList {  get; private set; }
     public List<ConstructionController> constructionList {  get; private set; }
     public HeroController hero {  get; private set; }
+    public ArmoryData armory { get; set; }
+    public Dictionary<int, CoverAbility> globalSkills = new Dictionary<int, CoverAbility>();
     #endregion
 
     private void Awake()
@@ -29,6 +31,14 @@ public class Player : MonoBehaviour
         DontDestroyOnLoad(this);
         constructionList = new List<ConstructionController>();
         unitList = new List<UnitController>();
+        InitSkills();
+    }
+    public void InitSkills()
+    {
+        for(int i = 1;i <= 3;i++)
+        {
+            globalSkills.Add(i, GameEntry.ResourceComponent.dataDic["GlobalSkill"][armory.globalSkills[i]] as CoverAbility);
+        }
     }
     public void AddObject(GameObjectController controller)
     {

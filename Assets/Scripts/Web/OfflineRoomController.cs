@@ -9,7 +9,7 @@ public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomControlle
     public Player localPlayer;
     public Player noCampPlayer;
     public GameObject heroPrefab;
-    public ArmoryData armoryData;
+    protected ArmoryData armoryData;
     public Dictionary<PlayerSite, Player> playerDic { get; set; }
     Player IRoomController.localPlayer { get => localPlayer; }
     Player IRoomController.noCampPlayer { get => noCampPlayer; }
@@ -63,6 +63,7 @@ public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomControlle
         }
         HeroController hero = Instantiate(heroPrefab).GetComponent<HeroController>();
         hero.transform.position = Vector3.zero;
+        localPlayer.armory = armoryData;
         localPlayer.AddObject(hero);
     }
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)

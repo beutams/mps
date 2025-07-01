@@ -61,4 +61,12 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
             }
         }
     }
+    public void ReceiverSkill()
+    {
+        byte skills = InputManager.instance.GetSkill();
+/*        if ((skills & 1) == 1)
+        if ((skills & 1) == 1)
+        if ((skills & 1) == 1)
+        if ((skills & 1) == 1)*/
+    }
 }

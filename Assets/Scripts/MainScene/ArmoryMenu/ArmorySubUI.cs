@@ -33,15 +33,22 @@ public class ArmorySubUI : SubUIBase
     {
         InitData();
         InitComponent();
+        InitButton();
     }
     public void InitData()
     {
-        foreach(var hero in GameEntry.ResourceComponent.dataDic["HeroStats"].Values)
+        foreach (var hero in GameEntry.ResourceComponent.dataDic["HeroStats"].Values)
         {
             HeroStats stats = hero as HeroStats;
             ArmoryItem item = Instantiate(itemPrefab);
+            int id = GameEntry.ResourceComponent.indexDic["HeroStats"][stats];
             item.Init(stats.imgPath, stats.name,
-                () => SetData(ArmoryType.Hero, GameEntry.ResourceComponent.indexDic["HeroStats"][stats]));
+                () => {
+                    if (data.hero == id)
+                        SetData(ArmoryType.Hero, id);
+                    else
+                        SetData(ArmoryType.Hero, -1);
+                });
             item.transform.parent = heroItemList;
             heroList.Add(item, stats);
 
@@ -66,6 +73,12 @@ public class ArmorySubUI : SubUIBase
         for(int i = 0;i < selectIconList.childCount; i++)
             imgList.Add(selectIconList.GetChild(i).GetComponent<Image>());
     }
+    public void InitButton()
+    {
+        heroButton.onClick += () => OnSwitchClick(0);
+        skillButton.onClick += () => OnSwitchClick(1);
+        OnSwitchClick(0);
+    }
     public void SetData(ArmoryType item, int value)
     {
         switch (item)
@@ -84,16 +97,23 @@ public class ArmorySubUI : SubUIBase
         {
             if(i == 0)
             {
-                HeroStats stats = GameEntry.ResourceComponent.dataDic["HeroStats"][data.hero] as HeroStats;
-                imgList[i].sprite = GameEntry.ResourceComponent.GetImage(stats.imgPath);
+                string path = defaultImgPath;
+                if (data.hero == -1)
+                {
+                    HeroStats stats = GameEntry.ResourceComponent.dataDic["HeroStats"][data.hero] as HeroStats;
+                    path = stats.imgPath;
+                }
+                imgList[i].sprite = GameEntry.ResourceComponent.GetImage(path);
             }
             else
             {
-                GlobalSkillData sdata = GameEntry.ResourceComponent.dataDic["GlobalSkillData"][data.globalSkills[i-1]] as GlobalSkillData;
-                if(sdata == null)
-                    imgList[i].sprite = GameEntry.ResourceComponent.GetImage(defaultImgPath);
-                else
-                    imgList[i].sprite = GameEntry.ResourceComponent.GetImage(sdata.imgPath);
+                string path = defaultImgPath;
+                if (data.globalSkills.Count >= i)
+                {
+                    GlobalSkillData sdata = GameEntry.ResourceComponent.dataDic["GlobalSkillData"][data.globalSkills[i-1]] as GlobalSkillData;
+                    path = sdata.imgPath;
+                }
+                imgList[i].sprite = GameEntry.ResourceComponent.GetImage(path);
             }
         }
     }

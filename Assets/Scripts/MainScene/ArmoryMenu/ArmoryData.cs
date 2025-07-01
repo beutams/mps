@@ -9,7 +9,7 @@ public class ArmoryData
     public List<int> globalSkills;
     public ArmoryData() 
     {
-        hero = 1;
-        globalSkills = new List<int>() { 0 };
+        hero = 0;
+        globalSkills = new List<int>() { };
     }
 }

@@ -67,21 +67,18 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
 
     public bool GetGather() => gatherAction.WasPerformedThisFrame();
     public bool GetShop() => shopAction.IsPressed();
-    public bool GetSkill(int index)
+    public byte GetSkill()
     {
-        switch(index)
-        {
-            case 1:
-                return skill1Action.IsPressed();
-            case 2:
-                return skill2Action.IsPressed();
-            case 3:
-                return skill3Action.IsPressed();
-            case 4:
-                return skill4Action.IsPressed();
-            default: 
-                return false;
-        }
+        byte index = 0;
+        if (skill1Action.IsPressed())
+            index += 1;
+        if (skill2Action.IsPressed())
+            index += 2;
+        if (skill3Action.IsPressed())
+            index += 4;
+        if (skill4Action.IsPressed())
+            index += 8;
+        return index;
     }
     public bool GetFire() => fireAction.WasPressedThisFrame();
     public bool GetMove() => moveAction.WasPressedThisFrame();

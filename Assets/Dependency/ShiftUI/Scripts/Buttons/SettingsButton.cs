@@ -2,10 +2,11 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 namespace Michsky.UI.Shift
 {
-    public class SettingsButton : MonoBehaviour, IPointerEnterHandler
+    public class SettingsButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
         [Header("Resources")]
         public Image detailImage;
@@ -27,6 +28,7 @@ namespace Michsky.UI.Shift
         public Sprite iconSprite;
         public Sprite iconBackground;
 
+        public Action onClick;
         void Start()
         {
             if (useCustomContent == false) { buttonTitleObj.text = buttonTitle; }
@@ -34,7 +36,7 @@ namespace Michsky.UI.Shift
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (enableIconPreview == true)
+/*            if (enableIconPreview == true)
             {
                 detailImage.gameObject.SetActive(false);
                 detailIcon.gameObject.SetActive(true);
@@ -52,7 +54,12 @@ namespace Michsky.UI.Shift
             }
 
             detailTitle.text = title;
-            detailDescription.text = description;
+            detailDescription.text = description;*/
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            onClick?.Invoke();
         }
     }
 }
