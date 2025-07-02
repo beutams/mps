@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalSkill : MonoBehaviour
+public class GlobalSkill : SingletonMonoBehaviour<GlobalSkill>
 {
     protected List<GlobalSkillItem> items = new List<GlobalSkillItem>();
     public GlobalSkillItem item;
@@ -19,6 +19,14 @@ public class GlobalSkill : MonoBehaviour
             globalItem.transform.parent = transform;
             items.Add(globalItem);
         }
+    }
+    public void DoSkill(int index)
+    {
+        items[index].DoSkill(null,Vector3.zero);
+    }
+    public void ShowInfo()
+    {
+        info.gameObject.SetActive(true);
     }
     public void OnShowInfo(string name)
     {

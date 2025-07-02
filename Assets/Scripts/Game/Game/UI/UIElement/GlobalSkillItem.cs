@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GlobalSkillItem : MonoBehaviour
+public class GlobalSkillItem : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] protected Image mask;
     [SerializeField] protected Image skill;
@@ -31,7 +32,6 @@ public class GlobalSkillItem : MonoBehaviour
     }
     public void DoSkill(GameObjectController obj, Vector3 targetPosition)
     {
-
         if (data.ability.CanDo())
             data.ability.Do();
         else if (data.ability.CanDo(obj))
@@ -44,7 +44,13 @@ public class GlobalSkillItem : MonoBehaviour
         this.data = data;
         data.ability = Instantiate(data.ability);
         data.ability.Init(null);
+        this.index = index;
         skill.sprite = GameEntry.ResourceComponent.GetImage(data.imgPath);
         gameObject.SetActive(true);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        
     }
 }

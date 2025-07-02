@@ -22,15 +22,23 @@ public class GameUI : MonoBehaviour
     {
         Init();
     }
+    private void Update()
+    {
+        UpdateInfo();
+    }
     public void Init()
     {
         List<GlobalSkillData> list = new List<GlobalSkillData>();
-        foreach(var id in IRoomController.Instance().armoryData.globalSkills)
+        foreach(var data in IRoomController.Instance().localPlayer.globalSkills.Values)
         {
-            GlobalSkillData data = Instantiate(GameEntry.ResourceComponent.dataDic["GlobalSkillData"][id]) as GlobalSkillData;
             list.Add(data);
         }
         GlobalSkill globalSkill = mainSkill.GetComponent<GlobalSkill>();
         globalSkill.InitAbilities(list);
+    }
+    public void UpdateInfo()
+    {
+        population.text = IRoomController.Instance().localPlayer.population + "/10";
+        property.text = IRoomController.Instance().localPlayer.property.ToString();
     }
 }

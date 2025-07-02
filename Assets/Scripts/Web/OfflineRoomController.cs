@@ -65,6 +65,7 @@ public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomControlle
         hero.transform.position = Vector3.zero;
         localPlayer.armory = armoryData;
         localPlayer.AddObject(hero);
+        localPlayer.InitSkills();
     }
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
