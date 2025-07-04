@@ -33,7 +33,7 @@ public class QuadTreeNode
         int stat = 0;
         stat = Overlaps(obj.transform.position, obj.stats.radius) ? 1 : stat;
         stat = CrossSplitLine(obj.transform.position, obj.stats.radius) ? 2 : stat;
-        if((stat == 1 && !isDivide && (objList.Count < GameEntry.SettingComponent.maxObject || depth == GameEntry.SettingComponent.maxDepth)) || (stat == 2))
+        if((stat == 1 && !isDivide && (objList.Count < GameEntry.SettingComponent.settingData.maxObject || depth == GameEntry.SettingComponent.settingData.maxDepth)) || (stat == 2))
         {
             if (!objList.Contains(obj))
             {
@@ -112,7 +112,7 @@ public class QuadTreeNode
     {
         if (isDivide)
         {
-            if (Count() <= GameEntry.SettingComponent.maxObject)
+            if (Count() <= GameEntry.SettingComponent.settingData.maxObject)
             {
                 foreach (var child in children)
                 {
@@ -204,7 +204,7 @@ public class QuadTreeNode
                 QuadTreeNode node = QuadTreeManager.instance.FindTarget(obj);
                 objList.Remove(obj);
                 node.objList.Add(obj);
-                if(!node.isDivide && node.objList.Count > GameEntry.SettingComponent.maxObject)
+                if(!node.isDivide && node.objList.Count > GameEntry.SettingComponent.settingData.maxObject)
                 {
                     node.Divide();
                 }

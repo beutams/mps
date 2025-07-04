@@ -118,6 +118,6 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         float yDir = y < 0.05f && y > -0.1 ? -1 : 0;
         yDir = y > 0.95f && y < 1.1f ? 1 : yDir;
         Vector2 direction = new Vector2(xDir, yDir);
-        Camera.main.transform.position = Camera.main.transform.position + Tools.V2ToV3(direction) * GameEntry.SettingComponent.CameraMoveSpeed * Time.deltaTime;
+        Camera.main.transform.position = Camera.main.transform.position + Tools.V2ToV3(direction) * GameEntry.SettingComponent.settingData.CameraMoveSpeed * Time.deltaTime;
     }
 }

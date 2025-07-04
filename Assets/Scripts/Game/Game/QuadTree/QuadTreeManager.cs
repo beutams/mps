@@ -13,7 +13,7 @@ public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
     }
     private void InitTree()
     {
-        root = new QuadTreeNode(GameEntry.SettingComponent.mapSize,new Vector2 { x= GameEntry.SettingComponent.mapSize / 2, y= GameEntry.SettingComponent.mapSize / 2 },0,null);
+        root = new QuadTreeNode(GameEntry.SettingComponent.settingData.mapSize, new Vector2 { x= GameEntry.SettingComponent.settingData.mapSize / 2, y= GameEntry.SettingComponent.settingData.mapSize / 2 },0,null);
     }
     public void Insert(GameObjectController obj)
     {

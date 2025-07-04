@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class SettingSubUI : SubUIBase
 {
+    public Dictionary<SettingItem,string> settingItemDic = new Dictionary<SettingItem,string>();
+    
     protected override void OnClose()
     {
-   
+        
     }
 
     protected override void OnOpen()
     {
-
+        
     }
 }
