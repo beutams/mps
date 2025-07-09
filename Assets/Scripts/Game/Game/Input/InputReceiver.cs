@@ -27,9 +27,16 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     }
     public void ReceiverShop()
     {
+        if (InputManager.instance.GetExit())
+        {
+            GameEntry.UIComponent.ShowUI("ShopUI");
+        }
+    }
+    public void ReceiverExit()
+    {
         if (InputManager.instance.GetShop())
         {
-            
+            GameEntry.UIComponent.ShowUI("ExitUI");
         }
     }
     public void ReceiverMove()

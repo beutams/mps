@@ -8,6 +8,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     public InputActionAsset asset;
     private InputAction gatherAction;
     private InputAction shopAction;
+    private InputAction exitAction;
     private InputAction skill1Action;
     private InputAction skill2Action;
     private InputAction skill3Action;
@@ -37,6 +38,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     {
         gatherAction = asset.FindAction("Gather");
         shopAction = asset.FindAction("Shop");
+        exitAction = asset.FindAction("Exit");
         skill1Action = asset.FindAction("Skill1");
         skill2Action = asset.FindAction("Skill2");
         skill3Action = asset.FindAction("Skill3");
@@ -67,6 +69,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
 
     public bool GetGather() => gatherAction.WasPerformedThisFrame();
     public bool GetShop() => shopAction.IsPressed();
+    public bool GetExit() => exitAction.IsPressed();
     public byte GetSkill()
     {
         byte index = 0;

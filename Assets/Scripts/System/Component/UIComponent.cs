@@ -7,6 +7,13 @@ public class UIComponent : BaseComponent<UIComponent>
     protected Stack<UIBase> uiStack = new Stack<UIBase>();
     protected Dictionary<string, UIBase> uiDic = new Dictionary<string, UIBase>();
 
+    private void Start()
+    {
+        foreach(var ui in GameEntry.ResourceComponent.prefabDic["UIBase"].Values)
+        {
+            uiDic.Add(ui.name, ui.GetComponent<UIBase>());
+        }
+    }
     public void RegisterUI(UIBase ui)
     {
         string name = ui.name;
@@ -15,11 +22,11 @@ public class UIComponent : BaseComponent<UIComponent>
         else
             uiDic[name] = ui;
     }
-    public void ShowUI(UIBase ui)
+    public void ShowUI(string ui)
     {
         uiStack.Peek().gameObject.SetActive(false);
-        ui.Init();
-        uiStack.Push(ui);
+        uiStack.Push(Instantiate(uiDic[ui].gameObject).GetComponent<UIBase>());
+        uiStack.Peek().Init();
         uiStack.Peek().gameObject.SetActive(true);
     }
     public void CloseUI()
