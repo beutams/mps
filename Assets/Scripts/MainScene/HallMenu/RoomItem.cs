@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,19 +13,18 @@ public class RoomItem : MonoBehaviour
     public TextMeshProUGUI gameModeObject;
     public TextMeshProUGUI playerObject;
 
-    protected string owner;
-    protected string chapter;
-    protected string title;
-    protected string description;
-    protected string gameMode;
-    protected string number;
-    protected string maxNumber;
+    protected RoomData roomData;
+    public string number;
+    public void SetData(RoomData data)
+    {
+        roomData = data;
+    }
     protected virtual void Refresh()
     {
-        titleObject.text = title; 
-        descriptionObject.text = description;
-        gameModeObject.text = gameMode;
-        playerObject.text = number + "/" + maxNumber;
+        titleObject.text = roomData.title; 
+        descriptionObject.text = roomData.description;
+        gameModeObject.text = roomData.gameMode;
+        playerObject.text = number + "/" + roomData.maxNumber;
     }
     protected virtual void OnJoin()
     {

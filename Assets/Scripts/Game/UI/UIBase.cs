@@ -8,4 +8,8 @@ public class UIBase : MonoBehaviour
     {
 
     }
+    public virtual void Close()
+    {
+        GameEntry.UIComponent.CloseUI(this);
+    }
 }

@@ -8,10 +8,11 @@ public class HallSubUI : SubUIBase
 {
     protected float timer = 0;
     protected float maxTimer = 2;
+    public RoomData roomData;
     public Transform content;
     public Transform roomUI;
     protected RoomItem itemPerfab;
-    protected Dictionary<ServerResponse, RoomItem> rooms;
+    protected Dictionary<DiscoveryResponse, RoomItem> rooms;
     protected override void Awake()
     {
         base.Awake();
@@ -44,13 +45,13 @@ public class HallSubUI : SubUIBase
         if (GameEntry.WebComponent.gameDiscover.discoveredServers.Count == 0) return;
         foreach(var room in rooms)
         {
-            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.ContainsValue(room.Key))
+            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.ContainsKey(room.Key))
             {
                 rooms.Remove(room.Key);
                 Destroy(room.Value);
             }
         }
-        foreach(var conn in GameEntry.WebComponent.gameDiscover.discoveredServers.Values)
+        foreach(var conn in GameEntry.WebComponent.gameDiscover.discoveredServers.Keys)
         {
             if (!rooms.ContainsKey(conn))
             {
@@ -63,6 +64,7 @@ public class HallSubUI : SubUIBase
     protected void OnCreateRoomClick()
     {
         NetworkManager.singleton.StartHost();
+        roomData = new RoomData("default", "default", "default", "default", "default", "default");
         roomUI.gameObject.SetActive(true);
     }
 }

@@ -29,8 +29,9 @@ public class UIComponent : BaseComponent<UIComponent>
         uiStack.Peek().Init();
         uiStack.Peek().gameObject.SetActive(true);
     }
-    public void CloseUI()
+    public void CloseUI(UIBase ui)
     {
+        if (uiStack.Peek() != ui) return;
         uiStack.Pop();
         uiStack.Peek().gameObject.SetActive(true);
     }

@@ -61,6 +61,7 @@ public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomControlle
                 Destroy(obj.gameObject);
             }
         }
+        //HeroController hero = Instantiate(GameEntry.ResourceComponent.prefabDic["HeroController"][armoryData.hero]).GetComponent<HeroController>();
         HeroController hero = Instantiate(heroPrefab).GetComponent<HeroController>();
         hero.transform.position = Vector3.zero;
         localPlayer.armory = armoryData;

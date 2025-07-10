@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WebComponent : BaseComponent<WebComponent> 
 {
-    public GameDiscover gameDiscover;
+    public GameDiscovery gameDiscover;
     public GameNetworkManager gameNetworkManager;
 
     private void Awake()
     {
-        gameDiscover = GetComponent<GameDiscover>();
+        gameDiscover = GetComponent<GameDiscovery>();
         gameNetworkManager = GetComponent<GameNetworkManager>();
     }
 }

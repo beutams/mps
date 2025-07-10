@@ -18,4 +18,24 @@ public class GameNetworkManager : NetworkManager
     {
         base.OnServerConnect(conn);
     }
+    public override void OnServerReady(NetworkConnectionToClient conn)
+    {
+        base.OnServerReady(conn);
+    }
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        base.OnServerDisconnect(conn);
+    }
+    public override void OnClientConnect()
+    {
+        base.OnClientConnect();
+    }
+    public override void OnClientDisconnect() 
+    { 
+        base.OnClientDisconnect();
+    }
+    public override void OnClientNotReady() 
+    { 
+        base.OnClientNotReady();
+    }
 }

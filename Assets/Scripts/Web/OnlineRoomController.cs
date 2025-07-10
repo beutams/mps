@@ -1,4 +1,4 @@
-/*using Mirror;
+using Mirror;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +7,15 @@ using UnityEngine.SceneManagement;
 public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>, IRoomController
 {
     public Guid roomId;
+    public Player localPlayer;
+    public Player noCampPlayer;
+    protected ArmoryData armoryData;
     public Dictionary<Player, bool> ready = new Dictionary<Player, bool>();
-    public Player localPlayer { get; set; }
-    public Player noCampPlayer { get; set; }
     public Dictionary<PlayerSite, Player> playerDic { get; set; }
+    Player IRoomController.localPlayer { get => localPlayer; }
+    Player IRoomController.noCampPlayer { get => noCampPlayer; }
+    ArmoryData IRoomController.armoryData { get => armoryData; set => armoryData = value; }
+
     public virtual void Awake()
     {
         DontDestroyOnLoad(this);
@@ -18,10 +23,7 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
     }
     public void InitLocalPlayer()
     {
-        if (isServer)
-        {
-
-        }
+        
     }
     [ClientRpc]
     public void InitOnlineNoCamp()
@@ -67,14 +69,14 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
         this.roomId = roomId;
         foreach (var player in playerDic)
         {
-*//*            if (NetworkClient.localPlayer == player.Value.netIdentity)
+            if (NetworkClient.localPlayer == player.Value.netIdentity)
             {
                 localPlayer = player.Value;
-            }*//*
+            }
         }
     }
     [ClientRpc]
-    public void AddPlayer(PlayerSite site,Player player)
+    public void AddPlayer(PlayerSite site, Player player)
     {
         playerDic.Add(site, player);
         ready.Add(player, false);
@@ -82,4 +84,3 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
     }
     #endregion
 }
-*/
