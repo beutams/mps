@@ -280,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  searchName: UIBase
 --- !u!223 &6136205577983209548
 Canvas:
   m_ObjectHideFlags: 0

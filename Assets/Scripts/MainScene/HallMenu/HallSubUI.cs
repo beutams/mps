@@ -67,4 +67,8 @@ public class HallSubUI : SubUIBase
         roomData = new RoomData("default", "default", "default", "default", "default", "default");
         roomUI.gameObject.SetActive(true);
     }
+    protected void OnStartClick()
+    {
+
+    }
 }

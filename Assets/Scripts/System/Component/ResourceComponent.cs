@@ -57,21 +57,18 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
             Stack<GameObject> objs = GetAllAssets<GameObject>("/Prefabs", "*.prefab");
             foreach (GameObject obj in objs)
             {
-                string name = obj.GetType().ToString();
-                if (obj.TryGetComponent(out UIBase ui))
-                    name = "UIBase";
                 if (!(obj.TryGetComponent(out IDCompnent id))) continue;
-                if (!dataDic.ContainsKey(name))
+                if (!dataDic.ContainsKey(id.searchName))
                 {
                     Dictionary<int, GameObject> table = new Dictionary<int, GameObject> { { id.ID, obj } };
                     Dictionary<GameObject, int> indexTable = new Dictionary<GameObject, int> { { obj, id.ID } };
-                    prefabDic[name] = table;
-                    indexpDic[name] = indexTable;
+                    prefabDic[id.searchName] = table;
+                    indexpDic[id.searchName] = indexTable;
                 }
                 else
                 {
-                    prefabDic[name].Add(id.ID, obj);
-                    indexpDic[name].Add(obj, id.ID);
+                    prefabDic[id.searchName].Add(id.ID, obj);
+                    indexpDic[id.searchName].Add(obj, id.ID);
                 }
             }
         }

@@ -23,9 +23,8 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
     }
     public void InitLocalPlayer()
     {
-        
+
     }
-    [ClientRpc]
     public void InitOnlineNoCamp()
     {
         noCampPlayer = Instantiate(noCampPlayer);
@@ -63,7 +62,7 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
         }
     }
     #region Init
-    [ClientRpc]
+/*    [ClientRpc]
     public void Init(Guid roomId)
     {
         this.roomId = roomId;
@@ -81,6 +80,6 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
         playerDic.Add(site, player);
         ready.Add(player, false);
         player.site = site;
-    }
+    }*/
     #endregion
 }

@@ -1,4 +1,4 @@
-/*using Mirror;
+using Mirror;
 using Mirror.Examples.Basic;
 using System;
 using System.Collections;
@@ -456,4 +456,3 @@ public class HallManager : MonoBehaviour
 
     #endregion
 }
-*/
