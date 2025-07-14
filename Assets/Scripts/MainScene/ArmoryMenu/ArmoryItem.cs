@@ -4,20 +4,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ArmoryItem : MonoBehaviour, IPointerClickHandler
+public class ArmoryItem : DoubleClick
 {
-    public Action onClick;
+    protected ScriptableObject obj;
     public Image img;
     public TextMeshProUGUI text;
-    public void Init(string imgPath, string name, Action action)
+    public void Init(string imgPath, string name,ScriptableObject obj, Action action)
     {
+        this.obj = obj;
         img.sprite = GameEntry.ResourceComponent.GetImage(imgPath);
         text.text = name;
-        onClick += action;
+        onDoubleClick += action;
+        onClick += OnClick;
     }
-
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnClick()
     {
-        onClick?.Invoke();
+        ArmorySubUI.instance.ShowObjectInfo(obj);
     }
 }

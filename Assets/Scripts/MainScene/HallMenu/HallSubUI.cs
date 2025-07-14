@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HallSubUI : SubUIBase
+public class HallSubUI : SubUIBase<HallSubUI>
 {
     protected float timer = 0;
     protected float maxTimer = 2;

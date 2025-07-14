@@ -17,6 +17,6 @@ public class MainSceneManager : MonoBehaviour
     }
     public void OnTitleClicked(UIGroup btn)
     {
-        SubUIBase.ChangeUI(btn);
+        SubUIBase<MainSubUI>.ChangeUI(btn);
     }
 }

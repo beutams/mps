@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1995805962502490603}
   - component: {fileID: 4036799578317377396}
   - component: {fileID: 8308202180467597932}
+  - component: {fileID: 6136440332444813847}
   m_Layer: 0
   m_Name: OnlineRoomController
   m_TagString: Untagged
@@ -64,3 +65,20 @@ MonoBehaviour:
   syncInterval: 0
   localPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
   noCampPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
+--- !u!114 &6136440332444813847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8631566490245839157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 3908789944
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0

@@ -17,7 +17,10 @@ public class GameUI : MonoBehaviour
     [Header("HeroPanel")]
     [SerializeField] protected Image health;
     [SerializeField] protected Image icon;
-    //[Header("WeapenPanel")]
+    [Header("WeapenPanel")]
+    [SerializeField] protected Transform weapenPanel;
+    [SerializeField] protected GameObject weapenGroup;
+    [SerializeField] protected GameObject weapenPrefab;
     private void Start()
     {
         Init();
@@ -40,5 +43,21 @@ public class GameUI : MonoBehaviour
     {
         population.text = IRoomController.Instance().localPlayer.population + "/10";
         property.text = IRoomController.Instance().localPlayer.property.ToString();
+    }
+    public void UpdateWeapen()
+    {
+        HeroController hero = IRoomController.instance.localPlayer.hero;
+        for(int i = 0; i < hero.weapenGroup.Count; i++)
+        {
+            Transform group = Instantiate(weapenGroup).transform;
+            group.parent = weapenPanel;
+            List<WeapenBase> weapens = hero.weapenGroup[i];
+            foreach(var weapen in weapens)
+            {
+                WeapenUIItem item = Instantiate(weapenPrefab).GetComponent<WeapenUIItem>();
+                item.transform.parent = group.GetChild(2);
+                item.SetWeapen(weapen);
+            }
+        }
     }
 }

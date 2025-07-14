@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0256d3631035d41b5b8aed4b9d6a90, type: 3}
   m_Name: FireSupportSkill
   m_EditorClassIdentifier: 
+  skillName: "\u706B\u529B\u652F\u63F4"
   imgPath: Assets\Dependency\ScienceFictionGUI\Textures\icons\Resources_Icon_01.png
   ability: {fileID: 11400000, guid: 7268834cd8aa981448ce0dbb40572019, type: 2}
   id: 0
+  description: "\u51B7\u5374\u65F6\u95F4\uFF1A180\u79D2 \u5F15\u5BFC\u65F6\u95F4\uFF1A5\u79D2\n\u5EF6\u8FDF\u6570\u79D2\u540E\uFF0C\u5BF9\u76EE\u6807\u533A\u57DF\u8FDB\u884C\u706B\u529B\u8986\u76D6\n"

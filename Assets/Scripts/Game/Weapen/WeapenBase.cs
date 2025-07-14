@@ -9,11 +9,11 @@ public abstract class WeapenBase : ScriptableObject, ID
     public Timer fireTimer;
     public Timer loadTimer;
     public bool autoLoad;
+    public int bulletCount;
     [Header("ID")]
     [SerializeField] protected int id;
     public int ID => id;
     protected Player player;
-    protected int bulletCount;
     public void Init(Player player)
     {
         this.player = player;

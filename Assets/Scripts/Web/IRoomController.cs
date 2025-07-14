@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public interface IRoomController
 {
+    public static IRoomController instance;
     public ArmoryData armoryData { get; set; }
     public Player localPlayer { get; }
     public Player noCampPlayer { get; }
@@ -14,11 +15,12 @@ public interface IRoomController
     public abstract void OnGameStart();
     public static IRoomController Instance()
     {
-        IRoomController roomController;
-        if((roomController = GameObject.FindAnyObjectByType<OfflineRoomController>()) != null)
-            return roomController;
-/*        else if ((roomController = GameObject.FindAnyObjectByType<OnlineRoomController>()) != null)
-            return roomController;*/
+        if (instance != null)
+            return instance;
+        if((instance = GameObject.FindAnyObjectByType<OfflineRoomController>()) != null)
+            return instance;
+        else if ((instance = GameObject.FindAnyObjectByType<OnlineRoomController>()) != null)
+            return instance;
         else 
             return null;
     }

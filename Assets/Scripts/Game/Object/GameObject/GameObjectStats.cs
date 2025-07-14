@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GameObjectStats : ScriptableObject, ID, IArmoryObject
 {
+    [Header("能力")]
     public List<Ability> abilities;
-
+    [Header("显示")]
     public GameObject healthPerfab;
+    public string objName;
     public string imgPath;
     public float maxHealth;
     public float defense;
+    [Header("数值")]
     public float radius;
     public float searchRadius;
     public bool canMove;

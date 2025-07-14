@@ -2,21 +2,24 @@ using Michsky.UI.Shift;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArmorySubUI : SubUIBase
+public class ArmorySubUI : SubUIBase<ArmorySubUI>
 {
     [Header("Left")]
-    public Transform heroItemList;
-    public Transform skillItemList;
-    public ArmoryItem itemPrefab;
-    public SettingsButton heroButton;
-    public SettingsButton skillButton;
+    [SerializeField] protected Transform heroItemList;
+    [SerializeField] protected Transform skillItemList;
+    [SerializeField] protected ArmoryItem itemPrefab;
+    [SerializeField] protected SettingsButton heroButton;
+    [SerializeField] protected SettingsButton skillButton;
     [Header("Right")]
-    public Transform selectIconList;
+    [SerializeField] protected Transform selectIconList;
+    [SerializeField] protected TextMeshProUGUI title;
+    [SerializeField] protected TextMeshProUGUI info;
 
     public Dictionary<ArmoryItem, HeroStats> heroList = new Dictionary<ArmoryItem, HeroStats>();
     public Dictionary<ArmoryItem, GlobalSkillData> skillList = new Dictionary<ArmoryItem, GlobalSkillData>();
@@ -42,7 +45,7 @@ public class ArmorySubUI : SubUIBase
             HeroStats stats = hero as HeroStats;
             ArmoryItem item = Instantiate(itemPrefab);
             int id = GameEntry.ResourceComponent.indexDic["HeroStats"][stats];
-            item.Init(stats.imgPath, stats.name,
+            item.Init(stats.imgPath, stats.objName,stats,
                 () => {
                     if (data.hero == id)
                         SetData(ArmoryType.Hero, id);
@@ -58,7 +61,7 @@ public class ArmorySubUI : SubUIBase
             GlobalSkillData sdata = skill as GlobalSkillData;
             int id = GameEntry.ResourceComponent.indexDic["GlobalSkillData"][sdata];
             ArmoryItem item = Instantiate(itemPrefab);
-            item.Init(sdata.imgPath, sdata.name, () => {
+            item.Init(sdata.imgPath, sdata.skillName, sdata, () => {
             if (data.globalSkills.Contains(id))
                 SetData(ArmoryType.GlobalSkillsRemove, id);
             else if (data.globalSkills.Count < 3)
@@ -124,14 +127,22 @@ public class ArmorySubUI : SubUIBase
         skillItemList.gameObject.SetActive(!isHero);
         
     }
-    protected override void OnClose()
+    public void ShowObjectInfo(ScriptableObject obj)
     {
-        
+        if(obj is HeroStats)
+            ShowHero(obj as HeroStats);
+        else if (obj is GlobalSkillData)
+            ShowSkill(obj as GlobalSkillData);
     }
-
-    protected override void OnOpen()
+    protected void ShowHero(HeroStats heroStats)
     {
-
+        title.text = heroStats.name;
+        info.text = heroStats.description;
+    }
+    protected void ShowSkill(GlobalSkillData data)
+    {
+        title.text = data.name;
+        title.text = data.description;
     }
     public enum ArmoryType 
     { 

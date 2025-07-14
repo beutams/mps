@@ -2,12 +2,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UnitStats", menuName = "ScriptableObject/Stats/Unit")]
 public class UnitStats : GameObjectStats
 {
-    [Header("ORCA")]
+    [Header("寻路")]
     public static float timeHorizon = 5f;
     public static float obsTimeHorizon = 5f;
     public static float speed = 2f;
     public static float findDistance = 1.5f;
-    [Header("Rotate")]
+    [Header("移动")]
     public float rotateForce;
     public float accelerateForce;
 }
