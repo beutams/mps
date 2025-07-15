@@ -17,5 +17,6 @@ public class LoadProcedure : ProcedureBase
     public override void OnStep()
     {
         GameEntry.ProcedureComponent.Change<ChangeUIProcedure>("MainScene");
+        ExcelReader.ExcelInitLoad();
     }
 }

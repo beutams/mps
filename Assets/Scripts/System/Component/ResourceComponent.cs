@@ -81,25 +81,6 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
     {
         try
         {
-/*            Stack<string> directories = new Stack<string>();
-            Stack<ScriptableObject> objs = new Stack<ScriptableObject>();
-            directories.Push(Application.dataPath + "/ScriptableObjects");
-            while (directories.Count > 0)
-            {
-                string cur = directories.Pop();
-                string[] next = Directory.GetDirectories(cur);
-                if (next != null && next.Length > 0)
-                    foreach (string s in next)
-                        directories.Push(s);
-                string[] obj = Directory.GetFiles(cur, "*.asset");
-                if (obj != null && obj.Length > 0)
-                    foreach (string o in obj)
-                    {
-                        string sub = o.Substring(Application.dataPath.Length - 6);
-                        string p = sub.Replace("\\", "/");
-                        objs.Push(AssetDatabase.LoadAssetAtPath<ScriptableObject>(p));
-                    }
-            }*/
             Stack<ScriptableObject> objs = GetAllAssets<ScriptableObject>("/ScriptableObjects", "*.asset");
             foreach (var obj in objs)
             {

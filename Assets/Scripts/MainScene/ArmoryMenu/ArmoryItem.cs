@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class ArmoryItem : DoubleClick
 {
+    protected ArmorySubUI armorySubUI;
     protected ScriptableObject obj;
     public Image img;
     public TextMeshProUGUI text;
+    private void Awake()
+    {
+        armorySubUI = FindObjectOfType<ArmorySubUI>();
+    }
     public void Init(string imgPath, string name,ScriptableObject obj, Action action)
     {
         this.obj = obj;
@@ -19,6 +24,6 @@ public class ArmoryItem : DoubleClick
     }
     public void OnClick()
     {
-        ArmorySubUI.instance.ShowObjectInfo(obj);
+        armorySubUI.ShowObjectInfo(obj);
     }
 }

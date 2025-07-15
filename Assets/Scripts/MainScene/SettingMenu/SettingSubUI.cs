@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingSubUI : SubUIBase<SettingSubUI>
+public class SettingSubUI : SubUIBase
 {
     public Dictionary<SettingItem,string> settingItemDic = new Dictionary<SettingItem,string>();
     

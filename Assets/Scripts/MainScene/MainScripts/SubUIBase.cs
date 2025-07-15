@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Michsky.UI.Shift;
 using UnityEngine;
 
-public abstract class SubUIBase<T> : SingletonMonoBehaviour<T>  where T : SubUIBase<T>
+public abstract class SubUIBase : MonoBehaviour
 {
-    public static Dictionary<UIGroup, SubUIBase<T>> allTitles = new Dictionary<UIGroup, SubUIBase<T>> ();
-    public static SubUIBase<T> current;
+    public static Dictionary<UIGroup, SubUIBase> allTitles = new Dictionary<UIGroup, SubUIBase> ();
+    public static SubUIBase current;
     public UIGroup button;
     protected virtual void Awake()
     {

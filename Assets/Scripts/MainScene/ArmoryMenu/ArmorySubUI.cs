@@ -8,7 +8,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArmorySubUI : SubUIBase<ArmorySubUI>
+public class ArmorySubUI : SubUIBase
 {
     [Header("Left")]
     [SerializeField] protected Transform heroItemList;
@@ -18,8 +18,8 @@ public class ArmorySubUI : SubUIBase<ArmorySubUI>
     [SerializeField] protected SettingsButton skillButton;
     [Header("Right")]
     [SerializeField] protected Transform selectIconList;
-    [SerializeField] protected TextMeshProUGUI title;
-    [SerializeField] protected TextMeshProUGUI info;
+    [SerializeField] protected TextMeshPro title;
+    [SerializeField] protected TextMeshPro info;
 
     public Dictionary<ArmoryItem, HeroStats> heroList = new Dictionary<ArmoryItem, HeroStats>();
     public Dictionary<ArmoryItem, GlobalSkillData> skillList = new Dictionary<ArmoryItem, GlobalSkillData>();
@@ -125,7 +125,6 @@ public class ArmorySubUI : SubUIBase<ArmorySubUI>
         bool isHero = value == 0 ? true : false;
         heroItemList.gameObject.SetActive(isHero);
         skillItemList.gameObject.SetActive(!isHero);
-        
     }
     public void ShowObjectInfo(ScriptableObject obj)
     {

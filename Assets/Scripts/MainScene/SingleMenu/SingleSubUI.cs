@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SingleSubUI : SubUIBase<SingleSubUI>
+public class SingleSubUI : SubUIBase
 {
     public GameObject chapterInfo;
     public Button enter;

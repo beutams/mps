@@ -15,28 +15,47 @@ public static class ExcelReader
     public static Dictionary<string, Dictionary<string, string>> dataDic = new Dictionary<string, Dictionary<string, string>>();
     // <表名,<变量名,类型>>
     public static Dictionary<string, Dictionary<string, string>> typeDic = new Dictionary<string, Dictionary<string, string>>();
-    public static Dictionary<string,string> Read(string path, string key)
+    public static void ExcelInitLoad()
     {
-
-        return null;
+        string path = Directory.GetParent(Application.dataPath).FullName.Replace("\\","/") + "/Data/ShopData.xlsx";
+        ReadFromExcel(path);
+    }
+    public static Dictionary<string,string> Read(string tableName, string key)
+    {
+        string dataStr = dataDic[tableName][key];
+        string[] datas = dataStr.Split(',');
+        Dictionary<string,string> datasDic = new Dictionary<string,string>();
+        for(int i = 0; i < datas.Length;i++)
+        {
+            if(datas[i] != string.Empty && datas[i] != null && datas[i] != "")
+            {
+                string[] kvp = datas[i].Split('=');
+                if(kvp.Length == 2)
+                    datasDic.Add(kvp[0], kvp[1]);
+            }
+        }
+        return datasDic;
+    }
+    public static string ReadValue(string tableName,string key,string value)
+    {
+        Dictionary<string,string> datas = Read(tableName, key);
+        return datas[value];
     }
     public static List<string> ReadFromExcel(string path)
     {
         using(var stream = File.Open(path, FileMode.Open, FileAccess.Read))
         {
+            string[] s = path.Split('/');
+            string fileName = s[s.Length - 1].Split('.')[0];
             using var reader = ExcelReaderFactory.CreateReader(stream);
             var result = reader.AsDataSet();
             if (result.Tables.Count > 0)
             {
                 //统计列
-                int columnMax = 1;
-                while (result.Tables[0].Rows[0][columnMax] != null || result.Tables[0].Rows[0][columnMax].ToString() != string.Empty)
-                {
-                    columnMax++;
-                }
+                int columnMax = result.Tables[0].Columns.Count;
                 //统计类型
                 Dictionary<string, string> types = new Dictionary<string, string>();
-                for (int i = 1; i <= columnMax; i++)
+                for (int i = 1; i < columnMax; i++)
                 {
                     types.Add(result.Tables[0].Rows[0][i].ToString(), result.Tables[0].Rows[1][i].ToString());
                 }
@@ -47,7 +66,7 @@ public static class ExcelReader
                     if (result.Tables[0].Rows[i][0].ToString() == "#" || result.Tables[0].Rows[i][0].ToString() == "") continue;
                     string key = result.Tables[0].Rows[i][0].ToString();
                     StringBuilder builder = new StringBuilder();
-                    for (int j = 1; j <= columnMax; j++)
+                    for (int j = 1; j < columnMax; j++)
                     {
                         builder.Append(result.Tables[0].Rows[0][j].ToString());
                         builder.Append("=");
@@ -57,7 +76,14 @@ public static class ExcelReader
                     string value = builder.ToString();
                     datas.Add(key, value);
                 }
-                if(dataDic.ContainsKey())
+                if(!dataDic.ContainsKey(fileName))
+                {
+                    dataDic.Add(fileName, datas);
+                }
+                if(!typeDic.ContainsKey(fileName))
+                {
+                    typeDic.Add(fileName, types);
+                }
             }
         }
         return null;
