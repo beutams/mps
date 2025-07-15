@@ -278,6 +278,15 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""c831ee5b-f951-4d49-aa93-9c707a44dbe2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -786,6 +795,17 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""action"": ""Config"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6073f88b-d245-4bc1-b83b-f600c3017f52"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -822,6 +842,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         m_Game_WeapenSwitchAuto8 = m_Game.FindAction("WeapenSwitchAuto8", throwIfNotFound: true);
         m_Game_WeapenSwitchAuto9 = m_Game.FindAction("WeapenSwitchAuto9", throwIfNotFound: true);
         m_Game_Config = m_Game.FindAction("Config", throwIfNotFound: true);
+        m_Game_Exit = m_Game.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -911,6 +932,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_WeapenSwitchAuto8;
     private readonly InputAction m_Game_WeapenSwitchAuto9;
     private readonly InputAction m_Game_Config;
+    private readonly InputAction m_Game_Exit;
     public struct GameActions
     {
         private @GameAction m_Wrapper;
@@ -943,6 +965,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         public InputAction @WeapenSwitchAuto8 => m_Wrapper.m_Game_WeapenSwitchAuto8;
         public InputAction @WeapenSwitchAuto9 => m_Wrapper.m_Game_WeapenSwitchAuto9;
         public InputAction @Config => m_Wrapper.m_Game_Config;
+        public InputAction @Exit => m_Wrapper.m_Game_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1036,6 +1059,9 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @Config.started += instance.OnConfig;
             @Config.performed += instance.OnConfig;
             @Config.canceled += instance.OnConfig;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -1124,6 +1150,9 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @Config.started -= instance.OnConfig;
             @Config.performed -= instance.OnConfig;
             @Config.canceled -= instance.OnConfig;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -1171,5 +1200,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         void OnWeapenSwitchAuto8(InputAction.CallbackContext context);
         void OnWeapenSwitchAuto9(InputAction.CallbackContext context);
         void OnConfig(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }
