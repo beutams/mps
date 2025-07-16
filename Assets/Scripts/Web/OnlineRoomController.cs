@@ -6,29 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>, IRoomController
 {
-    public Guid roomId;
-    public Player localPlayer;
-    public Player noCampPlayer;
+    protected Player localPlayer;
+    protected Player noCampPlayer;
     protected ArmoryData armoryData;
-    public Dictionary<Player, bool> ready = new Dictionary<Player, bool>();
-    public Dictionary<PlayerSite, Player> playerDic { get; set; }
-    Player IRoomController.localPlayer { get => localPlayer; }
-    Player IRoomController.noCampPlayer { get => noCampPlayer; }
+    Player IRoomController.localPlayer { get => localPlayer; set => localPlayer = value; }
+    Player IRoomController.noCampPlayer { get => noCampPlayer; set => noCampPlayer = value; }
     ArmoryData IRoomController.armoryData { get => armoryData; set => armoryData = value; }
+
+    public Dictionary<PlayerSite, Player> playerDic { get; set; }
+    public Dictionary<NetworkConnectionToClient, Player> connDic = new Dictionary<NetworkConnectionToClient, Player>();
 
     public virtual void Awake()
     {
         DontDestroyOnLoad(this);
         playerDic = new Dictionary<PlayerSite, Player>();
-    }
-    public void InitLocalPlayer()
-    {
-
-    }
-    public void InitOnlineNoCamp()
-    {
-        noCampPlayer = Instantiate(noCampPlayer);
-        playerDic.Add(PlayerSite.NoCamp, noCampPlayer);
     }
     public virtual void OnGameStart()
     {
@@ -57,29 +48,7 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
     {
         if (scene.name == "GameScene")
         {
-            InitLocalPlayer();
             OnGameStart();
         }
     }
-    #region Init
-/*    [ClientRpc]
-    public void Init(Guid roomId)
-    {
-        this.roomId = roomId;
-        foreach (var player in playerDic)
-        {
-            if (NetworkClient.localPlayer == player.Value.netIdentity)
-            {
-                localPlayer = player.Value;
-            }
-        }
-    }
-    [ClientRpc]
-    public void AddPlayer(PlayerSite site, Player player)
-    {
-        playerDic.Add(site, player);
-        ready.Add(player, false);
-        player.site = site;
-    }*/
-    #endregion
 }

@@ -4,38 +4,30 @@ using UnityEngine;
 
 public class GameNetworkManager : NetworkManager
 {
-    public struct PendingPlayer
+    private RoomNetworkMangaer roomNetwork;
+    public override void OnStartServer()
     {
-        public NetworkConnectionToClient conn;
-        public GameObject roomPlayer;
+        base.OnStartServer();
+        roomNetwork.OnStartServer();
     }
-    public IRoomController roomController;
-    public string roomScene;
-    public string gameScene;
-    public HashSet<PendingPlayer> pendingPlayers = new HashSet<PendingPlayer>();
-    public HashSet<IRoomController> roomControllers = new HashSet<IRoomController>();
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
         base.OnServerConnect(conn);
-    }
-    public override void OnServerReady(NetworkConnectionToClient conn)
-    {
-        base.OnServerReady(conn);
+        roomNetwork.OnClientConnectServer(conn);
     }
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
         base.OnServerDisconnect(conn);
-    }
-    public override void OnClientConnect()
-    {
-        base.OnClientConnect();
+        roomNetwork.OnClientDisconnectServer(conn);
     }
     public override void OnClientDisconnect() 
-    { 
+    {
         base.OnClientDisconnect();
+        roomNetwork.OnClientDisconnect();
     }
-    public override void OnClientNotReady() 
-    { 
-        base.OnClientNotReady();
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        roomNetwork.OnStartClient();
     }
 }

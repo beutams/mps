@@ -1,4 +1,4 @@
-/*using Mirror;
+using Mirror;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -45,7 +45,7 @@ public class HallGUI : MonoBehaviour
         startReadyText = startReadyButton.GetComponentInChildren<TextMeshProUGUI>();
         cancelLeaveText = cancelLeaveButton.GetComponentInChildren<TextMeshProUGUI>();
         playerUIContent = new Dictionary<PlayerSite, Transform>();
-        for(int i = 0;i < players.transform.childCount; i++)
+        for (int i = 0; i < players.transform.childCount; i++)
         {
             playerUIContent.Add((PlayerSite)(i + 1), players.transform.GetChild(i));
         }
@@ -98,7 +98,7 @@ public class HallGUI : MonoBehaviour
     [ClientCallback]
     public void RefreshRoomList()
     {
-        foreach(var obj in objs)
+        foreach (var obj in objs)
         {
             Destroy(obj);
         }
@@ -127,7 +127,7 @@ public class HallGUI : MonoBehaviour
             startReadyText.text = "Ready";
             cancelLeaveText.text = "Leave";
         }
-        foreach(var item in infos)
+        foreach (var item in infos)
         {
             if (item.playerSite == 0) continue;
             me = (PlayerSite)item.playerSite;
@@ -146,11 +146,11 @@ public class HallGUI : MonoBehaviour
     public void RefreshRoom(PlayerInfo[] infos)
     {
         ResetRoom();
-        foreach(var item in playerUIContent)
+        foreach (var item in playerUIContent)
         {
-            foreach(var info in infos)
+            foreach (var info in infos)
             {
-                if(info.playerSite == (byte)item.Key)
+                if (info.playerSite == (byte)item.Key)
                 {
                     item.Value.GetComponentInChildren<TextMeshProUGUI>().text = info.playerIndex.ToString();
                     item.Value.GetComponent<Image>().color = info.ready ? Color.green : Color.gray;
@@ -167,7 +167,7 @@ public class HallGUI : MonoBehaviour
     [ClientCallback]
     public void ResetRoom()
     {
-        foreach(var item in playerUIContent.Values)
+        foreach (var item in playerUIContent.Values)
         {
             item.GetComponentInChildren<TextMeshProUGUI>().text = "";
             item.GetComponent<Image>().color = Color.gray;
@@ -180,4 +180,3 @@ public class HallGUI : MonoBehaviour
     }
     #endregion
 }
-*/

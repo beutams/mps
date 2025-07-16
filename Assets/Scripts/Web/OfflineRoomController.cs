@@ -11,8 +11,8 @@ public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomControlle
     public GameObject heroPrefab;
     protected ArmoryData armoryData;
     public Dictionary<PlayerSite, Player> playerDic { get; set; }
-    Player IRoomController.localPlayer { get => localPlayer; }
-    Player IRoomController.noCampPlayer { get => noCampPlayer; }
+    Player IRoomController.localPlayer { get => localPlayer; set => localPlayer = value; }
+    Player IRoomController.noCampPlayer { get => noCampPlayer; set => noCampPlayer = value; }
     ArmoryData IRoomController.armoryData { get => armoryData; set => armoryData = value; }
 
     protected virtual void Awake()
@@ -35,7 +35,7 @@ public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomControlle
         noCampPlayer.site = PlayerSite.NoCamp;
         playerDic.Add(PlayerSite.NoCamp, noCampPlayer);
     }
-    public virtual void OnGameStart()
+    public void OnGameStart()
     {
         string name = SceneManager.GetActiveScene().name;
         foreach (var player in playerDic.Values)

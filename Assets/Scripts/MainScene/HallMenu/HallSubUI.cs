@@ -1,5 +1,7 @@
+using Michsky.UI.Shift;
 using Mirror;
 using Mirror.Discovery;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,21 +14,16 @@ public class HallSubUI : SubUIBase
     public Transform content;
     public Transform roomUI;
     protected RoomItem itemPerfab;
+    protected GameObject playerUIPrefab;
     protected Dictionary<DiscoveryResponse, RoomItem> rooms;
+    public bool isSercer { get; set; }
+
+    protected Dictionary<NetworkConnectionToClient, GameObject> playerDic = new Dictionary<NetworkConnectionToClient, GameObject>();
     protected override void Awake()
     {
         base.Awake();
         itemPerfab = content.GetChild(0).GetComponent<RoomItem>();
         itemPerfab.gameObject.SetActive(false);
-    }
-    protected override void OnClose()
-    {
-        
-    }
-
-    protected override void OnOpen()
-    {
-        Find();
     }
     protected override void OnStep()
     {
@@ -37,8 +34,8 @@ public class HallSubUI : SubUIBase
     }
     protected void Find()
     {
-/*        GameEntry.WebComponent.gameDiscover.Discovery();
-        RefreshRoomList();*/
+        GameEntry.WebComponent.gameDiscover.Discovery();
+        RefreshRoomList();
     }
     protected void RefreshRoomList()
     {
@@ -61,14 +58,59 @@ public class HallSubUI : SubUIBase
             }
         }
     }
-    protected void OnCreateRoomClick()
+    protected void InitRoomUI()
+    {
+        roomUI.gameObject.SetActive(false);
+        roomUI.GetChild(2).GetComponent<MainButton>().buttonText = isSercer ? "开始" : "准备";
+        roomUI.GetChild(3).GetComponent<MainButton>().buttonText = "退出";
+        Transform players = roomUI.GetChild(1);
+        for(int i = 0; i < players.childCount; i++)
+        {
+            Destroy(players.GetChild(i));
+        }
+    }
+    #region Button
+    protected void OnCreateClick()
     {
         NetworkManager.singleton.StartHost();
-        roomData = new RoomData("default", "default", "default", "default", "default", "default");
         roomUI.gameObject.SetActive(true);
+        roomData = new RoomData("default", "default", "default", "default", "default", "default");
+    }
+    
+    protected void OnReadyClick()
+    {
+        NetworkClient.Send(new ServerMessage { option = ServerMessageOption.Ready });
     }
     protected void OnStartClick()
     {
-
+        if (!isSercer) return;
+        NetworkClient.Send(new ServerMessage { option = ServerMessageOption.Start });
     }
+    #endregion
+
+    #region CallBack
+    [ClientCallback]
+    public void OnUpdateRoom(ClientMessage msg)
+    {
+        Dictionary<NetworkConnectionToClient, bool> readyDic = msg.data as Dictionary<NetworkConnectionToClient, bool>;
+        foreach(var kvp in readyDic)
+        {
+            if (playerDic.ContainsKey(kvp.Key))
+            {
+
+            }
+            else
+            {
+                Transform transform = Instantiate(playerUIPrefab).transform;
+                transform.SetParent(roomUI.GetChild(1));
+                playerDic.Add(kvp.Key, transform.gameObject);
+            }
+        }
+    }
+    [ClientCallback]
+    public void OnStartGame(ClientMessage msg)
+    {
+        InitRoomUI();
+    }
+    #endregion
 }

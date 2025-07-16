@@ -7,19 +7,18 @@ public interface IRoomController
 {
     public static IRoomController instance;
     public ArmoryData armoryData { get; set; }
-    public Player localPlayer { get; }
-    public Player noCampPlayer { get; }
+    public Player localPlayer { get; set; }
+    public Player noCampPlayer { get; set; }
     public Dictionary<PlayerSite, Player> playerDic { get; }
-    public abstract void InitLocalPlayer();
     public abstract void OnSceneLoaded(Scene scene, LoadSceneMode mode);
     public abstract void OnGameStart();
     public static IRoomController Instance()
     {
         if (instance != null)
             return instance;
-        if((instance = GameObject.FindAnyObjectByType<OfflineRoomController>()) != null)
+        if((instance = Object.FindAnyObjectByType<OfflineRoomController>()) != null)
             return instance;
-        else if ((instance = GameObject.FindAnyObjectByType<OnlineRoomController>()) != null)
+        else if ((instance = Object.FindAnyObjectByType<OnlineRoomController>()) != null)
             return instance;
         else 
             return null;
