@@ -1,5 +1,6 @@
 using Mirror;
 using Mirror.Discovery;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,16 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
 
     protected override DiscoveryResponse ProcessRequest(DiscoveryRequest request, IPEndPoint endpoint)
     {
-        return new DiscoveryResponse() { roomData = hall.roomData };
+        try
+        {
+            return new DiscoveryResponse() { roomData = hall.roomData ,uri = transport.ServerUri()};
+        }
+        catch
+        {
+            Debug.LogError($"ProcessRequest send fail");
+            throw;
+        }
+
     }
     #endregion
 
@@ -52,4 +62,5 @@ public struct DiscoveryRequest : NetworkMessage
 public struct DiscoveryResponse : NetworkMessage
 {
     public RoomData roomData;
+    public Uri uri;
 }

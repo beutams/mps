@@ -13,9 +13,10 @@ public class HallSubUI : SubUIBase
     public RoomData roomData;
     public Transform content;
     public Transform roomUI;
+    public Transform createRoomUI;
     protected RoomItem itemPerfab;
     protected GameObject playerUIPrefab;
-    protected Dictionary<DiscoveryResponse, RoomItem> rooms;
+    protected Dictionary<RoomItem, DiscoveryResponse> rooms = new Dictionary<RoomItem, DiscoveryResponse>();
     public bool isSercer { get; set; }
 
     protected Dictionary<NetworkConnectionToClient, GameObject> playerDic = new Dictionary<NetworkConnectionToClient, GameObject>();
@@ -42,19 +43,20 @@ public class HallSubUI : SubUIBase
         if (GameEntry.WebComponent.gameDiscover.discoveredServers.Count == 0) return;
         foreach(var room in rooms)
         {
-            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.ContainsKey(room.Key))
+            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.ContainsKey(room.Value))
             {
                 rooms.Remove(room.Key);
-                Destroy(room.Value);
+                Destroy(room.Key);
             }
         }
         foreach(var conn in GameEntry.WebComponent.gameDiscover.discoveredServers.Keys)
         {
-            if (!rooms.ContainsKey(conn))
+            if (!rooms.ContainsValue(conn))
             {
                 var room = Instantiate(itemPerfab);
                 room.transform.parent = content;
-                rooms.Add(conn, room);
+                room.GetComponent<RoomItem>().SetData(conn);
+                rooms.Add(room, conn);
             }
         }
     }
@@ -69,13 +71,17 @@ public class HallSubUI : SubUIBase
             Destroy(players.GetChild(i));
         }
     }
-    #region Button
-    protected void OnCreateClick()
+    public void OnCreateRoom(RoomData roomData)
     {
         NetworkManager.singleton.StartHost();
         roomUI.gameObject.SetActive(true);
-        roomData = new RoomData("default", "default", "default", "default", "default", "default");
     }
+    #region Button
+    protected void OnCreateClick()
+    {
+        createRoomUI.gameObject.SetActive(true);
+    }
+
     
     protected void OnReadyClick()
     {

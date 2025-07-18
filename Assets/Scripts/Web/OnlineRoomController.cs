@@ -21,9 +21,9 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
         DontDestroyOnLoad(this);
         playerDic = new Dictionary<PlayerSite, Player>();
     }
+    [ClientRpc]
     public virtual void OnGameStart()
     {
-        string name = SceneManager.GetActiveScene().name;
         foreach (var player in playerDic.Values)
         {
             player.playerItem = Instantiate(player.playerItem, Vector3.zero, Quaternion.identity);
