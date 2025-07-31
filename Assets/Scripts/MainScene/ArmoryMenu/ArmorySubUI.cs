@@ -40,11 +40,11 @@ public class ArmorySubUI : SubUIBase
     }
     public void InitData()
     {
-        foreach (var hero in GameEntry.ResourceComponent.dataDic["HeroStats"].Values)
+        foreach (var hero in GameEntry.ResourceComponent.GetAllDataResource("HeroStats").Values)
         {
             HeroStats stats = hero as HeroStats;
             ArmoryItem item = Instantiate(itemPrefab);
-            int id = GameEntry.ResourceComponent.indexDic["HeroStats"][stats];
+            int id = GameEntry.ResourceComponent.GetDataIndex("HeroStats", stats);
             item.Init(stats.imgPath, stats.objName,stats,
                 () => {
                     if (data.hero == id)
@@ -56,10 +56,10 @@ public class ArmorySubUI : SubUIBase
             heroList.Add(item, stats);
 
         }
-        foreach (var skill in GameEntry.ResourceComponent.dataDic["GlobalSkillData"].Values)
+        foreach (var skill in GameEntry.ResourceComponent.GetAllDataResource("GlobalSkillData").Values)
         {
             GlobalSkillData sdata = skill as GlobalSkillData;
-            int id = GameEntry.ResourceComponent.indexDic["GlobalSkillData"][sdata];
+            int id = GameEntry.ResourceComponent.GetDataIndex("GlobalSkillData", sdata);
             ArmoryItem item = Instantiate(itemPrefab);
             item.Init(sdata.imgPath, sdata.skillName, sdata, () => {
             if (data.globalSkills.Contains(id))
@@ -103,7 +103,7 @@ public class ArmorySubUI : SubUIBase
                 string path = defaultImgPath;
                 if (data.hero == -1)
                 {
-                    HeroStats stats = GameEntry.ResourceComponent.dataDic["HeroStats"][data.hero] as HeroStats;
+                    HeroStats stats = GameEntry.ResourceComponent.GetDataResource("HeroStats",data.hero) as HeroStats;
                     path = stats.imgPath;
                 }
                 imgList[i].sprite = GameEntry.ResourceComponent.GetImage(path);
@@ -113,7 +113,7 @@ public class ArmorySubUI : SubUIBase
                 string path = defaultImgPath;
                 if (data.globalSkills.Count >= i)
                 {
-                    GlobalSkillData sdata = GameEntry.ResourceComponent.dataDic["GlobalSkillData"][data.globalSkills[i-1]] as GlobalSkillData;
+                    GlobalSkillData sdata = GameEntry.ResourceComponent.GetDataResource("GlobalSkillData", data.globalSkills[i-1]) as GlobalSkillData;
                     path = sdata.imgPath;
                 }
                 imgList[i].sprite = GameEntry.ResourceComponent.GetImage(path);

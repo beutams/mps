@@ -18,3 +18,6 @@ MonoBehaviour:
   fireInterval: 0.05
   loadTime: 1
   autoLoad: 1
+  bulletCount: 0
+  id: 0
+  idType: 5

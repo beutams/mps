@@ -9,9 +9,9 @@ public class UIComponent : BaseComponent<UIComponent>
 
     private void Start()
     {
-        foreach(var ui in GameEntry.ResourceComponent.prefabDic["UIBase"].Values)
+        foreach(var ui in GameEntry.ResourceComponent.GetAllPrefabResource("UIBase").Values)
         {
-            uiDic.Add(ui.name, ui.GetComponent<UIBase>());
+            RegisterUI(ui.GetComponent<UIBase>());
         }
     }
     public void RegisterUI(UIBase ui)
@@ -24,7 +24,8 @@ public class UIComponent : BaseComponent<UIComponent>
     }
     public void ShowUI(string ui)
     {
-        uiStack.Peek().gameObject.SetActive(false);
+        if(uiStack.Count > 0)
+            uiStack.Peek()?.gameObject.SetActive(false);
         uiStack.Push(Instantiate(uiDic[ui].gameObject).GetComponent<UIBase>());
         uiStack.Peek().Init();
         uiStack.Peek().gameObject.SetActive(true);

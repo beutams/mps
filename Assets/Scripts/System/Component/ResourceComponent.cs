@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -9,25 +10,91 @@ using UnityEngine;
 public class ResourceComponent : BaseComponent<ResourceComponent>
 {
     public static string scriptablepath = "/SaveData/ScriptableData.txt";
-    public Dictionary<string, Dictionary<int, ScriptableObject>> dataDic = new Dictionary<string, Dictionary<int, ScriptableObject>>();
-    public Dictionary<string, Dictionary<ScriptableObject, int>> indexDic = new Dictionary<string, Dictionary<ScriptableObject, int>>();
-    public Dictionary<string, Dictionary<int, GameObject>> prefabDic = new Dictionary<string, Dictionary<int, GameObject>>();
-    public Dictionary<string, Dictionary<GameObject, int>> indexpDic = new Dictionary<string, Dictionary<GameObject, int>>();
+    protected Dictionary<string, Dictionary<int, ScriptableObject>> dataDic = new Dictionary<string, Dictionary<int, ScriptableObject>>();
+    protected Dictionary<string, Dictionary<ScriptableObject, int>> indexDic = new Dictionary<string, Dictionary<ScriptableObject, int>>();
+    protected Dictionary<string, Dictionary<int, GameObject>> prefabDic = new Dictionary<string, Dictionary<int, GameObject>>();
+    protected Dictionary<string, Dictionary<GameObject, int>> indexpDic = new Dictionary<string, Dictionary<GameObject, int>>();
     public void Start()
     {
         DataToDictionary();
         PrefabToDictionary();
     }
-    public T GetResource<T>(string name) where T : class
+    #region Interface
+    public int GetPrefabIndex(string id, GameObject obj)
     {
+        return indexpDic[id][obj];
+    }
+    public int GetDataIndex(string id, ScriptableObject obj)
+    {
+        return indexDic[id][obj];
+    }
+    public Dictionary<int, GameObject> GetAllPrefabResource(string id)
+    {
+        if (prefabDic.ContainsKey(id))
+            return prefabDic[id];
+        return null;
+    }
+    public Dictionary<int, ScriptableObject> GetAllDataResource(string id)
+    {
+        if (dataDic.ContainsKey(id))
+            return dataDic[id];
+        return null;
+    }
+    public GameObject GetPrefabResource(string id, string name = null)
+    {
+        if (prefabDic.ContainsKey(id))
+        {
+            if (name == null)
+                return prefabDic[id].First().Value;
+            foreach (var prefab in prefabDic[id].Values)
+            {
+                if (prefab.name == name)
+                    return prefab;
+            }
+        }
+
+        return null;
+    }
+    public ScriptableObject GetDataResource(string id, string name = null)
+    {
+        if (dataDic.ContainsKey(id))
+        {
+            if (name == null)
+                return dataDic[id].First().Value;
+            foreach (var data in dataDic[id].Values)
+            {
+                if (data.name == name)
+                    return data;
+            }
+        }
+        return null;
+    }
+    public GameObject GetPrefabResource(string id, int inid)
+    {
+
+        if (prefabDic.ContainsKey(id))
+        {
+            if (prefabDic[id].ContainsKey(inid))
+                return prefabDic[id][inid];
+        }
+        return null;
+    }
+    public ScriptableObject GetDataResource(string id, int inid)
+    {
+        if (dataDic.ContainsKey(id))
+        {
+            if (dataDic[id].ContainsKey(inid))
+                return dataDic[id][inid];
+        }
         return null;
     }
     public Sprite GetImage(string path)
     {
-        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path.Replace('\\','/'));
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path.Replace('\\', '/'));
         return sprite;
     }
-    public Stack<T> GetAllAssets<T>(string path, string suffix) where T : UnityEngine.Object
+    #endregion
+    protected Stack<T> GetAllAssets<T>(string path, string suffix) where T : UnityEngine.Object
     {
         Stack<string> directories = new Stack<string>();
         Stack<T> objs = new Stack<T>();
@@ -50,63 +117,54 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
         }
         return objs;
     }
-    public void PrefabToDictionary()
+    protected void PrefabToDictionary()
     {
-        try
+        Stack<GameObject> objs = GetAllAssets<GameObject>("/Prefabs", "*.prefab");
+        foreach (GameObject obj in objs)
         {
-            Stack<GameObject> objs = GetAllAssets<GameObject>("/Prefabs", "*.prefab");
-            foreach (GameObject obj in objs)
+            if (!(obj.TryGetComponent(out ID idComponent))) continue;
+            string name = idComponent.searchName == IDType.None ? obj.name : idComponent.searchName.ToString();
+            if (!prefabDic.ContainsKey(name))
             {
-                if (!(obj.TryGetComponent(out IDCompnent id))) continue;
-                if (!dataDic.ContainsKey(id.searchName))
+                prefabDic[name] = new Dictionary<int, GameObject> { { idComponent.ID,obj } };
+                indexpDic[name] = new Dictionary<GameObject, int> { { obj, idComponent.ID } };
+            }
+            else
+            {
+                int id = idComponent.ID == 0 ? -prefabDic[name].Count : idComponent.ID;
+                if (prefabDic[name].ContainsKey(id))
                 {
-                    Dictionary<int, GameObject> table = new Dictionary<int, GameObject> { { id.ID, obj } };
-                    Dictionary<GameObject, int> indexTable = new Dictionary<GameObject, int> { { obj, id.ID } };
-                    prefabDic[id.searchName] = table;
-                    indexpDic[id.searchName] = indexTable;
+                    id = -prefabDic[name].Count;
                 }
-                else
-                {
-                    prefabDic[id.searchName].Add(id.ID, obj);
-                    indexpDic[id.searchName].Add(obj, id.ID);
-                }
+                prefabDic[name].Add(id, obj);
+                indexpDic[name].Add(obj, id);
             }
         }
-        catch
-        {
-            Debug.LogException(new Exception("ID冲突"));
-        }
     }
-    public void DataToDictionary()
+    protected void DataToDictionary()
     {
         try
         {
             Stack<ScriptableObject> objs = GetAllAssets<ScriptableObject>("/ScriptableObjects", "*.asset");
             foreach (var obj in objs)
             {
-                string name = obj.GetType().ToString();
-                if (obj is Ability)
-                    name = "Ability";
-                else if (obj is HeroStats)
-                    name = "HeroStats";
-                else if (obj is GameObjectStats)
-                    name = "GameObjectStats";
-                else if (obj is WeapenBase)
-                    name = "WeapenBase";
-                else if (obj is GlobalSkillData)
-                    name = "GlobalSkillData";
-                if (!(obj is ID)) continue;
+                ID idComponent;
+                if ((idComponent = obj as ID) == null) continue;
+                string name = idComponent.searchName == IDType.None ? obj.name : idComponent.searchName.ToString();
                 if (!dataDic.ContainsKey(name))
                 {
-                    Dictionary<int, ScriptableObject> table = new Dictionary<int, ScriptableObject> { { ((ID)obj).ID, obj } };
-                    Dictionary<ScriptableObject, int> indexTable = new Dictionary<ScriptableObject, int> { { obj, ((ID)obj).ID } };
-                    dataDic[name] = table;
-                    indexDic[name] = indexTable;
+                    dataDic[name] = new Dictionary<int, ScriptableObject> { { idComponent.ID, obj } };
+                    indexDic[name] = new Dictionary<ScriptableObject, int> { { obj, idComponent.ID } };
                 }
                 else
                 {
-                    dataDic[name].Add(((ID)obj).ID, obj);
-                    indexDic[name].Add(obj, ((ID)obj).ID);
+                    int id = idComponent.ID == 0 ? -dataDic[name].Count : idComponent.ID;
+                    if (dataDic[name].ContainsKey(id))
+                    {
+                        id = -dataDic[name].Count;
+                    }
+                    dataDic[name].Add(id, obj);
+                    indexDic[name].Add(obj, id);
                 }
             }
         }
@@ -115,4 +173,14 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
             Debug.LogException(new Exception("ID冲突"));
         }
     }
+}
+public enum IDType
+{
+    None,
+    UIBase,
+    Ability,
+    HeroStats,
+    GameObjectStats,
+    WeapenBase,
+    GlobalSkillData
 }

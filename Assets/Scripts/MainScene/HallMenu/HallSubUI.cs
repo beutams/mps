@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HallSubUI : SubUIBase
 {
@@ -13,7 +14,7 @@ public class HallSubUI : SubUIBase
     public RoomData roomData;
     public Transform content;
     public Transform roomUI;
-    public Transform createRoomUI;
+    public Button createButton;
     protected RoomItem itemPerfab;
     protected GameObject playerUIPrefab;
     protected Dictionary<RoomItem, DiscoveryResponse> rooms = new Dictionary<RoomItem, DiscoveryResponse>();
@@ -25,6 +26,8 @@ public class HallSubUI : SubUIBase
         base.Awake();
         itemPerfab = content.GetChild(0).GetComponent<RoomItem>();
         itemPerfab.gameObject.SetActive(false);
+        createButton.onClick.AddListener(OnCreateClick);
+        GameEntry.EventComponent.Subscribe(GameEvent.CreateRoomEvent,OnCreateRoom);
     }
     protected override void OnStep()
     {
@@ -35,8 +38,8 @@ public class HallSubUI : SubUIBase
     }
     protected void Find()
     {
-        GameEntry.WebComponent.gameDiscover.Discovery();
-        RefreshRoomList();
+        //GameEntry.WebComponent.gameDiscover.Discovery();
+        //RefreshRoomList();
     }
     protected void RefreshRoomList()
     {
@@ -71,15 +74,15 @@ public class HallSubUI : SubUIBase
             Destroy(players.GetChild(i));
         }
     }
-    public void OnCreateRoom(RoomData roomData)
+    public void OnCreateRoom(object data)
     {
-        NetworkManager.singleton.StartHost();
+        RoomData roomData = (RoomData)data;
         roomUI.gameObject.SetActive(true);
     }
     #region Button
     protected void OnCreateClick()
     {
-        createRoomUI.gameObject.SetActive(true);
+        GameEntry.UIComponent.ShowUI("CreateRoomUI");
     }
 
     

@@ -71,7 +71,7 @@ public class RoomNetworkMangaer : MonoBehaviour
     }
     private void OnStartGame()
     {
-        IRoomController roomController = Instantiate(GameEntry.ResourceComponent.prefabDic["OnlineRoomController"][0]).GetComponent<OnlineRoomController>();
+        IRoomController roomController = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OnlineRoomController")).GetComponent<OnlineRoomController>();
         OnlineRoomController onlineRoomController = roomController as OnlineRoomController;
         Player noCamp = Instantiate(NetworkManager.singleton.playerPrefab).GetComponent<Player>();
         noCamp.transform.position = Vector3.zero;

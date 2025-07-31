@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1995805962502490603}
   - component: {fileID: -906349341108172010}
-  - component: {fileID: 4036799578317377396}
   m_Layer: 0
   m_Name: OfflineRoomController
   m_TagString: Untagged
@@ -48,17 +47,5 @@ MonoBehaviour:
   localPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
   noCampPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
   heroPrefab: {fileID: 193299127927635927, guid: 287f9cd988138044d9f77f1fa0deaf18, type: 3}
---- !u!114 &4036799578317377396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8631566490245839157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77534178b2e6c00459f1f50a325508b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   id: 0
-  searchName: OfflineRoomController
+  idType: 0

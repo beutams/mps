@@ -10,10 +10,13 @@ public abstract class WeapenBase : ScriptableObject, ID
     public Timer loadTimer;
     public bool autoLoad;
     public int bulletCount;
+    protected Player player;
     [Header("ID")]
     [SerializeField] protected int id;
     public int ID => id;
-    protected Player player;
+    [SerializeField] protected IDType idType;
+    public IDType searchName => idType;
+
     public void Init(Player player)
     {
         this.player = player;

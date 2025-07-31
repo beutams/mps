@@ -15,7 +15,11 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     public override void Start()
     {
         base.Start();
-        hall = GameObject.Find("HallUI").GetComponent<HallSubUI>();
+    }
+    private void Update()
+    {
+        if(hall == null && GameObject.Find("HallUI") != null)
+            hall = GameObject.Find("HallUI").GetComponent<HallSubUI>();
     }
     public virtual void Discovery()
     {

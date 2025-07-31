@@ -30,5 +30,6 @@ public enum GameEvent
 {
     ChapterSelectEvent,
     ChapterCancelEvent,
+    CreateRoomEvent,
 }
 
