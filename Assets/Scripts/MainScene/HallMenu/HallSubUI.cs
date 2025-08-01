@@ -1,8 +1,5 @@
 using Michsky.UI.Shift;
 using Mirror;
-using Mirror.Discovery;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,8 +35,8 @@ public class HallSubUI : SubUIBase
     }
     protected void Find()
     {
-        //GameEntry.WebComponent.gameDiscover.Discovery();
-        //RefreshRoomList();
+        GameEntry.WebComponent.gameDiscover.Discovery();
+        RefreshRoomList();
     }
     protected void RefreshRoomList()
     {

@@ -4752,8 +4752,11 @@ MonoBehaviour:
   id: 0
   roomName: {fileID: 627906058118725836}
   description: {fileID: 3247998061648210935}
+  chapter: {fileID: 0}
+  gameMode: {fileID: 0}
+  maxPlayers: {fileID: 0}
   createButton: {fileID: 6086547139086161291}
-  cancelButton: {fileID: 0}
+  cancelButton: {fileID: 97389026867989526}
 --- !u!1 &3814768366069701905
 GameObject:
   m_ObjectHideFlags: 0

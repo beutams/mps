@@ -19,7 +19,7 @@ public class EventComponent : BaseComponent<EventComponent>
             return;
         eventDic[arg] -= action;
     }
-    public void Notify(GameEvent arg, object data)
+    public void Notify(GameEvent arg, object data = null)
     {
         if (!eventDic.ContainsKey(arg))
             return;
@@ -31,5 +31,6 @@ public enum GameEvent
     ChapterSelectEvent,
     ChapterCancelEvent,
     CreateRoomEvent,
+    ArmoryItemClick,
 }
 

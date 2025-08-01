@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class ResourceComponent : BaseComponent<ResourceComponent>
 {
-    public static string scriptablepath = "/SaveData/ScriptableData.txt";
     protected Dictionary<string, Dictionary<int, ScriptableObject>> dataDic = new Dictionary<string, Dictionary<int, ScriptableObject>>();
     protected Dictionary<string, Dictionary<ScriptableObject, int>> indexDic = new Dictionary<string, Dictionary<ScriptableObject, int>>();
     protected Dictionary<string, Dictionary<int, GameObject>> prefabDic = new Dictionary<string, Dictionary<int, GameObject>>();

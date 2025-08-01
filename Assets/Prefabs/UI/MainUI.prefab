@@ -3934,7 +3934,6 @@ MonoBehaviour:
   button: {fileID: 2818619075172721118}
   heroItemList: {fileID: 8323599578159956130}
   skillItemList: {fileID: 2057818522774485634}
-  itemPrefab: {fileID: 5165506681135153937, guid: 1f7207e9dc0b6c84ba4fe2947feccbf8, type: 3}
   heroButton: {fileID: 8675220824160398050}
   skillButton: {fileID: 2074829945849382777}
   selectIconList: {fileID: 2110298916764725120}

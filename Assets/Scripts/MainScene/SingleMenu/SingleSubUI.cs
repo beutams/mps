@@ -50,7 +50,7 @@ public class SingleSubUI : SubUIBase
     public virtual void OnEnterClick()
     {
         IRoomController room = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OfflineRoomController")).GetComponent<IRoomController>();
-        room.armoryData = ArmorySubUI.data == null ? new ArmoryData() : ArmorySubUI.data;
+        room.armoryData = GameEntry.UserComponent.Get("ArmoryData") as ArmoryData;
         SceneManager.sceneLoaded += OfflineRoomController.instance.OnSceneLoaded;
         SceneManager.LoadScene("GameScene");
     }

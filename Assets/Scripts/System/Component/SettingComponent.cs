@@ -11,34 +11,15 @@ public class SettingComponent : BaseComponent<SettingComponent>
     public SettingData settingData;
     protected string mainPath = Path.Combine(Path.Combine(Application.dataPath,"../"),"SaveData");
     protected Dictionary<string, FieldInfo> settingItemDic = new Dictionary<string, FieldInfo>();
-    private void Awake()
+    private void Start()
     {
         Init();
-        SaveData(settingData);
+        GameEntry.SaveDataComponent.Save(settingData, "SettingData");
     }
     private void Init()
     {
-        settingData = GetData<SettingData>();
+        settingData = GameEntry.SaveDataComponent.Read<SettingData>("SettingData");
         RegisterFields(settingData);
-    }
-    private T GetData<T>() where T : new()
-    {
-        string settingDataPath = $"{mainPath}/{typeof(T).Name}.json";
-        try
-        {
-            if (File.Exists(settingDataPath))
-            {
-                string dataStr = File.ReadAllText(settingDataPath);
-                T obj = JsonUtility.FromJson<T>(dataStr);
-                if (obj != null)
-                    return obj;
-            }
-            return new T(); 
-        }
-        catch
-        {
-            return new T();
-        }
     }
     private void RegisterFields<T>(T data)
     {
@@ -47,26 +28,6 @@ public class SettingComponent : BaseComponent<SettingComponent>
             settingItemDic.Add(item.Name, item);
         }
     }
-    private void SetData<T>(string key, object value,T data)
-    {
-        settingItemDic[key].SetValue(data, value);
-    }
-    public void SaveData<T>(T data)
-    {
-        try
-        {
-            string settingDataPath = $"{mainPath}/{typeof(T).Name}.json";
-            if (File.Exists(settingDataPath))
-                File.Delete(settingDataPath);
-            File.Create(settingDataPath).Close();
-            File.WriteAllText(settingDataPath, JsonUtility.ToJson(data));
-        }
-        catch(Exception e)
-        {
-            Debug.LogError($"Setting : {data.GetType().Name} save exception, Log : {e}");
-        }
-    }
-
 }
 [Serializable]
 public class SettingData
