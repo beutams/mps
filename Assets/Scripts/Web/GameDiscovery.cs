@@ -12,10 +12,10 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
 {
     public Dictionary<DiscoveryResponse, IPEndPoint> discoveredServers = new Dictionary<DiscoveryResponse, IPEndPoint>();
     public HallSubUI hall;
-    public override void Start()
+    private void Update()
     {
-        base.Start();
-        hall = GameObject.Find("HallUI").GetComponent<HallSubUI>();
+        if (hall == null)
+            hall = GameObject.Find("HallUI").GetComponent<HallSubUI>();
     }
     public virtual void Discovery()
     {
