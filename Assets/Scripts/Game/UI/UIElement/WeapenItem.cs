@@ -1,4 +1,6 @@
-public class WeapenItem
+using UnityEngine;
+
+public class WeapenItem : MonoBehaviour
 {
     
 }

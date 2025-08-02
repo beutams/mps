@@ -6,7 +6,7 @@ public class MenuProcedure : ProcedureBase
 {
     public override void OnEnter(string data)
     {
-        
+        GameEntry.UIComponent.ShowUI("MainUI");
     }
 
     public override void OnExit(string data)
@@ -20,6 +20,6 @@ public class MenuProcedure : ProcedureBase
     }
     public void EnterGame()
     {
-        GameEntry.ProcedureComponent.Change<ChangeUIProcedure>("Game");
+        GameEntry.ProcedureComponent.Change<ChangeSceneProcedure>("Game");
     }
 }

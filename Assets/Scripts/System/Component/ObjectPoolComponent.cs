@@ -8,37 +8,22 @@ using UnityEngine;
 public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
 {
     private Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
-    private Dictionary<string, GameObject> perfabDic = new Dictionary<string, GameObject>();
-    public GameObject Get(string key)
+    public GameObject Get(string key,string name = null)
     {
         try
         {
             GameObject result;
-            if (poolDic.ContainsKey(key) && perfabDic.ContainsKey(key))
+            if (poolDic.ContainsKey(key))
             {
                 if (poolDic[key].Count > 0)
-                {
                     result = poolDic[key].Dequeue();
-                }
                 else
-                {
-                    result = Instantiate(perfabDic[key]);
-                }
+                    result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key,name));
             }
             else
             {
                 poolDic.Add(key, new Queue<GameObject>());
-#if UNITY_EDITOR
-                string[] allObjs = Directory.GetFiles("Assets/Prefabs", "*.*", SearchOption.AllDirectories);
-                foreach (var obj in allObjs)
-                {
-                    if (!obj.EndsWith($"{key}.prefab")) continue;
-                    perfabDic.Add(key, AssetDatabase.LoadAssetAtPath<GameObject>(obj));
-                }
-#else
-        
-#endif
-                result = Instantiate(perfabDic[key]);
+                result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
             }
             result.name = key;
             result.SetActive(true);

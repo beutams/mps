@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ID 
 {
     public int ID { get; }
+    public IDType searchName {  get; }
 }

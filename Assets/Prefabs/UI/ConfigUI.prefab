@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1538769564890139061}
   - component: {fileID: 6981755946807531452}
   - component: {fileID: 3314869415852299391}
-  - component: {fileID: 8753635511374746490}
   m_Layer: 0
   m_Name: ConfigUI
   m_TagString: Untagged
@@ -115,17 +114,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8096c449bf2ba934ea8f3e5c3c5af562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8753635511374746490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6908047943219242093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77534178b2e6c00459f1f50a325508b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 2
-  searchName: UIBase
+  idType: 1
+  id: 0

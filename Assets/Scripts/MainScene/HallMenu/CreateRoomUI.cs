@@ -4,23 +4,30 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreateRoomUI : MonoBehaviour
+public class CreateRoomUI : UIBase
 {
-    public HallSubUI hallSubUI;
-    public TextMeshProUGUI roomName;
-    public TextMeshProUGUI description;
-
-    protected string owner;
-    protected string chapter;
-    protected string gameMode;
-    protected string maxPlayer;
-    public void Init()
+    protected HallSubUI hallSubUI;
+    [SerializeField] protected TextMeshProUGUI roomName;
+    [SerializeField] protected TextMeshProUGUI description;
+    [SerializeField] protected TMP_Dropdown chapter;
+    [SerializeField] protected TextMeshProUGUI gameMode;
+    [SerializeField] protected TextMeshProUGUI maxPlayers;
+    [SerializeField] protected Button createButton;
+    [SerializeField] protected Button cancelButton;
+    public override void Init()
     {
-
+        base.Init();
+        hallSubUI = FindAnyObjectByType<HallSubUI>();
+        createButton.onClick.AddListener(OnCreateClick);
+        cancelButton.onClick.AddListener(OnCancelClick);
     }
-    public void Create()
+    protected void OnCancelClick()
     {
-        hallSubUI.OnCreateRoom(new RoomData(owner, chapter, roomName.text, description.text, gameMode, maxPlayer));
+        GameEntry.UIComponent.CloseUI(this);
+    }
+    protected void OnCreateClick()
+    {
+        GameEntry.EventComponent.Notify(GameEvent.CreateRoomEvent, new RoomData("owner", chapter.itemText.text, roomName.text, description.text, gameMode.text, maxPlayers.text));
         Clear();
     }
     protected void Clear()

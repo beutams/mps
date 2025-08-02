@@ -13,7 +13,6 @@ public class ArmorySubUI : SubUIBase
     [Header("Left")]
     [SerializeField] protected Transform heroItemList;
     [SerializeField] protected Transform skillItemList;
-    [SerializeField] protected ArmoryItem itemPrefab;
     [SerializeField] protected SettingsButton heroButton;
     [SerializeField] protected SettingsButton skillButton;
     [Header("Right")]
@@ -24,27 +23,25 @@ public class ArmorySubUI : SubUIBase
     public Dictionary<ArmoryItem, HeroStats> heroList = new Dictionary<ArmoryItem, HeroStats>();
     public Dictionary<ArmoryItem, GlobalSkillData> skillList = new Dictionary<ArmoryItem, GlobalSkillData>();
     protected List<Image> imgList = new List<Image>();
-    public static ArmoryData data;
+    protected string itemName = "ArmoryItem";
+    protected ArmoryData data => GameEntry.UserComponent.Get("ArmoryData") as ArmoryData;
     protected int switchId = 0;
     protected string defaultImgPath = string.Empty;
-    protected override void Awake()
-    {
-        base.Awake();
-        data = new ArmoryData();
-    }
     protected virtual void Start()
     {
         InitData();
         InitComponent();
-        InitButton();
+        InitEvent();
     }
     public void InitData()
     {
-        foreach (var hero in GameEntry.ResourceComponent.dataDic["HeroStats"].Values)
+        if(data == null)
+            GameEntry.UserComponent.Set("ArmoryData", new ArmoryData());
+        foreach (var hero in GameEntry.ResourceComponent.GetAllDataResource("HeroStats").Values)
         {
             HeroStats stats = hero as HeroStats;
-            ArmoryItem item = Instantiate(itemPrefab);
-            int id = GameEntry.ResourceComponent.indexDic["HeroStats"][stats];
+            ArmoryItem item = GameEntry.ObjectPoolComponent.Get(itemName).GetComponent<ArmoryItem>();
+            int id = GameEntry.ResourceComponent.GetDataIndex("HeroStats", stats);
             item.Init(stats.imgPath, stats.objName,stats,
                 () => {
                     if (data.hero == id)
@@ -56,11 +53,11 @@ public class ArmorySubUI : SubUIBase
             heroList.Add(item, stats);
 
         }
-        foreach (var skill in GameEntry.ResourceComponent.dataDic["GlobalSkillData"].Values)
+        foreach (var skill in GameEntry.ResourceComponent.GetAllDataResource("GlobalSkillData").Values)
         {
             GlobalSkillData sdata = skill as GlobalSkillData;
-            int id = GameEntry.ResourceComponent.indexDic["GlobalSkillData"][sdata];
-            ArmoryItem item = Instantiate(itemPrefab);
+            int id = GameEntry.ResourceComponent.GetDataIndex("GlobalSkillData", sdata);
+            ArmoryItem item = GameEntry.ObjectPoolComponent.Get(itemName).GetComponent<ArmoryItem>();
             item.Init(sdata.imgPath, sdata.skillName, sdata, () => {
             if (data.globalSkills.Contains(id))
                 SetData(ArmoryType.GlobalSkillsRemove, id);
@@ -76,8 +73,9 @@ public class ArmorySubUI : SubUIBase
         for(int i = 0;i < selectIconList.childCount; i++)
             imgList.Add(selectIconList.GetChild(i).GetComponent<Image>());
     }
-    public void InitButton()
+    public void InitEvent()
     {
+        GameEntry.EventComponent.Subscribe(GameEvent.ArmoryItemClick, ShowObjectInfo);
         heroButton.onClick += () => OnSwitchClick(0);
         skillButton.onClick += () => OnSwitchClick(1);
         OnSwitchClick(0);
@@ -103,7 +101,7 @@ public class ArmorySubUI : SubUIBase
                 string path = defaultImgPath;
                 if (data.hero == -1)
                 {
-                    HeroStats stats = GameEntry.ResourceComponent.dataDic["HeroStats"][data.hero] as HeroStats;
+                    HeroStats stats = GameEntry.ResourceComponent.GetDataResource("HeroStats",data.hero) as HeroStats;
                     path = stats.imgPath;
                 }
                 imgList[i].sprite = GameEntry.ResourceComponent.GetImage(path);
@@ -113,7 +111,7 @@ public class ArmorySubUI : SubUIBase
                 string path = defaultImgPath;
                 if (data.globalSkills.Count >= i)
                 {
-                    GlobalSkillData sdata = GameEntry.ResourceComponent.dataDic["GlobalSkillData"][data.globalSkills[i-1]] as GlobalSkillData;
+                    GlobalSkillData sdata = GameEntry.ResourceComponent.GetDataResource("GlobalSkillData", data.globalSkills[i-1]) as GlobalSkillData;
                     path = sdata.imgPath;
                 }
                 imgList[i].sprite = GameEntry.ResourceComponent.GetImage(path);
@@ -126,7 +124,7 @@ public class ArmorySubUI : SubUIBase
         heroItemList.gameObject.SetActive(isHero);
         skillItemList.gameObject.SetActive(!isHero);
     }
-    public void ShowObjectInfo(ScriptableObject obj)
+    public void ShowObjectInfo(object obj)
     {
         if(obj is HeroStats)
             ShowHero(obj as HeroStats);
@@ -135,13 +133,13 @@ public class ArmorySubUI : SubUIBase
     }
     protected void ShowHero(HeroStats heroStats)
     {
-        title.text = heroStats.name;
-        info.text = heroStats.description;
+        //title.text = heroStats.name;
+        //info.text = heroStats.description;
     }
     protected void ShowSkill(GlobalSkillData data)
     {
-        title.text = data.name;
-        title.text = data.description;
+        //title.text = data.name;
+        //title.text = data.description;
     }
     public enum ArmoryType 
     { 

@@ -17,9 +17,11 @@ public class GameObjectStats : ScriptableObject, ID, IArmoryObject
     public bool canAttack;
     [Header("ID")]
     [SerializeField] protected int id;
+    [SerializeField] protected IDType idType;
     public int ID => id;
+    public IDType searchName => idType;
     [Header("Armory")]
-    [SerializeField] protected ArmorySubUI.ArmoryType type;    
+    [SerializeField] protected ArmorySubUI.ArmoryType type;
     public ArmorySubUI.ArmoryType Type => type;
 
     public T[] GetAbilities<T>() where T : Ability

@@ -49,8 +49,8 @@ public class SingleSubUI : SubUIBase
     }
     public virtual void OnEnterClick()
     {
-        IRoomController room = Instantiate(GameEntry.ResourceComponent.prefabDic["OfflineRoomController"][0]).GetComponent<IRoomController>();
-        room.armoryData = ArmorySubUI.data == null ? new ArmoryData() : ArmorySubUI.data;
+        IRoomController room = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OfflineRoomController")).GetComponent<IRoomController>();
+        room.armoryData = GameEntry.UserComponent.Get("ArmoryData") as ArmoryData;
         SceneManager.sceneLoaded += OfflineRoomController.instance.OnSceneLoaded;
         SceneManager.LoadScene("GameScene");
     }

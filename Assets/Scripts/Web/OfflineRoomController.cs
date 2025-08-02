@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 
-public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomController>, IRoomController
+public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomController>, IRoomController, ID
 {
     public Player localPlayer;
     public Player noCampPlayer;
@@ -14,6 +14,11 @@ public class OfflineRoomController : SingletonMonoBehaviour<OfflineRoomControlle
     Player IRoomController.localPlayer { get => localPlayer; set => localPlayer = value; }
     Player IRoomController.noCampPlayer { get => noCampPlayer; set => noCampPlayer = value; }
     ArmoryData IRoomController.armoryData { get => armoryData; set => armoryData = value; }
+    [Header("ID")]
+    [SerializeField] protected int id;
+    [SerializeField] protected IDType idType;
+    public IDType searchName => idType;
+    public int ID => id;
 
     protected virtual void Awake()
     {

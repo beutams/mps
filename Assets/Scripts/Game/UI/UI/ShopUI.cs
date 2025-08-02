@@ -7,20 +7,64 @@ using UnityEngine.UI;
 
 public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler
 {
+    [Header("Shop")]
     public Transform shopContent;
+    protected static List<ProductItem> allItem = new List<ProductItem>();
+    [Header("Weapen")]
+    public Transform weapenContent;
+    protected List<WeapenItem> weapenItems = new List<WeapenItem>();
+    [Header("Else")]
     public RectTransform info;
     public Image dragImage;
-    public Transform weapenContent;
     protected ProductItem last;
     protected ProductItem currentItem;
     protected bool isDrag;
-    protected List<Weapen> productList = new List<Weapen>();
     protected Timer timer;
-    public static List<ProductItem> allItem = new List<ProductItem>();
+
     private void Start()
+    {
+        InitTimer();
+        InitShopData();
+        InitWeapenData();
+    }
+    private void InitTimer()
     {
         timer = new Timer();
         timer.Init(3f, OnTimerComplete, false, false);
+    }
+    private string GetData(string key,string value)
+    {
+        return ExcelReader.ReadValue("ShopData", key, value);
+    }
+    private void InitShopData()
+    {
+        Dictionary<string,string> datas = ExcelReader.dataDic["ShopData"];
+        foreach(var kvp in datas)
+        {
+            ProductItem item = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("ProductItem",kvp.Value)).GetComponent<ProductItem>();
+            item.transform.SetParent(shopContent);
+            ProductData data = new ProductData() 
+            { 
+                cost = int.Parse(GetData(kvp.Key, "Cost")), 
+                imgPath = GetData(kvp.Key, "ImgPath"), 
+                weapen = GameEntry.ResourceComponent.GetDataResource("WeapenBase", GetData(kvp.Key, "Name")) as Weapen 
+            };
+            item.data = data;item.Refresh();
+        }
+    }
+    //# small,300,300 | small,400,400
+    private void InitWeapenData()
+    {
+        Dictionary<string,string> heroDatas = ExcelReader.Read("WeapenData", IRoomController.Instance().armoryData.hero.ToString());
+        string[] solts = heroDatas["Solt"].Split('|');
+        foreach(var solt in solts)
+        {
+            WeapenItem item = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("WeapenItem").GetComponent<WeapenItem>());
+            item.transform.SetParent(weapenContent);
+            string[] data = solt.Split(',');
+            item.transform.localPosition = new Vector3(int.Parse(data[1]),int.Parse(data[2]), 0);
+            weapenItems.Add(item);
+        }
     }
     private void Update()
     {

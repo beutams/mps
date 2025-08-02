@@ -1,4 +1,4 @@
-public class ProductData
+public struct ProductData
 {
     public Weapen weapen;
     public string imgPath;

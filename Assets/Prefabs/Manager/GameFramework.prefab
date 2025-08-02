@@ -266,10 +266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab213b9be263deb4cb2e646f39e1a8b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraMoveSpeed: 6
-  maxDepth: 5
-  maxObject: 5
-  mapSize: 102
+  settingData:
+    CameraMoveSpeed: 6
+    maxDepth: 5
+    maxObject: 2
+    mapSize: 102
 --- !u!1 &4527564024810447360
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +426,7 @@ GameObject:
   - component: {fileID: 3115688524381866713}
   - component: {fileID: 176507637422974779}
   - component: {fileID: 6370031589983666484}
+  - component: {fileID: 7854430542190704740}
   m_Layer: 0
   m_Name: Web
   m_TagString: Untagged
@@ -468,6 +470,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   secretHandshake: 194946721160323407
+  hall: {fileID: 0}
 --- !u!114 &176507637422974779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48fa59e30d92bfc428562c57c92f103f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   runInBackground: 1
   headlessStartMode: 0
   editorAutoStart: 0
@@ -513,8 +516,6 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  roomScene: 
-  gameScene: 
 --- !u!114 &6370031589983666484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +545,20 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
+--- !u!114 &7854430542190704740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5758872104680873960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883b81975c67e234dbe7119df1c57473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDiscover: {fileID: 3115688524381866713}
+  gameNetworkManager: {fileID: 176507637422974779}
 --- !u!1 &6256433216297274339
 GameObject:
   m_ObjectHideFlags: 0

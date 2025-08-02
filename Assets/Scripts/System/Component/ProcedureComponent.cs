@@ -38,9 +38,11 @@ public class ProcedureComponent : BaseComponent<ProcedureComponent>
         {
             if(procedure.GetType() == typeof(T))
             {
+                Debug.Log($"Procedure {currentProcedure.GetType().Name} Change To {procedure.GetType().Name}");
                 currentProcedure.OnExit(data);
                 currentProcedure = procedure;
                 currentProcedure.OnEnter(data);
+
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.InputSystem;
 /// <summary>
 /// #   变量名1 变量名2 变量名3
 /// #   类型1   类型2   类型3

@@ -5,7 +5,7 @@ using Michsky.UI.Shift;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainSceneManager : MonoBehaviour
+public class MainSceneManager : UIBase
 {
     public void Start()
     {

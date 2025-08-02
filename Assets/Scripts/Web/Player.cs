@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     {
         for(int i = 1;i <= 3;i++)
         {
-            globalSkills.Add(i, GameEntry.ResourceComponent.dataDic["GlobalSkillData"][armory.globalSkills[i-1]] as GlobalSkillData);
+            globalSkills.Add(i, GameEntry.ResourceComponent.GetDataResource("GlobalSkillData", armory.globalSkills[i - 1]) as GlobalSkillData);
         }
     }
     public void AddObject(GameObjectController controller)

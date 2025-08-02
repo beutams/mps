@@ -11,11 +11,18 @@ using UnityEngine.Events;
 public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryResponse>
 {
     public Dictionary<DiscoveryResponse, IPEndPoint> discoveredServers = new Dictionary<DiscoveryResponse, IPEndPoint>();
-    public HallSubUI hall;
-    private void Update()
+    public RoomData roomData;
+    public override void Start()
     {
-        if (hall == null)
-            hall = GameObject.Find("HallUI").GetComponent<HallSubUI>();
+        base.Start();
+        GameEntry.EventComponent.Subscribe(GameEvent.CreateRoomEvent,SetRoomData);
+    }
+    protected void SetRoomData(object roomData)
+    {
+        if(roomData is RoomData)
+        {
+            this.roomData = (RoomData)roomData;
+        }
     }
     public virtual void Discovery()
     {
@@ -32,7 +39,7 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     {
         try
         {
-            return new DiscoveryResponse() { roomData = hall.roomData ,uri = transport.ServerUri()};
+            return new DiscoveryResponse() { roomData = roomData ,uri = transport.ServerUri()};
         }
         catch
         {

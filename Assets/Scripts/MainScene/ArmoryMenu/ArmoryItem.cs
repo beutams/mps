@@ -4,26 +4,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ArmoryItem : DoubleClick
+public class ArmoryItem : DoubleClick, ID
 {
-    protected ArmorySubUI armorySubUI;
     protected ScriptableObject obj;
-    public Image img;
-    public TextMeshProUGUI text;
-    private void Awake()
-    {
-        armorySubUI = FindObjectOfType<ArmorySubUI>();
-    }
+    [SerializeField] protected Image img;
+    [SerializeField] protected TextMeshProUGUI text;
+
+    [Header("ID")]
+    [SerializeField] protected int id;
+    [SerializeField] protected IDType type;
+    public int ID => id;
+    public IDType searchName => type;
+
     public void Init(string imgPath, string name,ScriptableObject obj, Action action)
     {
         this.obj = obj;
         img.sprite = GameEntry.ResourceComponent.GetImage(imgPath);
         text.text = name;
         onDoubleClick += action;
-        onClick += OnClick;
-    }
-    public void OnClick()
-    {
-        armorySubUI.ShowObjectInfo(obj);
+        onClick += () => GameEntry.EventComponent.Notify(GameEvent.ArmoryItemClick, obj);
     }
 }

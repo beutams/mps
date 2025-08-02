@@ -15,5 +15,6 @@ MonoBehaviour:
   skillName: "\u6218\u672F\u5C0F\u961F"
   imgPath: Assets\Dependency\ScienceFictionGUI\Textures\icons\Resources_Icon_01.png
   ability: {fileID: 11400000, guid: f1407fbb5d1904d4cac230dd27629094, type: 2}
-  id: 1
   description: "\u51B7\u5374\u65F6\u95F4\uFF1A180\u79D2\n\u5EF6\u8FDF\u6570\u79D2\u540E\uFF0C\u5728\u76EE\u6807\u5730\u533A\u7A7A\u964D\u4E00\u652F\u706B\u529B\u5C0F\u961F\n\u81EA\u52A8\u653B\u51FB\u9644\u8FD1\u7684\u6240\u6709\u654C\u65B9\u5355\u4F4D"
+  id: 0
+  idType: 6

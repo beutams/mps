@@ -14,4 +14,6 @@ public class BulletData : ScriptableObject, ID
     [Header("ID")]
     [SerializeField]protected int id;
     public int ID => id;
+    [SerializeField] protected IDType idType;
+    public IDType searchName => idType;
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ArmoryData
+public class ArmoryData : UserData
 {
     public int hero;
     public List<int> globalSkills;

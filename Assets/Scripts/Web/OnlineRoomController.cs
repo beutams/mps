@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>, IRoomController
+public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>, IRoomController, ID
 {
     protected Player localPlayer;
     protected Player noCampPlayer;
@@ -12,7 +12,11 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
     Player IRoomController.localPlayer { get => localPlayer; set => localPlayer = value; }
     Player IRoomController.noCampPlayer { get => noCampPlayer; set => noCampPlayer = value; }
     ArmoryData IRoomController.armoryData { get => armoryData; set => armoryData = value; }
-
+    [Header("ID")]
+    [SerializeField] protected int id;
+    [SerializeField] protected IDType idType;
+    public IDType searchName => idType;
+    public int ID => id;
     public Dictionary<PlayerSite, Player> playerDic { get; set; }
     public Dictionary<NetworkConnectionToClient, Player> connDic = new Dictionary<NetworkConnectionToClient, Player>();
 
