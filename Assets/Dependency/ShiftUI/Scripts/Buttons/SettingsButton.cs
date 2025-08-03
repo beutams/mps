@@ -9,11 +9,6 @@ namespace Michsky.UI.Shift
     public class SettingsButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
         [Header("Resources")]
-        public Image detailImage;
-        public Image detailIcon;
-        public Image detailBackground;
-        public TextMeshProUGUI detailTitle;
-        public TextMeshProUGUI detailDescription;
         public TextMeshProUGUI buttonTitleObj;
 
         [Header("Content")]
