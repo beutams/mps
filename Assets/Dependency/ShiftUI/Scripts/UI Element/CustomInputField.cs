@@ -2,6 +2,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace Michsky.UI.Shift
 {
