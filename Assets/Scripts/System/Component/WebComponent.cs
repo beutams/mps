@@ -16,6 +16,10 @@ public class WebComponent : BaseComponent<WebComponent>
         gameDiscover = GetComponent<GameDiscovery>();
         gameNetworkManager = GetComponent<GameNetworkManager>(); 
     }
+    private void Start()
+    {
+        NetworkManager.singleton.StartClient();
+    }
     [ServerCallback]
     public void StartGame()
     {
@@ -23,6 +27,5 @@ public class WebComponent : BaseComponent<WebComponent>
             if (!player) return;
         IRoomController roomController = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OnlineRoomController")).GetComponent<IRoomController>();
         Player noCampPlayer = Instantiate(gameNetworkManager.playerPrefab).GetComponent<Player>();
-
     }
 }

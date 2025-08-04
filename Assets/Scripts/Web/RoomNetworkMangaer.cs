@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class RoomNetworkMangaer : MonoBehaviour
 {
     private HallSubUI hallSubUI;
-    private GameNetworkManager gameNetworkManager;
     private Dictionary<NetworkConnectionToClient, bool> readyDic = new Dictionary<NetworkConnectionToClient, bool>();
     
     private void Awake()
@@ -38,7 +37,7 @@ public class RoomNetworkMangaer : MonoBehaviour
         }
     }
     [ClientCallback]
-    public void OnStartClient()
+    public void OnClientConnect()
     {
         NetworkClient.RegisterHandler<ClientMessage>(OnClientMessage);
     }

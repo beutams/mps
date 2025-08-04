@@ -3,55 +3,41 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.Events;
 
 namespace Michsky.UI.Shift
 {
-    public class SettingsButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+    public class SettingsButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
         [Header("Resources")]
         public TextMeshProUGUI buttonTitleObj;
+        public Animator buttonAnimator;
 
-        [Header("Content")]
-        public bool useCustomContent;
-        public string buttonTitle;
-
-        [Header("Preview")]
-        public bool enableIconPreview;
-        public string title;
-        [TextArea] public string description;
-        public Sprite imageSprite;
-        public Sprite iconSprite;
-        public Sprite iconBackground;
-
-        public Action onClick;
-        void Start()
-        {
-            if (useCustomContent == false) { buttonTitleObj.text = buttonTitle; }
-        }
+        [Header("Event")]
+        public UnityEvent onEnter;
+        public UnityEvent onExit;
+        public UnityEvent onClick;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-/*            if (enableIconPreview == true)
+#if !UNITY_ANDROID && !UNITY_IOS
+            if (!buttonAnimator.GetCurrentAnimatorStateInfo(0).IsName("Highlighted"))
             {
-                detailImage.gameObject.SetActive(false);
-                detailIcon.gameObject.SetActive(true);
-                detailBackground.gameObject.SetActive(true);
-                detailIcon.sprite = iconSprite;
-                detailBackground.sprite = iconBackground;
+                buttonAnimator.Play("Highlighted");
+                onEnter?.Invoke();
             }
-
-            else
-            {
-                detailImage.gameObject.SetActive(true);
-                detailIcon.gameObject.SetActive(false);
-                detailBackground.gameObject.SetActive(false);
-                detailImage.sprite = imageSprite;
-            }
-
-            detailTitle.text = title;
-            detailDescription.text = description;*/
+#endif
         }
-
+        public void OnPointerExit(PointerEventData eventData)
+        {
+#if !UNITY_ANDROID && !UNITY_IOS
+            if (!buttonAnimator.GetCurrentAnimatorStateInfo(0).IsName("Normal"))
+            {
+                buttonAnimator.Play("Normal");
+                onExit?.Invoke();
+            }
+#endif
+        }
         public void OnPointerClick(PointerEventData eventData)
         {
             onClick?.Invoke();

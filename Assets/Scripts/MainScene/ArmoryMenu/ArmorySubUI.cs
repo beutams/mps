@@ -17,8 +17,8 @@ public class ArmorySubUI : SubUIBase
     [SerializeField] protected SettingsButton skillButton;
     [Header("Right")]
     [SerializeField] protected Transform selectIconList;
-    [SerializeField] protected TextMeshPro title;
-    [SerializeField] protected TextMeshPro info;
+    [SerializeField] protected TextMeshProUGUI title;
+    [SerializeField] protected TextMeshProUGUI info;
 
     public Dictionary<ArmoryItem, HeroStats> heroList = new Dictionary<ArmoryItem, HeroStats>();
     public Dictionary<ArmoryItem, GlobalSkillData> skillList = new Dictionary<ArmoryItem, GlobalSkillData>();
@@ -76,8 +76,8 @@ public class ArmorySubUI : SubUIBase
     public void InitEvent()
     {
         GameEntry.EventComponent.Subscribe(GameEvent.ArmoryItemClick, ShowObjectInfo);
-        heroButton.onClick += () => OnSwitchClick(0);
-        skillButton.onClick += () => OnSwitchClick(1);
+        heroButton.onClick.AddListener(() => OnSwitchClick(0));
+        skillButton.onClick.AddListener(() => OnSwitchClick(1));
         OnSwitchClick(0);
     }
     public void SetData(ArmoryType item, int value)
@@ -133,13 +133,13 @@ public class ArmorySubUI : SubUIBase
     }
     protected void ShowHero(HeroStats heroStats)
     {
-        //title.text = heroStats.name;
-        //info.text = heroStats.description;
+        title.text = heroStats.name;
+        info.text = heroStats.description;
     }
     protected void ShowSkill(GlobalSkillData data)
     {
-        //title.text = data.name;
-        //title.text = data.description;
+        title.text = data.name;
+        title.text = data.description;
     }
     public enum ArmoryType 
     { 

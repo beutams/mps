@@ -155,14 +155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b1eb24c2f1d2f4384d7d3fa4355ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detailImage: {fileID: 0}
-  detailIcon: {fileID: 0}
-  detailBackground: {fileID: 0}
-  detailTitle: {fileID: 0}
-  detailDescription: {fileID: 0}
   buttonTitleObj: {fileID: 114938146230647920}
   useCustomContent: 0
-  buttonTitle: Example title
+  buttonTitle: Hero
   enableIconPreview: 0
   title: Preview Title
   description: Description here
