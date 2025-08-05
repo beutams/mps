@@ -470,7 +470,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   secretHandshake: 194946721160323407
-  hall: {fileID: 0}
 --- !u!114 &176507637422974779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,7 +497,7 @@ MonoBehaviour:
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 0}
-  autoCreatePlayer: 1
+  autoCreatePlayer: 0
   playerSpawnMethod: 0
   spawnPrefabs: []
   exceptionsDisconnect: 1
@@ -543,7 +542,7 @@ MonoBehaviour:
   ReliableMaxMessageSize: 297433
   UnreliableMaxMessageSize: 1194
   debugLog: 0
-  statisticsGUI: 0
+  statisticsGUI: 1
   statisticsLog: 0
 --- !u!114 &7854430542190704740
 MonoBehaviour:

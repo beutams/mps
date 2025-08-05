@@ -4,30 +4,34 @@ using UnityEngine;
 
 public class GameNetworkManager : NetworkManager
 {
-    private RoomNetworkMangaer roomNetwork;
     public override void OnStartServer()
     {
+        Debug.Log("GameNetworkManager : OnStartServer");
         base.OnStartServer();
-        roomNetwork?.OnStartServer();
+        GameEntry.EventComponent.Notify(GameEvent.ServerStartEvent);
     }
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
+        Debug.Log("GameNetworkManager : OnServerConnect");
         base.OnServerConnect(conn);
-        roomNetwork?.OnClientConnectServer(conn);
+        GameEntry.EventComponent.Notify(GameEvent.ServerConnectEvent,conn);
     }
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
+        Debug.Log("GameNetworkManager : OnServerDisconnect");
         base.OnServerDisconnect(conn);
-        roomNetwork?.OnClientDisconnectServer(conn);
+        GameEntry.EventComponent.Notify(GameEvent.ServerDisconnectEvent, conn);
     }
     public override void OnClientDisconnect() 
     {
+        Debug.Log("GameNetworkManager : OnClientDisconnect");
         base.OnClientDisconnect();
-        roomNetwork?.OnClientDisconnect();
+        GameEntry.EventComponent.Notify(GameEvent.ClientDisconnectEvent);
     }
     public override void OnClientConnect()
     {
+        Debug.Log("GameNetworkManager : OnClientConnect");
         base.OnClientConnect();
-        roomNetwork?.OnClientConnect();
+        GameEntry.EventComponent.Notify(GameEvent.ClientConnectEvent);
     }
 }

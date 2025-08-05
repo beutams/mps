@@ -16,7 +16,6 @@ public class RoomItem : DoubleClick
     public TextMeshProUGUI playerObject;
 
     protected DiscoveryResponse server;
-    protected RoomData roomData;
     public string number;
     public void Start()
     {
@@ -24,19 +23,19 @@ public class RoomItem : DoubleClick
     }
     public void SetData(DiscoveryResponse server)
     {
-        roomData = server.roomData;
         this.server = server;
     }
     protected virtual void Refresh()
     {
-        titleObject.text = roomData.title; 
-        descriptionObject.text = roomData.description;
-        gameModeObject.text = roomData.gameMode;
-        playerObject.text = number + "/" + roomData.maxNumber;
+        titleObject.text = server.roomData.title; 
+        descriptionObject.text = server.roomData.description;
+        gameModeObject.text = server.roomData.gameMode;
+        playerObject.text = number + "/" + server.roomData.maxNumber;
     }
-    protected virtual void OnJoin()
+    public virtual void OnJoin()
     {
+        Debug.Log($"Join {server.uri}");
         FindAnyObjectByType<GameDiscovery>().StopDiscovery();
-        NetworkManager.singleton.StartClient(server.uri);
+        GameEntry.EventComponent.Notify(GameEvent.ClientReadyConnectEvent, server);
     }
 }

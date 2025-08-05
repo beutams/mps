@@ -11,39 +11,49 @@ public class RoomNetworkMangaer : MonoBehaviour
     private void Awake()
     {
         hallSubUI = FindAnyObjectByType<HallSubUI>();
+        GameEntry.EventComponent.Subscribe(GameEvent.ServerStartEvent, OnStartServer);
+        GameEntry.EventComponent.Subscribe(GameEvent.ServerConnectEvent, OnClientConnectServer);
+        GameEntry.EventComponent.Subscribe(GameEvent.ServerDisconnectEvent, OnClientDisconnectServer);
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientDisconnectEvent, OnClientDisconnect);
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientConnectEvent, OnClientConnect);
     }
     [ServerCallback]
-    public void OnStartServer()
+    public void OnStartServer(object data)
     {
+        Debug.Log("Room OnStartSercer");
         NetworkServer.RegisterHandler<ServerMessage>(OnServerMessage);
         hallSubUI.isSercer = true;
     }
     [ServerCallback]
-    public void OnClientDisconnectServer(NetworkConnectionToClient conn)
+    public void OnClientDisconnectServer(object conn)
     {
-        readyDic.Remove(conn);
+        Debug.Log("Room OnClientDisconnectServer");
+        readyDic.Remove(conn as NetworkConnectionToClient);
         foreach(var playerConn in readyDic.Keys)
         {
             playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = readyDic });
         }
     }
     [ServerCallback]
-    public void OnClientConnectServer(NetworkConnectionToClient conn)
+    public void OnClientConnectServer(object conn)
     {
-        readyDic.Add(conn,false);
+        Debug.Log("Room OnClientConnectServer");
+        readyDic.Add(conn as NetworkConnectionToClient,false);
         foreach (var playerConn in readyDic.Keys)
         {
             playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = readyDic });
         }
     }
     [ClientCallback]
-    public void OnClientConnect()
+    public void OnClientConnect(object data)
     {
+        Debug.Log("Room OnClientConnect");
         NetworkClient.RegisterHandler<ClientMessage>(OnClientMessage);
     }
     [ClientCallback]
-    public void OnClientDisconnect()
+    public void OnClientDisconnect(object data)
     {
+        Debug.Log("Room OnClientDisconnect");
         hallSubUI.roomUI.gameObject.SetActive(false);
     }
 
@@ -55,6 +65,7 @@ public class RoomNetworkMangaer : MonoBehaviour
             case ServerMessageOption.None:
                 break;
             case ServerMessageOption.Start:
+                Debug.Log("Server Message : Start");
                 foreach (var ready in readyDic.Values)
                     if (!ready) return;
                 foreach (var playerConn in readyDic.Keys)
@@ -62,6 +73,7 @@ public class RoomNetworkMangaer : MonoBehaviour
                 OnStartGame();
                 break;
             case ServerMessageOption.Ready:
+                Debug.Log($"Server Message : {conn} is Ready");
                 readyDic[conn] = !readyDic[conn];
                 foreach(var playerConn in readyDic.Keys)
                     playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = readyDic });
@@ -96,9 +108,11 @@ public class RoomNetworkMangaer : MonoBehaviour
             case ClientMessageOption.None:
                 break;
             case ClientMessageOption.UpdateRoom:
+                Debug.Log($"Client Message : UpdateRoom");
                 hallSubUI.OnUpdateRoom(msg);
                 break;
             case ClientMessageOption.Started:
+                Debug.Log($"Client Message : Started");
                 hallSubUI.OnStartGame(msg);
                 break;
         }

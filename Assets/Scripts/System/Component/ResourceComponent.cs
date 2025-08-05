@@ -89,10 +89,15 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
     }
     public Sprite GetImage(string path)
     {
+#if UNITY_EDITOR
         Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path.Replace('\\', '/'));
         return sprite;
+#else
+        return null;
+#endif
+        
     }
-    #endregion
+#endregion
     protected Stack<T> GetAllAssets<T>(string path, string suffix) where T : UnityEngine.Object
     {
         Stack<string> directories = new Stack<string>();
@@ -111,7 +116,9 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
                 {
                     string sub = o.Substring(Application.dataPath.Length - 6);
                     string p = sub.Replace("\\", "/");
+#if UNITY_EDITOR
                     objs.Push(AssetDatabase.LoadAssetAtPath<T>(p));
+#endif
                 }
         }
         return objs;

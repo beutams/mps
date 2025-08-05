@@ -19,4 +19,8 @@ public struct RoomData
         this.gameMode = gameMode;
         this.maxNumber = maxNumber;
     }
+    public override string ToString()
+    {
+        return $"owner={owner},chapter={chapter},title={title},gameMode={gameMode},maxPlayer={maxNumber}";
+    }
 }

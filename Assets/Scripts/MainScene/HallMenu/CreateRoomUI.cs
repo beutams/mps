@@ -10,8 +10,8 @@ public class CreateRoomUI : UIBase
     [SerializeField] protected TextMeshProUGUI roomName;
     [SerializeField] protected TextMeshProUGUI description;
     [SerializeField] protected TMP_Dropdown chapter;
-    [SerializeField] protected TextMeshProUGUI gameMode;
-    [SerializeField] protected TextMeshProUGUI maxPlayers;
+    [SerializeField] protected TMP_Dropdown gameMode;
+    [SerializeField] protected TMP_Dropdown maxPlayers;
     [SerializeField] protected Button createButton;
     [SerializeField] protected Button cancelButton;
     public override void Init()
@@ -27,11 +27,13 @@ public class CreateRoomUI : UIBase
     }
     protected void OnCreateClick()
     {
-        GameEntry.EventComponent.Notify(GameEvent.CreateRoomEvent, new RoomData("owner", chapter.itemText.text, roomName.text, description.text, gameMode.text, maxPlayers.text));
+        RoomData room = new RoomData("owner", chapter.itemText.text, roomName.text, description.text, gameMode.itemText.text, maxPlayers.itemText.text);
+        GameEntry.EventComponent.Notify(GameEvent.CreateRoomEvent, room);
+        Debug.Log($"Create Room {room}");
         Clear();
     }
     protected void Clear()
     {
-
+        GameEntry.UIComponent.CloseUI(this);
     }
 }

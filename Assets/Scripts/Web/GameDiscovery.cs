@@ -10,12 +10,34 @@ using UnityEngine.Events;
 
 public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryResponse>
 {
-    public Dictionary<DiscoveryResponse, IPEndPoint> discoveredServers = new Dictionary<DiscoveryResponse, IPEndPoint>();
+    public HashSet<DiscoveryResponse> discoveredServers = new HashSet<DiscoveryResponse>();
+    protected List<DiscoveryResponse> currentFindList = new List<DiscoveryResponse>();
     public RoomData roomData;
     public override void Start()
     {
         base.Start();
-        GameEntry.EventComponent.Subscribe(GameEvent.CreateRoomEvent,SetRoomData);
+        GameEntry.EventComponent.Subscribe(GameEvent.CreateRoomEvent, SetRoomData);
+        GameEntry.EventComponent.Subscribe(GameEvent.ServerStartEvent, OnServerStart);
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientReadyConnectEvent, Connect);
+        OnServerFound.AddListener(OnDiscoveredServer);
+    }
+    private void LateUpdate()
+    {
+        foreach(var entry in discoveredServers)
+        {
+            if(!currentFindList.Contains(entry))
+            {
+                discoveredServers.Remove(entry);
+            }
+        }
+        foreach(var entry in currentFindList) 
+        {
+            if (!discoveredServers.Contains(entry))
+            {
+                discoveredServers.Add(entry);
+            }
+        }
+        currentFindList.Clear();
     }
     protected void SetRoomData(object roomData)
     {
@@ -26,48 +48,62 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     }
     public virtual void Discovery()
     {
-        discoveredServers.Clear();
         StartDiscovery();
+        Debug.Log("Start Discovery");
     }
     #region Server
-    protected override void ProcessClientRequest(DiscoveryRequest request, IPEndPoint endpoint)
-    {
-        base.ProcessClientRequest(request, endpoint);
-    }
-
     protected override DiscoveryResponse ProcessRequest(DiscoveryRequest request, IPEndPoint endpoint)
     {
         try
         {
-            return new DiscoveryResponse() { roomData = roomData ,uri = transport.ServerUri()};
+            return new DiscoveryResponse() { roomData = roomData ,uri = transport.ServerUri(), serverId = ServerId};
         }
         catch
         {
             Debug.LogError($"ProcessRequest send fail");
             throw;
         }
-
+    }
+    protected void OnServerStart(object data)
+    {
+        AdvertiseServer();
     }
     #endregion
 
     #region Client
     protected override DiscoveryRequest GetRequest()
     {
-        return base.GetRequest();
+        return new DiscoveryRequest();
     }
     protected override void ProcessResponse(DiscoveryResponse response, IPEndPoint endpoint)
     {
-        discoveredServers.Add(response, endpoint);
-        Debug.Log(discoveredServers.Count());
+        response.endPoint = endpoint;
+        UriBuilder realUri = new UriBuilder(response.uri)
+        {
+            Host = response.endPoint.Address.ToString()
+        };
+        response.uri = realUri.Uri;
+        OnServerFound.Invoke(response);
+    }
+    public void OnDiscoveredServer(DiscoveryResponse response)
+    {
+        currentFindList.Add(response);
+        Debug.Log($"Discovered Server: {response.uri}");
+        Debug.Log($"{currentFindList.Count}");
+    }
+    public void Connect(object response)
+    {
+        if (NetworkClient.isConnecting || NetworkClient.isConnected) return;
+        Debug.Log($"Client try connect {((DiscoveryResponse)response).uri}");
+        NetworkClient.Connect(((DiscoveryResponse)response).uri);
     }
     #endregion
 }
-public struct DiscoveryRequest : NetworkMessage
-{
-    public RoomData roomData;
-}
+public struct DiscoveryRequest : NetworkMessage { }
 public struct DiscoveryResponse : NetworkMessage
 {
     public RoomData roomData;
     public Uri uri;
+    public long serverId;
+    public IPEndPoint endPoint { get; set; }
 }

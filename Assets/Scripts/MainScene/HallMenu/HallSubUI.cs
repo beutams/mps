@@ -1,5 +1,6 @@
 using Michsky.UI.Shift;
 using Mirror;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class HallSubUI : SubUIBase
     public Button createButton;
     protected RoomItem itemPerfab;
     protected GameObject playerUIPrefab;
-    protected Dictionary<RoomItem, DiscoveryResponse> rooms = new Dictionary<RoomItem, DiscoveryResponse>();
+    public Dictionary<RoomItem, DiscoveryResponse> rooms = new Dictionary<RoomItem, DiscoveryResponse>();
     public bool isSercer { get; set; }
 
     protected Dictionary<NetworkConnectionToClient, GameObject> playerDic = new Dictionary<NetworkConnectionToClient, GameObject>();
@@ -24,14 +25,19 @@ public class HallSubUI : SubUIBase
         itemPerfab = content.GetChild(0).GetComponent<RoomItem>();
         itemPerfab.gameObject.SetActive(false);
         createButton.onClick.AddListener(OnCreateClick);
-        GameEntry.EventComponent.Subscribe(GameEvent.CreateRoomEvent,OnCreateRoom);
+        GameEntry.EventComponent.Subscribe(GameEvent.CreateRoomEvent, OnCreateRoom);
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientReadyConnectEvent, OnJoinRoom);
     }
     protected override void OnStep()
     {
         if (timer < maxTimer)
             timer += Time.deltaTime;
-        else
+        else if (!NetworkServer.active && !NetworkClient.isConnected && !NetworkClient.isConnecting)
+        {
             Find();
+            timer = 0;
+        }
+
     }
     protected void Find()
     {
@@ -43,19 +49,20 @@ public class HallSubUI : SubUIBase
         if (GameEntry.WebComponent.gameDiscover.discoveredServers.Count == 0) return;
         foreach(var room in rooms)
         {
-            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.ContainsKey(room.Value))
+            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.Contains(room.Value))
             {
                 rooms.Remove(room.Key);
                 Destroy(room.Key);
             }
         }
-        foreach(var conn in GameEntry.WebComponent.gameDiscover.discoveredServers.Keys)
+        foreach(var conn in GameEntry.WebComponent.gameDiscover.discoveredServers)
         {
             if (!rooms.ContainsValue(conn))
             {
                 var room = Instantiate(itemPerfab);
                 room.transform.parent = content;
                 room.GetComponent<RoomItem>().SetData(conn);
+                room.gameObject.SetActive(true);
                 rooms.Add(room, conn);
             }
         }
@@ -73,7 +80,15 @@ public class HallSubUI : SubUIBase
     }
     public void OnCreateRoom(object data)
     {
-        RoomData roomData = (RoomData)data;
+        Debug.Log($"Server set roomData {(RoomData)data} to hallUI");
+        roomData = (RoomData)data;
+        roomUI.gameObject.SetActive(true);
+        NetworkManager.singleton.StartServer();
+    }
+    public void OnJoinRoom(object data)
+    {
+        Debug.Log($"Client set roomData {((DiscoveryResponse)data).roomData} to hallUI, RoomUI Active");
+        roomData = ((DiscoveryResponse)data).roomData;
         roomUI.gameObject.SetActive(true);
     }
     #region Button
