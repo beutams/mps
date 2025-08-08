@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HallSubUI : SubUIBase
 {
     protected float timer = 0;
-    protected float maxTimer = 2;
+    protected float maxTimer = 5;
     public RoomData roomData;
     public Transform content;
     public Transform roomUI;
@@ -30,18 +30,6 @@ public class HallSubUI : SubUIBase
     }
     protected override void OnStep()
     {
-        if (timer < maxTimer)
-            timer += Time.deltaTime;
-        else if (!NetworkServer.active && !NetworkClient.isConnected && !NetworkClient.isConnecting)
-        {
-            Find();
-            timer = 0;
-        }
-
-    }
-    protected void Find()
-    {
-        GameEntry.WebComponent.gameDiscover.Discovery();
         RefreshRoomList();
     }
     protected void RefreshRoomList()
@@ -49,7 +37,7 @@ public class HallSubUI : SubUIBase
         if (GameEntry.WebComponent.gameDiscover.discoveredServers.Count == 0) return;
         foreach(var room in rooms)
         {
-            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.Contains(room.Value))
+            if (!GameEntry.WebComponent.gameDiscover.discoveredServers.ContainsKey(room.Value))
             {
                 rooms.Remove(room.Key);
                 Destroy(room.Key);
@@ -57,15 +45,16 @@ public class HallSubUI : SubUIBase
         }
         foreach(var conn in GameEntry.WebComponent.gameDiscover.discoveredServers)
         {
-            if (!rooms.ContainsValue(conn))
+            if (!rooms.ContainsValue(conn.Key))
             {
                 var room = Instantiate(itemPerfab);
                 room.transform.parent = content;
-                room.GetComponent<RoomItem>().SetData(conn);
+                room.GetComponent<RoomItem>().SetData(conn.Key);
                 room.gameObject.SetActive(true);
-                rooms.Add(room, conn);
+                rooms.Add(room, conn.Key);
             }
         }
+        Debug.Log("Rooms :" + rooms.Count);
     }
     protected void InitRoomUI()
     {

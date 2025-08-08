@@ -470,6 +470,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   secretHandshake: 194946721160323407
+  roomData:
+    owner: 
+    chapter: 
+    title: 
+    description: 
+    gameMode: 
+    maxNumber: 
 --- !u!114 &176507637422974779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,14 +497,14 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   offlineSceneLoadDelay: 0
-  transport: {fileID: 0}
+  transport: {fileID: 6370031589983666484}
   networkAddress: localhost
   maxConnections: 100
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
-  autoCreatePlayer: 0
+  playerPrefab: {fileID: 1504416006943276323, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
+  autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
   exceptionsDisconnect: 1

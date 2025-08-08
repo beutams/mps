@@ -10,9 +10,13 @@ using UnityEngine.Events;
 
 public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryResponse>
 {
-    public HashSet<DiscoveryResponse> discoveredServers = new HashSet<DiscoveryResponse>();
-    protected List<DiscoveryResponse> currentFindList = new List<DiscoveryResponse>();
+    public Dictionary<DiscoveryResponse, int> discoveredServers = new Dictionary<DiscoveryResponse, int>();
+    public Dictionary<DiscoveryResponse, int> curDiscoveredServers = new Dictionary<DiscoveryResponse, int>();
+    protected List<DiscoveryResponse> waitDelete = new List<DiscoveryResponse>();
+    protected bool isSearching;
     public RoomData roomData;
+    float timer;
+    float maxTime = 10f;
     public override void Start()
     {
         base.Start();
@@ -20,24 +24,46 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
         GameEntry.EventComponent.Subscribe(GameEvent.ServerStartEvent, OnServerStart);
         GameEntry.EventComponent.Subscribe(GameEvent.ClientReadyConnectEvent, Connect);
         OnServerFound.AddListener(OnDiscoveredServer);
+        GameEntry.WebComponent.gameDiscover.Discovery();
     }
-    private void LateUpdate()
+    private void Update()
     {
-        foreach(var entry in discoveredServers)
+        KeepServerActive();
+    }
+    protected void KeepServerActive()
+    {
+        if (timer < 1)
+            timer += Time.deltaTime;
+        else
         {
-            if(!currentFindList.Contains(entry))
+
+            timer = 0;
+            waitDelete.Clear();
+            discoveredServers.Clear();
+            foreach(var entry in curDiscoveredServers)
             {
-                discoveredServers.Remove(entry);
+                discoveredServers.Add(entry.Key, entry.Value);
+            }
+            foreach (var entry in discoveredServers.Keys)
+            {
+                discoveredServers[entry] += 1;
+                if (discoveredServers[entry] > maxTime)
+                {
+                    waitDelete.Add(entry);
+                }
+            }
+            if(waitDelete.Count > 0)
+            {
+                foreach(var entry in waitDelete)
+                {
+                    if(discoveredServers.ContainsKey(entry))
+                    {
+                        discoveredServers.Remove(entry);
+                    }
+                }
             }
         }
-        foreach(var entry in currentFindList) 
-        {
-            if (!discoveredServers.Contains(entry))
-            {
-                discoveredServers.Add(entry);
-            }
-        }
-        currentFindList.Clear();
+
     }
     protected void SetRoomData(object roomData)
     {
@@ -87,9 +113,10 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     }
     public void OnDiscoveredServer(DiscoveryResponse response)
     {
-        currentFindList.Add(response);
+        isSearching = false;
+        curDiscoveredServers[response] = 0;
         Debug.Log($"Discovered Server: {response.uri}");
-        Debug.Log($"{currentFindList.Count}");
+        Debug.Log($"{curDiscoveredServers.Count}");
     }
     public void Connect(object response)
     {
