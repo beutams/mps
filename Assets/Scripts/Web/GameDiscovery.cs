@@ -13,6 +13,7 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     public Dictionary<DiscoveryResponse, int> discoveredServers = new Dictionary<DiscoveryResponse, int>();
     public Dictionary<DiscoveryResponse, int> curDiscoveredServers = new Dictionary<DiscoveryResponse, int>();
     protected List<DiscoveryResponse> waitDelete = new List<DiscoveryResponse>();
+    protected List<DiscoveryResponse> waitAdd = new List<DiscoveryResponse>();
     protected bool isSearching;
     public RoomData roomData;
     float timer;
@@ -39,6 +40,7 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
 
             timer = 0;
             waitDelete.Clear();
+            waitAdd.Clear();
             discoveredServers.Clear();
             foreach(var entry in curDiscoveredServers)
             {
@@ -46,13 +48,23 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
             }
             foreach (var entry in discoveredServers.Keys)
             {
-                discoveredServers[entry] += 1;
+                waitAdd.Add(entry);
                 if (discoveredServers[entry] > maxTime)
                 {
                     waitDelete.Add(entry);
                 }
             }
-            if(waitDelete.Count > 0)
+            if (waitAdd.Count > 0)
+            {
+                foreach (var entry in waitAdd)
+                {
+                    if (discoveredServers.ContainsKey(entry))
+                    {
+                        discoveredServers[entry] += 1;
+                    }
+                }
+            }
+            if (waitDelete.Count > 0)
             {
                 foreach(var entry in waitDelete)
                 {
@@ -82,7 +94,7 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     {
         try
         {
-            return new DiscoveryResponse() { roomData = roomData ,uri = transport.ServerUri(), serverId = ServerId};
+            return new DiscoveryResponse() { /*roomData = roomData ,*/uri = transport.ServerUri(), serverId = ServerId};
         }
         catch
         {
@@ -116,20 +128,19 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
         isSearching = false;
         curDiscoveredServers[response] = 0;
         Debug.Log($"Discovered Server: {response.uri}");
-        Debug.Log($"{curDiscoveredServers.Count}");
     }
     public void Connect(object response)
     {
         if (NetworkClient.isConnecting || NetworkClient.isConnected) return;
+        NetworkManager.singleton.StartClient(((DiscoveryResponse)response).uri);
         Debug.Log($"Client try connect {((DiscoveryResponse)response).uri}");
-        NetworkClient.Connect(((DiscoveryResponse)response).uri);
     }
     #endregion
 }
 public struct DiscoveryRequest : NetworkMessage { }
 public struct DiscoveryResponse : NetworkMessage
 {
-    public RoomData roomData;
+    //public RoomData roomData;
     public Uri uri;
     public long serverId;
     public IPEndPoint endPoint { get; set; }

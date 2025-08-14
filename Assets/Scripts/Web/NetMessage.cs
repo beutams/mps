@@ -22,12 +22,32 @@ public enum ServerMessageOption
 public struct ClientMessage : NetworkMessage
 {
     public ClientMessageOption option;
-    public object data;
+    public PlayerInfo[] data;
+    public override string ToString()
+    {
+        string result = "";
+        foreach (var item in data)
+            result += item.ToString();
+        return result;
+    }
 }
 public enum ClientMessageOption
 {
     None,
     UpdateRoom,
     Started
+}
+#endregion
+#region Data
+[Serializable]
+public struct PlayerInfo
+{
+    public string name;
+    public bool ready;
+    public int index;
+    public override string ToString()
+    {
+        return $"name:{name},ready:{ready},index:{index}";
+    }
 }
 #endregion

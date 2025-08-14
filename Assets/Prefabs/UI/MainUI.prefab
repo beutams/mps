@@ -3000,6 +3000,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 4342595409060701815}
+  roomData:
+    owner: 
+    chapter: 
+    title: 
+    description: 
+    gameMode: 
+    maxNumber: 
   content: {fileID: 7114146286037309404}
   roomUI: {fileID: 7960100026668033415}
   createButton: {fileID: 5078656437006574019}

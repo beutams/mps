@@ -1,13 +1,14 @@
 using Mirror;
+using Mirror.Examples.MultipleMatch;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class RoomNetworkMangaer : MonoBehaviour
 {
     private HallSubUI hallSubUI;
-    private Dictionary<NetworkConnectionToClient, bool> readyDic = new Dictionary<NetworkConnectionToClient, bool>();
-    
+    private Dictionary<NetworkConnectionToClient, PlayerInfo> connDic = new Dictionary<NetworkConnectionToClient, PlayerInfo>();
     private void Awake()
     {
         hallSubUI = FindAnyObjectByType<HallSubUI>();
@@ -28,20 +29,20 @@ public class RoomNetworkMangaer : MonoBehaviour
     public void OnClientDisconnectServer(object conn)
     {
         Debug.Log("Room OnClientDisconnectServer");
-        readyDic.Remove(conn as NetworkConnectionToClient);
-        foreach(var playerConn in readyDic.Keys)
+        connDic.Remove(conn as NetworkConnectionToClient);
+        foreach(var playerConn in connDic.Keys)
         {
-            playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = readyDic });
+            playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = connDic.Values.ToArray() }) ;
         }
     }
     [ServerCallback]
     public void OnClientConnectServer(object conn)
     {
         Debug.Log("Room OnClientConnectServer");
-        readyDic.Add(conn as NetworkConnectionToClient,false);
-        foreach (var playerConn in readyDic.Keys)
+        connDic.Add(conn as NetworkConnectionToClient, new PlayerInfo { index = connDic.Count, name = connDic.Count.ToString(), ready = false }) ;
+        foreach (var playerConn in connDic.Keys)
         {
-            playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = readyDic });
+            playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = connDic.Values.ToArray() });
         }
     }
     [ClientCallback]
@@ -66,17 +67,19 @@ public class RoomNetworkMangaer : MonoBehaviour
                 break;
             case ServerMessageOption.Start:
                 Debug.Log("Server Message : Start");
-                foreach (var ready in readyDic.Values)
-                    if (!ready) return;
-                foreach (var playerConn in readyDic.Keys)
-                    playerConn.Send(new ClientMessage { option = ClientMessageOption.Started, data = readyDic });
+                foreach (var player in connDic.Values)
+                    if (!player.ready) return;
+                foreach (var playerConn in connDic.Keys)
+                    playerConn.Send(new ClientMessage { option = ClientMessageOption.Started, data = connDic.Values.ToArray() });
                 OnStartGame();
                 break;
             case ServerMessageOption.Ready:
                 Debug.Log($"Server Message : {conn} is Ready");
-                readyDic[conn] = !readyDic[conn];
-                foreach(var playerConn in readyDic.Keys)
-                    playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = readyDic });
+                PlayerInfo info = connDic[conn];
+                info.ready = ! info.ready;
+                connDic[conn] = info;
+                foreach(var playerConn in connDic.Keys)
+                    playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = connDic.Values.ToArray() });
                 break;
         }
     }
@@ -87,7 +90,7 @@ public class RoomNetworkMangaer : MonoBehaviour
         Player noCamp = Instantiate(NetworkManager.singleton.playerPrefab).GetComponent<Player>();
         noCamp.transform.position = Vector3.zero;
         roomController.noCampPlayer = noCamp;
-        foreach(var playerConn in readyDic)
+        foreach(var playerConn in connDic)
         {
             Player player = Instantiate(NetworkManager.singleton.playerPrefab).GetComponent<Player>();
             player.transform.position = Vector3.zero;

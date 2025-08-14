@@ -18,7 +18,7 @@ public class WebComponent : BaseComponent<WebComponent>
     }
     private void Start()
     {
-        NetworkManager.singleton.StartClient();
+        
     }
     [ServerCallback]
     public void StartGame()

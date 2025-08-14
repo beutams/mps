@@ -18,7 +18,7 @@ public class HallSubUI : SubUIBase
     public Dictionary<RoomItem, DiscoveryResponse> rooms = new Dictionary<RoomItem, DiscoveryResponse>();
     public bool isSercer { get; set; }
 
-    protected Dictionary<NetworkConnectionToClient, GameObject> playerDic = new Dictionary<NetworkConnectionToClient, GameObject>();
+    protected Dictionary<PlayerInfo, GameObject> playerDic = new Dictionary<PlayerInfo, GameObject>();
     protected override void Awake()
     {
         base.Awake();
@@ -54,7 +54,6 @@ public class HallSubUI : SubUIBase
                 rooms.Add(room, conn.Key);
             }
         }
-        Debug.Log("Rooms :" + rooms.Count);
     }
     protected void InitRoomUI()
     {
@@ -76,8 +75,8 @@ public class HallSubUI : SubUIBase
     }
     public void OnJoinRoom(object data)
     {
-        Debug.Log($"Client set roomData {((DiscoveryResponse)data).roomData} to hallUI, RoomUI Active");
-        roomData = ((DiscoveryResponse)data).roomData;
+/*        Debug.Log($"Client set roomData {((DiscoveryResponse)data).roomData} to hallUI, RoomUI Active");
+        roomData = ((DiscoveryResponse)data).roomData;*/
         roomUI.gameObject.SetActive(true);
     }
     #region Button
@@ -102,10 +101,11 @@ public class HallSubUI : SubUIBase
     [ClientCallback]
     public void OnUpdateRoom(ClientMessage msg)
     {
-        Dictionary<NetworkConnectionToClient, bool> readyDic = msg.data as Dictionary<NetworkConnectionToClient, bool>;
-        foreach(var kvp in readyDic)
+        PlayerInfo[] infos = msg.data;
+        Debug.Log(msg.ToString());
+        foreach(var info in infos)
         {
-            if (playerDic.ContainsKey(kvp.Key))
+            if (playerDic.ContainsKey(info))
             {
 
             }
@@ -113,7 +113,7 @@ public class HallSubUI : SubUIBase
             {
                 Transform transform = Instantiate(playerUIPrefab).transform;
                 transform.SetParent(roomUI.GetChild(1));
-                playerDic.Add(kvp.Key, transform.gameObject);
+                playerDic.Add(info, transform.gameObject);
             }
         }
     }
