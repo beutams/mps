@@ -8,13 +8,14 @@ using UnityEngine;
 public struct ServerMessage : NetworkMessage
 {
     public ServerMessageOption option;
-    public object data;
+    public ArmoryData data;
 }
 public enum ServerMessageOption
 {
     None,
     Start,
-    Ready
+    Ready,
+    Register
 }
 #endregion
 
@@ -45,9 +46,10 @@ public struct PlayerInfo
     public string name;
     public bool ready;
     public int index;
+    public ArmoryData data;
     public override string ToString()
     {
-        return $"name:{name},ready:{ready},index:{index}";
+        return $"name:{name},ready:{ready},index:{index},data:{data}";
     }
 }
 #endregion

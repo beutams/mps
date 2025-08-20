@@ -94,7 +94,7 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     {
         try
         {
-            return new DiscoveryResponse() { /*roomData = roomData ,*/uri = transport.ServerUri(), serverId = ServerId};
+            return new DiscoveryResponse() { roomData = roomData ,uri = transport.ServerUri(), serverId = ServerId};
         }
         catch
         {
@@ -127,7 +127,7 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
     {
         isSearching = false;
         curDiscoveredServers[response] = 0;
-        Debug.Log($"Discovered Server: {response.uri}");
+        Debug.Log($"Discovered Server: {response.uri},{response.roomData}");
     }
     public void Connect(object response)
     {
@@ -140,7 +140,7 @@ public class GameDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryRes
 public struct DiscoveryRequest : NetworkMessage { }
 public struct DiscoveryResponse : NetworkMessage
 {
-    //public RoomData roomData;
+    public RoomData roomData;
     public Uri uri;
     public long serverId;
     public IPEndPoint endPoint { get; set; }

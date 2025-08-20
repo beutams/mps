@@ -14,11 +14,9 @@ public class HallSubUI : SubUIBase
     public Transform roomUI;
     public Button createButton;
     protected RoomItem itemPerfab;
-    protected GameObject playerUIPrefab;
     public Dictionary<RoomItem, DiscoveryResponse> rooms = new Dictionary<RoomItem, DiscoveryResponse>();
+    protected Dictionary<PlayerInfo, PlayerUIItem> playerDic = new Dictionary<PlayerInfo, PlayerUIItem>();
     public bool isSercer { get; set; }
-
-    protected Dictionary<PlayerInfo, GameObject> playerDic = new Dictionary<PlayerInfo, GameObject>();
     protected override void Awake()
     {
         base.Awake();
@@ -71,12 +69,12 @@ public class HallSubUI : SubUIBase
         Debug.Log($"Server set roomData {(RoomData)data} to hallUI");
         roomData = (RoomData)data;
         roomUI.gameObject.SetActive(true);
-        NetworkManager.singleton.StartServer();
+        NetworkManager.singleton.StartHost();
     }
     public void OnJoinRoom(object data)
     {
-/*        Debug.Log($"Client set roomData {((DiscoveryResponse)data).roomData} to hallUI, RoomUI Active");
-        roomData = ((DiscoveryResponse)data).roomData;*/
+        Debug.Log($"Client set roomData {((DiscoveryResponse)data).roomData} to hallUI, RoomUI Active");
+        roomData = ((DiscoveryResponse)data).roomData;
         roomUI.gameObject.SetActive(true);
     }
     #region Button
@@ -102,19 +100,16 @@ public class HallSubUI : SubUIBase
     public void OnUpdateRoom(ClientMessage msg)
     {
         PlayerInfo[] infos = msg.data;
-        Debug.Log(msg.ToString());
+        Debug.Log("UpdateRoom:" + msg.ToString());
         foreach(var info in infos)
         {
-            if (playerDic.ContainsKey(info))
+            if (!playerDic.ContainsKey(info))
             {
-
-            }
-            else
-            {
-                Transform transform = Instantiate(playerUIPrefab).transform;
+                Transform transform = GameEntry.ObjectPoolComponent.Get("PlayerUI").transform;
                 transform.SetParent(roomUI.GetChild(1));
-                playerDic.Add(info, transform.gameObject);
+                playerDic.Add(info, transform.GetComponent<PlayerUIItem>());
             }
+            playerDic[info].Refresh(info);
         }
     }
     [ClientCallback]

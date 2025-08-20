@@ -23,8 +23,9 @@ public class ArmorySubUI : SubUIBase
     protected ArmoryData data => GameEntry.UserComponent.Get("ArmoryData") as ArmoryData;
     protected int switchId = 0;
     protected string defaultImgPath = string.Empty;
-    protected virtual void Start()
+    protected override void Awake()
     {
+        base.Awake();
         InitData();
         InitComponent();
         InitEvent();

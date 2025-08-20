@@ -1,5 +1,6 @@
 using Mirror;
 using Mirror.Examples.MultipleMatch;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,17 +40,14 @@ public class RoomNetworkMangaer : MonoBehaviour
     public void OnClientConnectServer(object conn)
     {
         Debug.Log("Room OnClientConnectServer");
-        connDic.Add(conn as NetworkConnectionToClient, new PlayerInfo { index = connDic.Count, name = connDic.Count.ToString(), ready = false }) ;
-        foreach (var playerConn in connDic.Keys)
-        {
-            playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = connDic.Values.ToArray() });
-        }
     }
     [ClientCallback]
     public void OnClientConnect(object data)
     {
         Debug.Log("Room OnClientConnect");
         NetworkClient.RegisterHandler<ClientMessage>(OnClientMessage);
+        NetworkClient.Send(new ServerMessage { option = ServerMessageOption.Register, data = GameEntry.UserComponent.Get("ArmoryData") as ArmoryData });
+        Debug.Log($"Register armoryData {GameEntry.UserComponent.Get("ArmoryData") as ArmoryData}");
     }
     [ClientCallback]
     public void OnClientDisconnect(object data)
@@ -79,6 +77,13 @@ public class RoomNetworkMangaer : MonoBehaviour
                 info.ready = ! info.ready;
                 connDic[conn] = info;
                 foreach(var playerConn in connDic.Keys)
+                    playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = connDic.Values.ToArray() });
+                break;
+            case ServerMessageOption.Register:
+                Debug.Log("Server Message : Register");
+                connDic[conn] = new PlayerInfo { data = msg.data, index = connDic.Count, name = connDic.Count.ToString(), ready = false };
+                Debug.Log($"Server Register PlayerInfo:{connDic[conn]}");
+                foreach (var playerConn in connDic.Keys)
                     playerConn.Send(new ClientMessage { option = ClientMessageOption.UpdateRoom, data = connDic.Values.ToArray() });
                 break;
         }
