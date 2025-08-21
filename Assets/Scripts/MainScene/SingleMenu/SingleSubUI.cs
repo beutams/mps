@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class SingleSubUI : SubUIBase
 {
     public GameObject chapterInfo;
-    public Button enter;
-    public Button exit;
+    public MainButton enter;
+    public MainButton exit;
     private void Start()
     {
         enter.onClick.AddListener(OnEnterClick);

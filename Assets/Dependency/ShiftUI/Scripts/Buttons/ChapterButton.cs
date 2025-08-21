@@ -8,18 +8,6 @@ namespace Michsky.UI.Shift
 {
     public class ChapterButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        [Header("Resources")]
-        public Sprite backgroundImage;
-        public string buttonTitle = "My Title";
-        [TextArea] public string buttonDescription = "My Description";
-
-        [Header("Settings")]
-        public bool useCustomResources = false;
-
-        [Header("Status")]
-        public bool enableStatus;
-        public StatusItem statusItem;
-
         Image backgroundImageObj;
         TextMeshProUGUI titleObj;
         TextMeshProUGUI descriptionObj;
@@ -28,6 +16,7 @@ namespace Michsky.UI.Shift
         Transform statusCompleted;
         Animator animator;
 
+        public StatusItem statusItem;
         public UnityEvent onEnter;
         public UnityEvent onExit;
         public UnityEvent onClick;
@@ -41,49 +30,21 @@ namespace Michsky.UI.Shift
         void Start()
         {
             animator = GetComponent<Animator>();
-            if (useCustomResources == false)
-            {
-                backgroundImageObj = gameObject.transform.Find("Content/Background").GetComponent<Image>();
-                titleObj = gameObject.transform.Find("Content/Texts/Title").GetComponent<TextMeshProUGUI>();
-                descriptionObj = gameObject.transform.Find("Content/Texts/Description").GetComponent<TextMeshProUGUI>();
-
-                backgroundImageObj.sprite = backgroundImage;
-                titleObj.text = buttonTitle;
-                descriptionObj.text = buttonDescription;
-            }
-
-            if (enableStatus == true)
-            {
-                statusNone = gameObject.transform.Find("Content/Texts/Status/None").GetComponent<Transform>();
-                statusLocked = gameObject.transform.Find("Content/Texts/Status/Locked").GetComponent<Transform>();
-                statusCompleted = gameObject.transform.Find("Content/Texts/Status/Completed").GetComponent<Transform>();
-
-                if (statusItem == StatusItem.None)
-                {
-                    statusNone.gameObject.SetActive(true);
-                    statusLocked.gameObject.SetActive(false);
-                    statusCompleted.gameObject.SetActive(false);
-                }
-
-                else if (statusItem == StatusItem.Locked)
-                {
-                    statusNone.gameObject.SetActive(false);
-                    statusLocked.gameObject.SetActive(true);
-                    statusCompleted.gameObject.SetActive(false);
-                }
-
-                else if (statusItem == StatusItem.Completed)
-                {
-                    statusNone.gameObject.SetActive(false);
-                    statusLocked.gameObject.SetActive(false);
-                    statusCompleted.gameObject.SetActive(true);
-                }
-            }
+            backgroundImageObj = gameObject.transform.Find("Content/Background").GetComponent<Image>();
+            titleObj = gameObject.transform.Find("Content/Texts/Title").GetComponent<TextMeshProUGUI>();
+            descriptionObj = gameObject.transform.Find("Content/Texts/Description").GetComponent<TextMeshProUGUI>();
+            statusNone = gameObject.transform.Find("Content/Texts/Status/None").GetComponent<Transform>();
+            statusLocked = gameObject.transform.Find("Content/Texts/Status/Locked").GetComponent<Transform>();
+            statusCompleted = gameObject.transform.Find("Content/Texts/Status/Completed").GetComponent<Transform>();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            onClick?.Invoke();
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Press"))
+            {
+                onClick?.Invoke();
+                animator.Play("Press");
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -102,6 +63,31 @@ namespace Michsky.UI.Shift
             {
                 onEnter?.Invoke();
                 animator.Play("Highlighted");
+            }
+        }
+        public void Init(string title,string description,string back, StatusItem statu)
+        {
+            backgroundImageObj.sprite = GameEntry.ResourceComponent.GetImage(back);
+            titleObj.text = title;
+            descriptionObj.text = description;
+            statusItem = statu;
+            if (statusItem == StatusItem.None)
+            {
+                statusNone.gameObject.SetActive(true);
+                statusLocked.gameObject.SetActive(false);
+                statusCompleted.gameObject.SetActive(false);
+            }
+            else if (statusItem == StatusItem.Locked)
+            {
+                statusNone.gameObject.SetActive(false);
+                statusLocked.gameObject.SetActive(true);
+                statusCompleted.gameObject.SetActive(false);
+            }
+            else if (statusItem == StatusItem.Completed)
+            {
+                statusNone.gameObject.SetActive(false);
+                statusLocked.gameObject.SetActive(false);
+                statusCompleted.gameObject.SetActive(true);
             }
         }
     }

@@ -12,7 +12,9 @@ public class HallSubUI : SubUIBase
     public RoomData roomData;
     public Transform content;
     public Transform roomUI;
-    public Button createButton;
+    public MainButton createButton;
+    public MainButton startReadyButton;
+    public MainButton exitButton;
     protected RoomItem itemPerfab;
     public Dictionary<RoomItem, DiscoveryResponse> rooms = new Dictionary<RoomItem, DiscoveryResponse>();
     protected Dictionary<PlayerInfo, PlayerUIItem> playerDic = new Dictionary<PlayerInfo, PlayerUIItem>();
@@ -25,6 +27,9 @@ public class HallSubUI : SubUIBase
         createButton.onClick.AddListener(OnCreateClick);
         GameEntry.EventComponent.Subscribe(GameEvent.CreateRoomEvent, OnCreateRoom);
         GameEntry.EventComponent.Subscribe(GameEvent.ClientReadyConnectEvent, OnJoinRoom);
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientDisconnectEvent, OnDisconnect);
+        startReadyButton.onClick.AddListener(OnStartReadyClick);
+        exitButton.onClick.AddListener(OnExitClick);
     }
     protected override void OnStep()
     {
@@ -56,42 +61,51 @@ public class HallSubUI : SubUIBase
     protected void InitRoomUI()
     {
         roomUI.gameObject.SetActive(false);
-        roomUI.GetChild(2).GetComponent<MainButton>().buttonText = isSercer ? "开始" : "准备";
-        roomUI.GetChild(3).GetComponent<MainButton>().buttonText = "退出";
         Transform players = roomUI.GetChild(1);
         for(int i = 0; i < players.childCount; i++)
         {
             Destroy(players.GetChild(i));
         }
     }
+    protected void OnDisconnect(object data)
+    {
+        InitRoomUI();
+        GameEntry.WebComponent.gameDiscover.Discovery();
+    }
     public void OnCreateRoom(object data)
     {
         Debug.Log($"Server set roomData {(RoomData)data} to hallUI");
+        NetworkManager.singleton.StartHost();
+        isSercer = true;
         roomData = (RoomData)data;
         roomUI.gameObject.SetActive(true);
-        NetworkManager.singleton.StartHost();
+        roomUI.GetChild(2).GetComponent<MainButton>().SetText(isSercer ? "Start" : "Ready");
+        roomUI.GetChild(3).GetComponent<MainButton>().SetText("Exit");
     }
     public void OnJoinRoom(object data)
     {
         Debug.Log($"Client set roomData {((DiscoveryResponse)data).roomData} to hallUI, RoomUI Active");
         roomData = ((DiscoveryResponse)data).roomData;
         roomUI.gameObject.SetActive(true);
+        roomUI.GetChild(2).GetComponent<MainButton>().SetText(isSercer ? "Start" : "Ready");
+        roomUI.GetChild(3).GetComponent<MainButton>().SetText("Exit");
     }
     #region Button
     protected void OnCreateClick()
     {
         GameEntry.UIComponent.ShowUI("CreateRoomUI");
     }
-
-    
-    protected void OnReadyClick()
+    protected void OnStartReadyClick()
     {
-        NetworkClient.Send(new ServerMessage { option = ServerMessageOption.Ready });
+        if (isSercer) 
+            NetworkClient.Send(new ServerMessage { option = ServerMessageOption.Start });
+        else
+            NetworkClient.Send(new ServerMessage { option = ServerMessageOption.Ready });
     }
-    protected void OnStartClick()
+    protected void OnExitClick()
     {
-        if (!isSercer) return;
-        NetworkClient.Send(new ServerMessage { option = ServerMessageOption.Start });
+        isSercer = false;
+        NetworkClient.Disconnect();
     }
     #endregion
 

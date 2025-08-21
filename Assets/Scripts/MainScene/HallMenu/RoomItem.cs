@@ -27,7 +27,7 @@ public class RoomItem : DoubleClick
     }
     protected virtual void Refresh()
     {
-/*        titleObject.text = server.roomData.title; 
+/*        titleObject.text = server.roomData.title;
         descriptionObject.text = server.roomData.description;
         gameModeObject.text = server.roomData.gameMode;
         playerObject.text = number + "/" + server.roomData.maxNumber;*/

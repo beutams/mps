@@ -18,13 +18,13 @@ public class RoomNetworkMangaer : MonoBehaviour
         GameEntry.EventComponent.Subscribe(GameEvent.ServerDisconnectEvent, OnClientDisconnectServer);
         GameEntry.EventComponent.Subscribe(GameEvent.ClientDisconnectEvent, OnClientDisconnect);
         GameEntry.EventComponent.Subscribe(GameEvent.ClientConnectEvent, OnClientConnect);
+        gameObject.SetActive(false);
     }
     [ServerCallback]
     public void OnStartServer(object data)
     {
         Debug.Log("Room OnStartSercer");
         NetworkServer.RegisterHandler<ServerMessage>(OnServerMessage);
-        hallSubUI.isSercer = true;
     }
     [ServerCallback]
     public void OnClientDisconnectServer(object conn)
@@ -53,7 +53,6 @@ public class RoomNetworkMangaer : MonoBehaviour
     public void OnClientDisconnect(object data)
     {
         Debug.Log("Room OnClientDisconnect");
-        hallSubUI.roomUI.gameObject.SetActive(false);
     }
 
     #region Server
@@ -65,8 +64,8 @@ public class RoomNetworkMangaer : MonoBehaviour
                 break;
             case ServerMessageOption.Start:
                 Debug.Log("Server Message : Start");
-                foreach (var player in connDic.Values)
-                    if (!player.ready) return;
+/*                foreach (var player in connDic.Values)
+                    if (!player.ready) return;*/
                 foreach (var playerConn in connDic.Keys)
                     playerConn.Send(new ClientMessage { option = ClientMessageOption.Started, data = connDic.Values.ToArray() });
                 OnStartGame();

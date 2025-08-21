@@ -169,8 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armory: {fileID: 0}
   single: 0
-  createRoom: 0
-  joinRoomFirst: 1
+  createRoom: 1
+  joinRoomFirst: 0
 --- !u!1 &1046447558
 GameObject:
   m_ObjectHideFlags: 0

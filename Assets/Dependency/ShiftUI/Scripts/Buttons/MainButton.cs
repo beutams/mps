@@ -1,28 +1,58 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace Michsky.UI.Shift
 {
     [ExecuteInEditMode]
-    public class MainButton : MonoBehaviour
+    public class MainButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        [Header("Settings")]
-        public string buttonText = "My Title";
-        public bool useCustomText = false;
-
-        [Header("Resources")]
-        public TextMeshProUGUI normalText;
-        public TextMeshProUGUI highlightedText;
-        public TextMeshProUGUI pressedText;
-
-        void OnEnable()
+        Animator animator;
+        TextMeshProUGUI textMeshN;
+        TextMeshProUGUI textMeshH;
+        TextMeshProUGUI textMeshP;
+        public UnityEvent onEnter;
+        public UnityEvent onExit;
+        public UnityEvent onClick;
+        private void Awake()
         {
-            if (useCustomText == false)
+            animator = GetComponent<Animator>();
+        }
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Normal"))
             {
-                if (normalText != null) { normalText.text = buttonText; }
-                if (highlightedText != null) { highlightedText.text = buttonText; }
-                if (pressedText != null) { pressedText.text = buttonText; }
+                onClick?.Invoke();
+                animator.Play("Press");
             }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Normal"))
+            {
+                onExit?.Invoke();
+                animator.Play("Normal");
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Highlighted"))
+            {
+                onEnter?.Invoke();
+                animator.Play("Highlighted");
+            }
+        }
+        public void SetText(string text)
+        {
+            textMeshN = transform.Find("Normal/Text").GetComponent<TextMeshProUGUI>();
+            textMeshH = transform.Find("Highlighted/Text").GetComponent<TextMeshProUGUI>();
+            textMeshP = transform.Find("Pressed/Text").GetComponent<TextMeshProUGUI>();
+            textMeshN.text = text;
+            textMeshH.text = text;
+            textMeshP.text = text;
         }
     }
 }

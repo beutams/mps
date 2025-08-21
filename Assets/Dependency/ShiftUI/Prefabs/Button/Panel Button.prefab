@@ -741,17 +741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e38c7929fcd08448d013bee7d329f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useCustomText: 0
-  buttonText: TITLE
-  hasIcon: 1
-  iconSprite: {fileID: 21300000, guid: c26a820b2129e2f4eb122efd27df5339, type: 3}
   buttonAnimator: {fileID: 95628946458485592}
-  normalText: {fileID: 114335367907250908}
-  highlightedText: {fileID: 114332888457280522}
-  pressedText: {fileID: 114764457040512842}
-  normalIcon: {fileID: 114216078241335618}
-  highlightedIcon: {fileID: 114656697112793072}
-  pressedIcon: {fileID: 114241121234917188}
   onEnter:
     m_PersistentCalls:
       m_Calls: []
