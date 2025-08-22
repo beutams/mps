@@ -1,23 +1,25 @@
 using Mirror;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>, IRoomController, ID
 {
+    [Header("ID")]
+    [SerializeField] protected int id;
+    [SerializeField] protected IDType idType;
+    public IDType searchName => idType;
+    public int ID => id;
     protected Player localPlayer;
     protected Player noCampPlayer;
     protected ArmoryData armoryData;
     Player IRoomController.localPlayer { get => localPlayer; set => localPlayer = value; }
     Player IRoomController.noCampPlayer { get => noCampPlayer; set => noCampPlayer = value; }
     ArmoryData IRoomController.armoryData { get => armoryData; set => armoryData = value; }
-    [Header("ID")]
-    [SerializeField] protected int id;
-    [SerializeField] protected IDType idType;
-    public IDType searchName => idType;
-    public int ID => id;
     public Dictionary<PlayerSite, Player> playerDic { get; set; }
+    [SyncVar]
     public Dictionary<NetworkConnectionToClient, Player> connDic = new Dictionary<NetworkConnectionToClient, Player>();
 
     public virtual void Awake()
@@ -25,10 +27,14 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
         DontDestroyOnLoad(this);
         playerDic = new Dictionary<PlayerSite, Player>();
     }
-    [ClientRpc]
+    [ClientCallback]
     public virtual void OnGameStart()
     {
-        foreach (var player in playerDic.Values)
+        Debug.Log($"Client OnGameStart,PlayerNumber : {connDic.Count()}");
+        List<Player> playerlist = new List<Player>();
+        connDic.Values.ToList().CopyTo(playerlist);
+        playerlist.Add(noCampPlayer);
+        foreach (var player in playerlist)
         {
             player.playerItem = Instantiate(player.playerItem, Vector3.zero, Quaternion.identity);
             player.playerItem.name = player.playerItem.name.ToString() + player.site.ToString();
@@ -46,13 +52,30 @@ public class OnlineRoomController : SingletonNetBehaviour<OnlineRoomController>,
                     }
                 }
             }
+            foreach (var obj in objs)
+            {
+                Destroy(obj.gameObject);
+            }
         }
     }
+    public void InitLoadPlayer()
+    {
+        foreach(var conn in connDic)
+        {
+            if(conn.Value == NetworkClient.localPlayer.GetComponent<Player>())
+            {
+                localPlayer = conn.Value;
+            }
+        }
+    }
+    [ClientCallback]
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log($"Client OnSceneLoaded");
         if (scene.name == "GameScene")
         {
             OnGameStart();
+            InitLoadPlayer();
         }
     }
 }

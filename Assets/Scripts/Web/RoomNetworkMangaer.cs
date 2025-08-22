@@ -94,15 +94,15 @@ public class RoomNetworkMangaer : MonoBehaviour
         Player noCamp = Instantiate(NetworkManager.singleton.playerPrefab).GetComponent<Player>();
         noCamp.transform.position = Vector3.zero;
         roomController.noCampPlayer = noCamp;
-        foreach(var playerConn in connDic)
+        foreach (var playerConn in connDic)
         {
             Player player = Instantiate(NetworkManager.singleton.playerPrefab).GetComponent<Player>();
             player.transform.position = Vector3.zero;
+            player.site = (PlayerSite)playerConn.Value.index + 1;
             onlineRoomController.connDic.Add(playerConn.Key, player);
             NetworkServer.AddPlayerForConnection(playerConn.Key, player.gameObject);
         }
         NetworkServer.Spawn(onlineRoomController.gameObject);
-        SceneManager.sceneLoaded += onlineRoomController.OnSceneLoaded;
         NetworkManager.singleton.ServerChangeScene("GameScene");
     }
     #endregion
@@ -119,8 +119,11 @@ public class RoomNetworkMangaer : MonoBehaviour
                 hallSubUI.OnUpdateRoom(msg);
                 break;
             case ClientMessageOption.Started:
+                SceneManager.sceneLoaded += (scene,mode) => 
+                { 
+                    FindAnyObjectByType<OnlineRoomController>().OnSceneLoaded(scene, mode); 
+                };
                 Debug.Log($"Client Message : Started");
-                hallSubUI.OnStartGame(msg);
                 break;
         }
     }

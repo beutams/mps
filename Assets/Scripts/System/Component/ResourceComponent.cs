@@ -1,3 +1,4 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,15 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
     {
         DataToDictionary();
         PrefabToDictionary();
+        LoadAllPrefabToWeb();
+    }
+
+    private void LoadAllPrefabToWeb()
+    {
+        foreach(var list in prefabDic.Values)
+            foreach(var prefab in list)
+                if(prefab.Value.TryGetComponent(out NetworkIdentity identity))
+                    NetworkClient.RegisterPrefab(prefab.Value);
     }
     #region Interface
     public int GetPrefabIndex(string id, GameObject obj)
