@@ -2,10 +2,17 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthImage : MonoBehaviour
+public class HealthImage : MonoBehaviour, ID
 {
     private Image health;
     private float maxWidth;
+
+    [SerializeField] private int id;
+    [SerializeField] private IDType type;
+    public int ID => id;
+
+    public IDType searchName => type;
+
     private void Awake()
     {
         health = transform.GetChild(0).GetComponent<Image>();

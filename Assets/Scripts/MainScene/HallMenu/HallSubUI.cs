@@ -60,11 +60,12 @@ public class HallSubUI : SubUIBase
     }
     protected void InitRoomUI()
     {
+        if (roomUI == null) return;
         roomUI.gameObject.SetActive(false);
         Transform players = roomUI.GetChild(1);
         for(int i = 0; i < players.childCount; i++)
         {
-            Destroy(players.GetChild(i));
+            GameEntry.ObjectPoolComponent.Release(players.GetChild(i).gameObject);
         }
     }
     protected void OnDisconnect(object data)
@@ -125,11 +126,6 @@ public class HallSubUI : SubUIBase
             }
             playerDic[info].Refresh(info);
         }
-    }
-    [ClientCallback]
-    public void OnStartGame(ClientMessage msg)
-    {
-        InitRoomUI();
     }
     #endregion
 }
