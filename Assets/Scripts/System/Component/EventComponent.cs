@@ -42,6 +42,8 @@ public enum GameEvent
     ClientReadyConnectEvent, //客户端将要连接服务器
     ClientConnectEvent, //客户端连入服务器
     ClientDisconnectEvent, //客户端断开连接
+    //Game
+    ClientChangeSceneSuccessEvent
 
 }
 

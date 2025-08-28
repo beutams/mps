@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1995805962502490603}
   - component: {fileID: -906349341108172010}
+  - component: {fileID: -3585319626953655460}
   m_Layer: 0
   m_Name: OfflineRoomController
   m_TagString: Untagged
@@ -44,8 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e1c131a95c94294682588003abd9266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
-  noCampPlayer: {fileID: 2053500998624448156, guid: a4d5364ffe3475c40858e2444c14d8da, type: 3}
-  heroPrefab: {fileID: 193299127927635927, guid: 287f9cd988138044d9f77f1fa0deaf18, type: 3}
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   id: 0
   idType: 0
+--- !u!114 &-3585319626953655460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8631566490245839157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 1666789947
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0

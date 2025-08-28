@@ -38,4 +38,9 @@ public class SettingData
     public int maxDepth = 5;
     public int maxObject = 2;
     public float mapSize = 102;
+    [Header("MiniMapColor")]
+    public Color local = Color.green;
+    public Color noCamp = Color.white;
+    public Color partner = Color.blue;
+    public Color enemy = Color.red;
 }

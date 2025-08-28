@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class ArmorySubUI : SubUIBase
 {
@@ -15,12 +16,13 @@ public class ArmorySubUI : SubUIBase
     [SerializeField] protected Transform selectIconList;
     [SerializeField] protected TextMeshProUGUI title;
     [SerializeField] protected TextMeshProUGUI info;
+    [SerializeField] protected VideoPlayer videoPlayer;
 
     public Dictionary<ArmoryItem, HeroStats> heroList = new Dictionary<ArmoryItem, HeroStats>();
     public Dictionary<ArmoryItem, GlobalSkillData> skillList = new Dictionary<ArmoryItem, GlobalSkillData>();
     protected List<Image> imgList = new List<Image>();
     protected string itemName = "ArmoryItem";
-    protected ArmoryData data => GameEntry.UserComponent.Get("ArmoryData") as ArmoryData;
+    protected ArmoryData data { get { return GameEntry.UserComponent.Get("ArmoryData") as ArmoryData; } set { GameEntry.UserComponent.Set("ArmoryData", value); } }
     protected int switchId = 0;
     protected string defaultImgPath = string.Empty;
     protected override void Awake()
@@ -29,6 +31,7 @@ public class ArmorySubUI : SubUIBase
         InitData();
         InitComponent();
         InitEvent();
+        RefreshUI();
     }
     public void InitData()
     {
@@ -46,7 +49,7 @@ public class ArmorySubUI : SubUIBase
                     else
                         SetData(ArmoryType.Hero, -1);
                 });
-            item.transform.parent = heroItemList;
+            item.transform.SetParent(heroItemList);
             heroList.Add(item, stats);
 
         }
@@ -61,14 +64,14 @@ public class ArmorySubUI : SubUIBase
             else if (data.globalSkills.Count < 3)
                 SetData(ArmoryType.GlobalSkillsAdd, id);
             });
-            item.transform.parent = skillItemList;
+            item.transform.SetParent(skillItemList);
             skillList.Add(item, sdata);
         }
     }
     public void InitComponent()
     {
         for(int i = 0;i < selectIconList.childCount; i++)
-            imgList.Add(selectIconList.GetChild(i).GetComponent<Image>());
+            imgList.Add(selectIconList.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>());
     }
     public void InitEvent()
     {
@@ -91,12 +94,16 @@ public class ArmorySubUI : SubUIBase
                 data.globalSkills.Remove(value);
                 break;
         }
+        RefreshUI();
+    }
+    protected virtual void RefreshUI()
+    {
         for(int i = 0;i < imgList.Count; i++)
         {
             if(i == 0)
             {
                 string path = defaultImgPath;
-                if (data.hero == -1)
+                if (data.hero != -1)
                 {
                     HeroStats stats = GameEntry.ResourceComponent.GetDataResource("HeroStats",data.hero) as HeroStats;
                     path = stats.imgPath;
@@ -135,8 +142,8 @@ public class ArmorySubUI : SubUIBase
     }
     protected void ShowSkill(GlobalSkillData data)
     {
-        title.text = data.name;
-        title.text = data.description;
+        title.text = data.skillName;
+        info.text = data.description;
     }
     public enum ArmoryType 
     { 

@@ -5,6 +5,7 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
 {
     private void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         InputManager.instance.CameraMove();
         ReceiverGather();
         ReceiverShop();
@@ -18,7 +19,7 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
         {
             if(hit.collider != null)
             {
-                foreach (var unit in IRoomController.Instance().localPlayer.unitList)
+                foreach (var unit in RoomController.instance.localPlayer.unitList)
                 {
                     unit.SetMoveTarget(null, hit.point);
                 }
@@ -41,31 +42,31 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     }
     public void ReceiverMove()
     {
-        if (IRoomController.Instance().localPlayer.hero == null) return;
+        if (RoomController.instance.localPlayer.hero == null) return;
         if (InputManager.instance.GetMove() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
             if (hit.collider.CompareTag("GameObject"))
             {
-                IRoomController.Instance().localPlayer.hero.SetMoveTarget(hit.transform.GetComponent<GameObjectController>(), hit.point);
+                RoomController.instance.localPlayer.hero.SetMoveTarget(hit.transform.GetComponent<GameObjectController>(), hit.point);
             }
             else if (hit.collider != null)
             {
-                IRoomController.Instance().localPlayer.hero.SetMoveTarget(null, hit.point);
+                RoomController.instance.localPlayer.hero.SetMoveTarget(null, hit.point);
             }
         }
     }
     public void ReceiverFire()
     {
-        if (IRoomController.Instance().localPlayer.hero == null) return;
+        if (RoomController.instance.localPlayer.hero == null) return;
         if (InputManager.instance.GetFire() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
             if (hit.collider.CompareTag("GameObject"))
             {
-                IRoomController.Instance().localPlayer.hero.SetTarget(hit.transform.GetComponent<GameObjectController>(), hit.point);
+                RoomController.instance.localPlayer.hero.SetTarget(hit.transform.GetComponent<GameObjectController>(), hit.point);
             }
             else if (hit.collider != null)
             {
-                IRoomController.Instance().localPlayer.hero.SetTarget(null, hit.point);
+                RoomController.instance.localPlayer.hero.SetTarget(null, hit.point);
             }
         }
     }

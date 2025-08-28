@@ -9,15 +9,16 @@ namespace Michsky.UI.Shift
 {
     public class SettingsButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
-        [Header("Resources")]
-        public TextMeshProUGUI buttonTitleObj;
-        public Animator buttonAnimator;
+        protected Animator buttonAnimator;
 
         [Header("Event")]
         public UnityEvent onEnter;
         public UnityEvent onExit;
         public UnityEvent onClick;
-
+        private void Awake()
+        {
+            buttonAnimator = GetComponent<Animator>();
+        }
         public void OnPointerEnter(PointerEventData eventData)
         {
 #if !UNITY_ANDROID && !UNITY_IOS

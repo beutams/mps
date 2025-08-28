@@ -23,16 +23,17 @@ public class GameUI : MonoBehaviour
     [SerializeField] protected GameObject weapenPrefab;
     private void Start()
     {
-        Init();
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent,(_) => Init());
     }
     private void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         UpdateInfo();
     }
     public void Init()
     {
         List<GlobalSkillData> list = new List<GlobalSkillData>();
-        foreach(var data in IRoomController.Instance().localPlayer.globalSkills.Values)
+        foreach(var data in RoomController.instance.localPlayer.globalSkills.Values)
         {
             list.Add(data);
         }
@@ -41,12 +42,12 @@ public class GameUI : MonoBehaviour
     }
     public void UpdateInfo()
     {
-        population.text = IRoomController.Instance().localPlayer.population + "/10";
-        property.text = IRoomController.Instance().localPlayer.property.ToString();
+        population.text = RoomController.instance.localPlayer.population + "/10";
+        property.text = RoomController.instance.localPlayer.property.ToString();
     }
     public void UpdateWeapen()
     {
-        HeroController hero = IRoomController.instance.localPlayer.hero;
+        HeroController hero = RoomController.instance.localPlayer.hero;
         for(int i = 0; i < hero.weapenGroup.Count; i++)
         {
             Transform group = Instantiate(weapenGroup).transform;

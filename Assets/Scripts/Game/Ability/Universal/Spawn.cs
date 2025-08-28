@@ -5,7 +5,7 @@ using UnityEngine;
 public class AutoSpawn : AutoAbility
 {
     public Vector3 spawnPosition;
-    public List<GameObject> perfabs;
+    public List<string> prefabs;
     public Vector3 targetPoint;
     public float intevalTime;
     private bool run;
@@ -35,9 +35,9 @@ public class AutoSpawn : AutoAbility
     }
     private void Spawn()
     {
-        if (index < perfabs.Count)
+        if (index < prefabs.Count)
         {
-            GameObject obj = GameEntry.ObjectPoolComponent.Get(perfabs[index].name);
+            GameObject obj = GameEntry.ObjectPoolComponent.Get("UnitStat",prefabs[index]);
             obj.transform.position = spawnPosition;
             obj.transform.rotation = Quaternion.identity;
             obj.GetComponent<GameObjectController>().events.onSpawn?.Invoke(owner.player);

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-
-public static class StartScene
+[InitializeOnLoad]
+public class InitOnLoad
 {
-    [MenuItem("BuildTools/PlayModeUseFirstScene")]
-    public static void UpdatePlayModeUserFirstScene()
+    static InitOnLoad()
     {
         SceneAsset scene = AssetDatabase.LoadAssetAtPath<SceneAsset>(EditorBuildSettings.scenes[0].path);
         EditorSceneManager.playModeStartScene = scene;

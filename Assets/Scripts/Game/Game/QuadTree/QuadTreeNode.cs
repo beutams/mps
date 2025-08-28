@@ -189,6 +189,7 @@ public class QuadTreeNode
     #region 更新
     public void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         if (objList.Count != 0)
         {
             List<GameObjectController> controllers = new List<GameObjectController>();

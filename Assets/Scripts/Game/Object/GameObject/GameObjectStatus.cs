@@ -36,6 +36,7 @@ public class GameObjectStatus : MonoBehaviour
     }
     protected void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         currentStatu.OnStep(this);
     }
     public bool Change<T>() where T : AGameObjectStatu<GameObjectStatus> 

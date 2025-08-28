@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class UnitController : GameObjectController
 {
     public static string unitHealthBar = "UnitHealthBar";
+    public static string unitMiniMap = "UnitMiniMapItem";
     protected Vector3[] pathPoint;
     protected NavMeshPath path;
 
@@ -21,11 +22,13 @@ public class UnitController : GameObjectController
     {
         base.OnObjectSpawn(player);
         UIManager.instance.AddHealthBar(this, unitHealthBar);
+        UIManager.instance.AddMiniMapItem(this, unitMiniMap);
     }
     protected override void OnObjectDead()
     {
         base.OnObjectDead();
         UIManager.instance.RemoveHealthBar(this);
+        UIManager.instance.RemoveMiniMapItem(this);
     }
     protected override void Awake()
     {
@@ -39,6 +42,7 @@ public class UnitController : GameObjectController
     #region Behaviour
     protected override void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         if (isMove)
         {
             ORCAStep();

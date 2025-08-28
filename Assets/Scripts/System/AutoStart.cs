@@ -10,19 +10,24 @@ public class AutoStart : MonoBehaviour
     public bool single;
     public bool createRoom;
     public bool joinRoomFirst;
+    public bool autoStartGame;
     protected bool isdo;
+    protected bool isStart;
     protected float timer;
     void Update()
     {
         timer+= Time.deltaTime;
         if (isdo)
-            return;
+        { }
         else if (single)
             AutoStartSingle();
         else if (createRoom)
             AutoStartCreateRoom();
         else if (joinRoomFirst)
             AutoStartJoinRoom();
+        if (autoStartGame && !isStart)
+            AutoStartGame();
+
     }
     public void AutoStartSingle()
     {
@@ -55,6 +60,16 @@ public class AutoStart : MonoBehaviour
         {
             obj.rooms.First().Key.OnJoin();
             isdo = true;
+        }
+    }
+    public void AutoStartGame()
+    {
+        if (timer < 3f) return;
+        GameObject obj = GameObject.Find("StartOrReady");
+        if (obj != null)
+        {
+            obj.GetComponent<MainButton>().onClick?.Invoke();
+            isStart = true;
         }
     }
 }

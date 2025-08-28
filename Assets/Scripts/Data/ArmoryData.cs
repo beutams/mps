@@ -10,8 +10,8 @@ public class ArmoryData : UserData
     public List<int> globalSkills;
     public ArmoryData() 
     {
-        hero = 0;
-        globalSkills = new List<int>() {-1,-1,-1 };
+        hero = 1;
+        globalSkills = new List<int>() {1,2,3 };
     }
     public override string ToString()
     {

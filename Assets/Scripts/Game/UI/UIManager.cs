@@ -1,18 +1,27 @@
 using Mirror;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
+    public Color green;
+    public Color blue;
+    public Color red;
     private Transform healthBarCanvas;
+    private Transform minimapParent;
     private Dictionary<GameObjectController, HealthImage> healthImages = new Dictionary<GameObjectController, HealthImage>();
+    private Dictionary<GameObjectController, MiniMapItem> minimapItems = new Dictionary<GameObjectController, MiniMapItem>();
     private void Awake()
     {
         healthBarCanvas = GameObject.Find("HealthBarCanvas").transform;
+        minimapParent = GameObject.Find("MiniMapParent").transform;
     }
     private void Update()
     {
         DrawHealthBar();
+        DrawMiniMap();
     }
     private void DrawHealthBar()
     {
@@ -31,5 +40,30 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         GameEntry.ObjectPoolComponent.Release(obj.gameObject);
         healthImages.Remove(obj);
+    }
+    private void DrawMiniMap()
+    {
+        foreach (var obj in minimapItems)
+        {
+            obj.Value.Locate(obj.Key.transform.position);
+        }
+    }
+    public void AddMiniMapItem(GameObjectController obj, string name)
+    {
+        GameObject img = GameEntry.ObjectPoolComponent.Get(name);
+        minimapItems.Add(obj, img.GetComponent<MiniMapItem>());
+        img.transform.SetParent(minimapParent);
+        Image image = img.GetComponent<Image>();
+        if (obj.player == RoomController.instance.localPlayer)
+            image.color = GameEntry.SettingComponent.settingData.local;
+        else if (obj.player == RoomController.instance.playerDic[PlayerSite.NoCamp])
+            image.color = GameEntry.SettingComponent.settingData.enemy;
+        else
+            image.color = GameEntry.SettingComponent.settingData.partner;
+    }
+    public void RemoveMiniMapItem(GameObjectController obj)
+    {
+        GameEntry.ObjectPoolComponent.Release(obj.gameObject);
+        minimapItems.Remove(obj);
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     #region 设定
     public Transform playerItem;
@@ -16,16 +16,16 @@ public class Player : MonoBehaviour
     #endregion
 
     #region 属性
+    public PlayerSite site {  get; set; }
+    public ArmoryData armory { get; set; }
+    public HeroController hero {  get; private set; }
+    public Dictionary<int, GlobalSkillData> globalSkills = new Dictionary<int, GlobalSkillData>();
     public Transform units { get; set; }
     public Transform constructions { get; set; }
-    public PlayerSite site {  get; set; }
     public List<UnitController> unitList {  get; private set; }
     public List<ConstructionController> constructionList {  get; private set; }
-    public HeroController hero {  get; private set; }
-    public ArmoryData armory { get; set; }
     public int property {  get; set; }
     public int population { get; set; }
-    public Dictionary<int, GlobalSkillData> globalSkills = new Dictionary<int, GlobalSkillData>();
     #endregion
 
     private void Awake()
@@ -34,14 +34,17 @@ public class Player : MonoBehaviour
         constructionList = new List<ConstructionController>();
         unitList = new List<UnitController>();
     }
-    public void InitSkills()
-    {
-        for(int i = 1;i <= 3;i++)
-        {
-            globalSkills.Add(i, GameEntry.ResourceComponent.GetDataResource("GlobalSkillData", armory.globalSkills[i - 1]) as GlobalSkillData);
-        }
-    }
     public void AddObject(GameObjectController controller)
+    {
+        AddObjectServer(controller);
+    }
+    [Command]
+    public void AddObjectServer(GameObjectController controller)
+    {
+        AddObjectClient(controller);
+    }
+    [ClientRpc]
+    public void AddObjectClient(GameObjectController controller)
     {
         if (controller is HeroController && hero == null)
         {
@@ -58,6 +61,26 @@ public class Player : MonoBehaviour
             constructionList.Add(controller as ConstructionController);
             controller.transform.SetParent(constructions);
         }
-
+    }
+    public void InitArmoryData()
+    {
+        InitArmoryDataServer();
+    }
+    [Command]
+    public void InitArmoryDataServer()
+    {
+        Debug.Log($"Server Init Armory, Player is {site}");
+        HeroController controller = GameEntry.ObjectPoolComponent.Get("HeroStats", armory.hero).GetComponent<HeroController>();
+        controller.transform.position = GameObject.Find("HeroStartPoint").transform.position + new Vector3(Random.Range(0,1),0, Random.Range(0, 1));
+        NetworkServer.Spawn(controller.gameObject);
+        InitArmoryDataClient(controller.gameObject);
+    }
+    [ClientRpc]
+    public virtual void InitArmoryDataClient(GameObject controller)
+    {
+        Debug.Log($"Client Init Armory, Player is {site}");
+        for (int i = 1; i <= 3; i++)
+            globalSkills.Add(i, GameEntry.ResourceComponent.GetDataResource("GlobalSkillData", armory.globalSkills[i - 1]) as GlobalSkillData);
+        controller.GetComponent<HeroController>().events.onSpawn?.Invoke(this);
     }
 }

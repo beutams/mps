@@ -25,7 +25,7 @@ public class WebComponent : BaseComponent<WebComponent>
     {
         foreach (var player in playerReadyDic.Values)
             if (!player) return;
-        IRoomController roomController = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OnlineRoomController")).GetComponent<IRoomController>();
+        RoomController roomController = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OnlineRoomController")).GetComponent<RoomController>();
         Player noCampPlayer = Instantiate(gameNetworkManager.playerPrefab).GetComponent<Player>();
     }
 }

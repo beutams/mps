@@ -3,10 +3,12 @@ using System.Collections.Generic;
 public class ConstructionController : GameObjectController
 {
     public static string constructionHealthBar = "ConstructionHealthBar";
+    public static string constructionMiniMap = "ConstructionMiniMapItem";
     protected override void OnObjectSpawn(Player player)
     {
         base.OnObjectSpawn(player);
         UIManager.instance.AddHealthBar(this, constructionHealthBar);
+        UIManager.instance.AddMiniMapItem(this, constructionMiniMap);
         ORCAManager.instance.AddObstacle(gameObject, true);
     }
 
@@ -14,6 +16,7 @@ public class ConstructionController : GameObjectController
     {
         base.OnObjectDead();
         UIManager.instance.RemoveHealthBar(this);
+        UIManager.instance.RemoveMiniMapItem(this);
         ORCAManager.instance.RemoveObstacle(gameObject);
     }
 

@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     private UnityEvent<GameObjectController> onCollision;
     private void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         CanDestory();
         Move();
     }

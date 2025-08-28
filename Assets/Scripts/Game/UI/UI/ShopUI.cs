@@ -55,7 +55,7 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler
     //# small,300,300 | small,400,400
     private void InitWeapenData()
     {
-        Dictionary<string,string> heroDatas = ExcelReader.Read("WeapenData", IRoomController.Instance().armoryData.hero.ToString());
+        Dictionary<string,string> heroDatas = ExcelReader.Read("WeapenData", RoomController.instance.localPlayer.armory.hero.ToString());
         string[] solts = heroDatas["Solt"].Split('|');
         foreach(var solt in solts)
         {

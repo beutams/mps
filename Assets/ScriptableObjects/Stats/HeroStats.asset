@@ -23,7 +23,7 @@ MonoBehaviour:
   searchRadius: 0
   canMove: 1
   canAttack: 1
-  id: 0
+  id: 1
   idType: 3
   type: 1
   rotateForce: 0

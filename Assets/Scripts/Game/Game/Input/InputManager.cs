@@ -65,7 +65,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         weapenSwitchAuto8Action = asset.FindAction("WeapenSwitchAuto8");
         weapenSwitchAuto9Action = asset.FindAction("WeapenSwitchAuto9");
     }
-    private HeroController hero => IRoomController.Instance().localPlayer.hero;
+    private HeroController hero => RoomController.instance.localPlayer.hero;
 
     public bool GetGather() => gatherAction.WasPerformedThisFrame();
     public bool GetShop() => shopAction.IsPressed();

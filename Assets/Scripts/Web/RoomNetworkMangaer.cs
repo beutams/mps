@@ -1,4 +1,5 @@
 using Mirror;
+using Mirror.Examples.Basic;
 using Mirror.Examples.MultipleMatch;
 using System;
 using System.Collections;
@@ -89,22 +90,19 @@ public class RoomNetworkMangaer : MonoBehaviour
     }
     private void OnStartGame()
     {
-        IRoomController roomController = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OnlineRoomController")).GetComponent<OnlineRoomController>();
-        OnlineRoomController onlineRoomController = roomController as OnlineRoomController;
+        OnlineRoomController roomController = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("OnlineRoomController")).GetComponent<OnlineRoomController>();
         Player noCamp = Instantiate(NetworkManager.singleton.playerPrefab).GetComponent<Player>();
-        noCamp.transform.position = Vector3.zero;
-        roomController.noCampPlayer = noCamp;
+        NetworkServer.Spawn(roomController.gameObject);
+        NetworkServer.Spawn(noCamp.gameObject);
+        roomController.AddNoCampPlayer(noCamp.gameObject);
         foreach (var playerConn in connDic)
         {
             Player player = Instantiate(NetworkManager.singleton.playerPrefab).GetComponent<Player>();
-            player.transform.position = Vector3.zero;
-            player.site = (PlayerSite)playerConn.Value.index + 1;
-            onlineRoomController.connDic.Add(playerConn.Key, player);
             NetworkServer.AddPlayerForConnection(playerConn.Key, player.gameObject);
+            roomController.AddPlayer(playerConn.Value, player.gameObject);
         }
-        NetworkServer.Spawn(onlineRoomController.gameObject);
         NetworkManager.singleton.ServerChangeScene("GameScene");
-    }
+}
     #endregion
 
     #region Client

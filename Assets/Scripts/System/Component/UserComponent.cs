@@ -21,6 +21,7 @@ public class UserComponent : BaseComponent<UserComponent>
     {
         Dictionary<string, UserData> datas = save ? userDataSave : userData;
         datas[key] = value;
+        SaveData();
     }
     protected void LoadData()
     {

@@ -33,6 +33,7 @@ public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
     }
     private void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         root.Update();
     }
     private void OnDrawGizmos()

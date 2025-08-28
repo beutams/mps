@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.UI.GridLayoutGroup;
 
-public abstract class GameObjectController : MonoBehaviour
+public abstract class GameObjectController : NetworkBehaviour
 {
     public GameObjectStats stats;
     protected bool isSelect;
@@ -71,6 +71,7 @@ public abstract class GameObjectController : MonoBehaviour
     #region 更新
     protected virtual void Update()
     {
+        if (!RoomController.instance.gameReady) return;
         if (target != null)
             OnFindObject(target);
         if (targetPosition != Vector3.zero)
@@ -154,7 +155,7 @@ public abstract class GameObjectController : MonoBehaviour
     public virtual void GetNearestTarget()
     {
         GameObjectController result = null;
-        foreach (var player in IRoomController.Instance().playerDic.Values)
+        foreach (var player in RoomController.instance.playerDic.Values)
         {
             if(player == this.player) continue;
             if (player.unitList.Count > 0)
