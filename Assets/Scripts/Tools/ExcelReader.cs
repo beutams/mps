@@ -2,6 +2,7 @@ using ExcelDataReader;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,13 +19,22 @@ public static class ExcelReader
     public static Dictionary<string, Dictionary<string, string>> typeDic = new Dictionary<string, Dictionary<string, string>>();
     public static void ExcelInitLoad()
     {
-        string path = Directory.GetParent(Application.dataPath).FullName.Replace("\\","/") + "/Data/ShopData.xlsx";
-        ReadFromExcel(path);
+        string path = Directory.GetParent(Application.dataPath).FullName.Replace("\\","/") + "/Data";
+        string[] files = Directory.GetFiles(path);
+        foreach (string file in files)
+        {
+            if (file.EndsWith(".xlsx"))
+            {
+                string filePath = file.Replace("\\", "/");
+                ReadFromExcel(filePath);
+            }
+        }
+
     }
     public static Dictionary<string,string> Read(string tableName, string key)
     {
         string dataStr = dataDic[tableName][key];
-        string[] datas = dataStr.Split(',');
+        string[] datas = dataStr.Split('&');
         Dictionary<string,string> datasDic = new Dictionary<string,string>();
         for(int i = 0; i < datas.Length;i++)
         {
@@ -41,6 +51,18 @@ public static class ExcelReader
     {
         Dictionary<string,string> datas = Read(tableName, key);
         return datas[value];
+    }
+    public static List<string> GetList(string tableName,string key, string value)
+    {
+        Dictionary<string, string> datas = Read(tableName, key);
+        string data = datas[value];
+        if (typeDic[tableName][value].StartsWith("List"))
+        {
+            string separator = typeDic[tableName][value].Split('(')[1].Substring(0, 1);
+            string[] subDatas = data.Split(separator);
+            return subDatas.ToList();
+        }
+        return null;
     }
     public static List<string> ReadFromExcel(string path)
     {
@@ -72,7 +94,7 @@ public static class ExcelReader
                         builder.Append(result.Tables[0].Rows[0][j].ToString());
                         builder.Append("=");
                         builder.Append(result.Tables[0].Rows[i][j].ToString());
-                        builder.Append(",");
+                        builder.Append("&");
                     }
                     string value = builder.ToString();
                     datas.Add(key, value);

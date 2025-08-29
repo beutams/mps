@@ -53,13 +53,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         GameObject img = GameEntry.ObjectPoolComponent.Get(name);
         minimapItems.Add(obj, img.GetComponent<MiniMapItem>());
         img.transform.SetParent(minimapParent);
-        Image image = img.GetComponent<Image>();
+        SpriteRenderer image = img.GetComponent<SpriteRenderer>();
         if (obj.player == RoomController.instance.localPlayer)
-            image.color = GameEntry.SettingComponent.settingData.local;
+            image.color = ColorTool.ToColor(GameEntry.SettingComponent.settingData.local);
         else if (obj.player == RoomController.instance.playerDic[PlayerSite.NoCamp])
-            image.color = GameEntry.SettingComponent.settingData.enemy;
+            image.color = ColorTool.ToColor(GameEntry.SettingComponent.settingData.noCamp);
         else
-            image.color = GameEntry.SettingComponent.settingData.partner;
+            image.color = ColorTool.ToColor(GameEntry.SettingComponent.settingData.partner);
     }
     public void RemoveMiniMapItem(GameObjectController obj)
     {

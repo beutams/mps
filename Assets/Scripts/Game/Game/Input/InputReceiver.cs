@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class InputReceiver : SingletonMonoBehaviour<InputReceiver> 
 {
+    protected bool openShop;
     private void Update()
     {
         if (!RoomController.instance.gameReady) return;
@@ -28,9 +29,18 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     }
     public void ReceiverShop()
     {
-        if (InputManager.instance.GetExit())
+        if (InputManager.instance.GetShop())
         {
-            GameEntry.UIComponent.ShowUI("ShopUI");
+            if (openShop)
+            {
+                GameEntry.UIComponent.CloseUI("ShopUI");
+                openShop = false;
+            }
+            else
+            {
+                GameEntry.UIComponent.ShowUI("ShopUI");
+                openShop = true;
+            }
         }
     }
     public void ReceiverExit()

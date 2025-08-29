@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameUI : UIBase, ID
 {
     [Header("MainSkill")]
     [SerializeField] protected Transform mainSkill;
@@ -21,6 +21,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] protected Transform weapenPanel;
     [SerializeField] protected GameObject weapenGroup;
     [SerializeField] protected GameObject weapenPrefab;
+
     private void Start()
     {
         GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent,(_) => Init());

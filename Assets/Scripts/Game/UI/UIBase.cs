@@ -11,7 +11,9 @@ public class UIBase : MonoBehaviour, ID
     public IDType searchName => idType;
     public virtual void Init()
     {
-
+        GameObject canvas = GameObject.Find("Canvas");
+        if(canvas != null)
+            transform.SetParent(canvas.transform);
     }
     public virtual void Close()
     {

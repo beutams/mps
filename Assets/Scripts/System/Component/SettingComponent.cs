@@ -9,24 +9,21 @@ using UnityEngine.Purchasing.MiniJSON;
 public class SettingComponent : BaseComponent<SettingComponent>
 {
     public SettingData settingData;
+    protected SettingDataNotSave notSaveData;
     protected string mainPath = Path.Combine(Path.Combine(Application.dataPath,"../"),"SaveData");
-    protected Dictionary<string, FieldInfo> settingItemDic = new Dictionary<string, FieldInfo>();
+    private void Awake()
+    {
+        notSaveData = new SettingDataNotSave();     
+    }
     private void Start()
     {
         Init();
-        GameEntry.SaveDataComponent.Save(settingData, "SettingData");
     }
     private void Init()
     {
         settingData = GameEntry.SaveDataComponent.Read<SettingData>("SettingData");
-        RegisterFields(settingData);
-    }
-    private void RegisterFields<T>(T data)
-    {
-        foreach(var item in data.GetType().GetFields())
-        {
-            settingItemDic.Add(item.Name, item);
-        }
+        notSaveData.ToSettingData();
+        GameEntry.SaveDataComponent.Save(settingData, "SettingData");
     }
 }
 [Serializable]
@@ -39,8 +36,25 @@ public class SettingData
     public int maxObject = 2;
     public float mapSize = 102;
     [Header("MiniMapColor")]
+    [HideInInspector] public float[] local;
+    [HideInInspector] public float[] noCamp;
+    [HideInInspector] public float[] partner;
+    [HideInInspector] public float[] enemy;
+}
+[Serializable]
+public class SettingDataNotSave
+{
     public Color local = Color.green;
-    public Color noCamp = Color.white;
+    public Color noCamp = Color.red;
     public Color partner = Color.blue;
     public Color enemy = Color.red;
+
+    public void ToSettingData()
+    {
+        SettingData data = GameEntry.SettingComponent.settingData;
+        data.local = ColorTool.ToFloat(local);
+        data.noCamp = ColorTool.ToFloat(noCamp);
+        data.partner = ColorTool.ToFloat(partner);
+        data.enemy = ColorTool.ToFloat(enemy);
+    }
 }

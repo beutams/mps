@@ -7,19 +7,20 @@ public class MenuProcedure : ProcedureBase
     public override void OnEnter(string data)
     {
         GameEntry.UIComponent.ShowUI("MainUI");
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent, ChangeToGameProcedure);
     }
 
     public override void OnExit(string data)
     {
-        
+        GameEntry.EventComponent.Desubscribe(GameEvent.ClientChangeSceneSuccessEvent, ChangeToGameProcedure);
     }
 
     public override void OnStep()
     {
         
     }
-    public void EnterGame()
+    public void ChangeToGameProcedure(object data)
     {
-        GameEntry.ProcedureComponent.Change<ChangeSceneProcedure>("Game");
+        GameEntry.ProcedureComponent.Change<GameProcedure>();
     }
 }

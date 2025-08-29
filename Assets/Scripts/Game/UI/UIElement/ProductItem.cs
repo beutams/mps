@@ -5,18 +5,17 @@ using UnityEngine.UI;
 
 public class ProductItem : MonoBehaviour
 {
-    public ShopUI shopUI;
-    public ProductData data;
-    protected Image img;
-    protected TextMeshProUGUI cost;
-    private void Awake()
+    protected ProductData data;
+    public Image img;
+    public TextMeshProUGUI cost;
+    public void Refresh(ProductData data)
     {
-        img = transform.GetChild(0).GetComponent<Image>();
-        cost = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-    }
-    public void Refresh()
-    {
+        this.data = data;
         img.sprite = GameEntry.ResourceComponent.GetImage(data.imgPath);
         cost.text = data.cost.ToString();
+    }
+    public Weapen GetWeapen()
+    {
+        return data.weapen;
     }
 }

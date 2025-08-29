@@ -68,7 +68,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     private HeroController hero => RoomController.instance.localPlayer.hero;
 
     public bool GetGather() => gatherAction.WasPerformedThisFrame();
-    public bool GetShop() => shopAction.IsPressed();
+    public bool GetShop() => shopAction.WasPerformedThisFrame();
     public bool GetExit() => exitAction.IsPressed();
     public byte GetSkill()
     {

@@ -220,8 +220,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250e551ab8b70064eb557320609fa19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstProcedure: 
-  allProceduresName: []
+  firstProcedure: LoadProcedure
+  allProceduresName:
+  - LoadProcedure
+  - ExitProcedure
+  - ChangeSceneProcedure
+  - MenuProcedure
+  - GameProcedure
 --- !u!1 &4511180142771536978
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +276,26 @@ MonoBehaviour:
     maxDepth: 5
     maxObject: 2
     mapSize: 102
+    local:
+    - 0
+    - 1
+    - 0
+    - 1
+    noCamp:
+    - 1
+    - 1
+    - 1
+    - 1
+    partner:
+    - 0
+    - 0
+    - 1
+    - 1
+    enemy:
+    - 1
+    - 0
+    - 0
+    - 1
 --- !u!1 &4527564024810447360
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler
     protected static List<ProductItem> allItem = new List<ProductItem>();
     [Header("Weapen")]
     public Transform weapenContent;
-    protected List<WeapenItem> weapenItems = new List<WeapenItem>();
+    protected List<WeapenSoltItem> weapenItems = new List<WeapenSoltItem>();
     [Header("Else")]
     public RectTransform info;
     public Image dragImage;
@@ -41,7 +41,7 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler
         Dictionary<string,string> datas = ExcelReader.dataDic["ShopData"];
         foreach(var kvp in datas)
         {
-            ProductItem item = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("ProductItem",kvp.Value)).GetComponent<ProductItem>();
+            ProductItem item = GameEntry.ObjectPoolComponent.Get("ProductItem").GetComponent<ProductItem>();
             item.transform.SetParent(shopContent);
             ProductData data = new ProductData() 
             { 
@@ -49,20 +49,19 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler
                 imgPath = GetData(kvp.Key, "ImgPath"), 
                 weapen = GameEntry.ResourceComponent.GetDataResource("WeapenBase", GetData(kvp.Key, "Name")) as Weapen 
             };
-            item.data = data;item.Refresh();
+            item.Refresh(data);
         }
     }
     //# small,300,300 | small,400,400
     private void InitWeapenData()
     {
-        Dictionary<string,string> heroDatas = ExcelReader.Read("WeapenData", RoomController.instance.localPlayer.armory.hero.ToString());
-        string[] solts = heroDatas["Solt"].Split('|');
-        foreach(var solt in solts)
+        List<string> soltData = ExcelReader.GetList("HeroData", RoomController.instance.localPlayer.armory.hero.ToString(),"Solt");
+        foreach(var solt in soltData)
         {
-            WeapenItem item = Instantiate(GameEntry.ResourceComponent.GetPrefabResource("WeapenItem").GetComponent<WeapenItem>());
+            WeapenSoltItem item = GameEntry.ObjectPoolComponent.Get("WeapenSolt").GetComponent<WeapenSoltItem>();
             item.transform.SetParent(weapenContent);
             string[] data = solt.Split(',');
-            item.transform.localPosition = new Vector3(int.Parse(data[1]),int.Parse(data[2]), 0);
+            item.GetComponent<RectTransform>().anchoredPosition = new Vector2(int.Parse(data[0]),int.Parse(data[1]));
             weapenItems.Add(item);
         }
     }
@@ -115,7 +114,7 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler
         WeapenSoltItem result = RaycastItem<WeapenSoltItem>();
         if(result!= null)
         {
-            result.Equip(currentItem.data.weapen);
+            result.Equip(currentItem.GetWeapen());
         }
     }
 

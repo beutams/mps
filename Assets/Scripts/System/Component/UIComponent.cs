@@ -9,6 +9,7 @@ public class UIComponent : BaseComponent<UIComponent>
 
     private void Start()
     {
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent, (s) => { uiStack.Clear(); });
         foreach(var ui in GameEntry.ResourceComponent.GetAllPrefabResource("UIBase").Values)
         {
             RegisterUI(ui.GetComponent<UIBase>());
@@ -33,6 +34,12 @@ public class UIComponent : BaseComponent<UIComponent>
     public void CloseUI(UIBase ui)
     {
         if (uiStack.Peek() != ui) return;
+        uiStack.Pop();
+        uiStack.Peek().gameObject.SetActive(true);
+    }
+    public void CloseUI(string ui)
+    {
+        if (uiStack.Peek().name != ui) return;
         uiStack.Pop();
         uiStack.Peek().gameObject.SetActive(true);
     }
