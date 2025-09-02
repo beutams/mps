@@ -1,16 +1,16 @@
 using UnityEngine;
 public abstract class WeapenBase : ScriptableObject, ID
 {
-    public string weapon = "Weapen";
     public string bullet = "Bullet";
     public int maxBulletCount;
     public float fireInterval;
     public float loadTime;
+    public bool autoLoad;
+
     public Timer fireTimer;
     public Timer loadTimer;
-    public bool autoLoad;
-    public int bulletCount;
     protected Player player;
+    public int bulletCount { get; private set; }
     [Header("ID")]
     [SerializeField] protected int id;
     public int ID => id;

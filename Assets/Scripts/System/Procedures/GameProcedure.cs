@@ -11,7 +11,7 @@ public class GameProcedure : ProcedureBase
 
     public override void OnExit(string data)
     {
-
+        
     }
 
     public override void OnStep()

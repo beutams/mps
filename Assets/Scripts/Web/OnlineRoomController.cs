@@ -20,6 +20,7 @@ public class OnlineRoomController : RoomController, ID
         {
             InitLocalPlayer();
             OnGameStart();
+            InitPlayerData();
             localPlayer.InitArmoryData();
         });
     }
@@ -70,5 +71,12 @@ public class OnlineRoomController : RoomController, ID
     {
         yield return null;
         Ready();
+    }
+    public void InitPlayerData()
+    {
+        foreach (var player in playerDic.Values)
+        {
+            player.property = 1500;
+        }
     }
 }

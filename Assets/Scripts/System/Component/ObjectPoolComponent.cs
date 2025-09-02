@@ -12,53 +12,55 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
     {
         try
         {
+            string keyName = name == null ? key : $"{key}_{name}";
             GameObject result;
-            if (poolDic.ContainsKey(key))
+            if (poolDic.ContainsKey(keyName))
             {
-                if (poolDic[key].Count > 0)
-                    result = poolDic[key].Dequeue();
+                if (poolDic[keyName].Count > 0)
+                    result = poolDic[keyName].Dequeue();
                 else
                     result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key,name));
             }
             else
             {
-                poolDic.Add(key, new Queue<GameObject>());
+                poolDic.Add(keyName, new Queue<GameObject>());
                 result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
             }
-            result.name = key;
+            result.name = keyName;
             result.SetActive(true);
             return result;
         }
         catch (Exception e)
         {
-            Debug.LogError($"ObjectPool Instantiate Failed , Key = {key} , Exception : {e}");
+            Debug.LogError($"ObjectPool Instantiate Failed , Key = {key}_{name} , Exception : {e}");
             return null;
         }
     }
-    public GameObject Get(string key, int name)
+    public GameObject Get(string key, int id)
     {
         try
         {
+            string keyName = $"{key}_{id}";
             GameObject result;
-            if (poolDic.ContainsKey(key))
+            if (poolDic.ContainsKey(keyName))
             {
-                if (poolDic[key].Count > 0)
-                    result = poolDic[key].Dequeue();
+                if (poolDic[keyName].Count > 0)
+                    result = poolDic[keyName].Dequeue();
                 else
-                    result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
+                    result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, id));
             }
             else
             {
-                poolDic.Add(key, new Queue<GameObject>());
-                result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
+                poolDic.Add(keyName, new Queue<GameObject>());
+                result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, id));
             }
-            result.name = key;
+            result.name = keyName;
             result.SetActive(true);
             return result;
         }
         catch (Exception e)
         {
-            Debug.LogError($"ObjectPool Instantiate Failed , Key = {key} , Exception : {e}");
+            Debug.LogError($"ObjectPool Instantiate Failed , Key = {key}_{id} , Exception : {e}");
             return null;
         }
     }
@@ -67,6 +69,8 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
         if (poolDic.ContainsKey(obj.name))
         {
             obj.SetActive(false);
+            if(!obj.TryGetComponent<RectTransform>(out _))
+                obj.transform.SetParent(transform);
             poolDic[obj.name].Enqueue(obj);
         }
         else

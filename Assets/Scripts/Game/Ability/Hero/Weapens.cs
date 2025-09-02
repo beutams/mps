@@ -18,7 +18,7 @@ public class Weapens : Ability
         HeroController heroController = owner as HeroController;
         foreach(var item in heroController.weapenGroup[heroController.GetCurrentGroup()])
         {
-            item.Fire(owner, null, target);
+            item.weapen.Fire(owner, null, target);
         }
     }
     public override void Do(GameObjectController target)
@@ -27,7 +27,7 @@ public class Weapens : Ability
         HeroController heroController = owner as HeroController;
         foreach (var item in heroController.weapenGroup[heroController.GetCurrentGroup()])
         {
-            item.Fire(owner, target, target.transform.position);
+            item.weapen.Fire(owner, target, target.transform.position);
         }
     }
 }

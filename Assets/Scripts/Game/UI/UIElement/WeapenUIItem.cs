@@ -19,10 +19,11 @@ public class WeapenUIItem : MonoBehaviour
     {
         this.weapen = weapen;
         weapenName.text = weapen.name;
+        weapen.Init(RoomController.instance.localPlayer) ;
     }
     public void Update()
     {
         bulletCount.text = weapen.bulletCount.ToString();
-        reloadBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, weapen.loadTimer.GetProgress() * loadBarWidth);
+        reloadBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, weapen.fireTimer.GetProgress() * loadBarWidth);
     }
 }

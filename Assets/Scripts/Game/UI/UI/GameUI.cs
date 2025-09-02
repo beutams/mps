@@ -13,25 +13,27 @@ public class GameUI : UIBase, ID
     [SerializeField] protected TextMeshProUGUI property;
     [Header("Sount")]
     [SerializeField] protected TextMeshProUGUI sount;
-    //[Header("MiniMap")]
     [Header("HeroPanel")]
     [SerializeField] protected Image health;
     [SerializeField] protected Image icon;
     [Header("WeapenPanel")]
     [SerializeField] protected Transform weapenPanel;
-    [SerializeField] protected GameObject weapenGroup;
-    [SerializeField] protected GameObject weapenPrefab;
 
     private void Start()
     {
-        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent,(_) => Init());
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent,(_) => OnReadyInit());
+        GameEntry.EventComponent.Subscribe(GameEvent.UICloseEvent, UpdateWeapen);
     }
     private void Update()
     {
         if (!RoomController.instance.gameReady) return;
         UpdateInfo();
     }
-    public void Init()
+    public void OnReadyInit()
+    {
+        InitSkill();
+    }
+    public void InitSkill()
     {
         List<GlobalSkillData> list = new List<GlobalSkillData>();
         foreach(var data in RoomController.instance.localPlayer.globalSkills.Values)
@@ -46,19 +48,31 @@ public class GameUI : UIBase, ID
         population.text = RoomController.instance.localPlayer.population + "/10";
         property.text = RoomController.instance.localPlayer.property.ToString();
     }
-    public void UpdateWeapen()
+    public void UpdateWeapen(object data)
     {
-        HeroController hero = RoomController.instance.localPlayer.hero;
-        for(int i = 0; i < hero.weapenGroup.Count; i++)
+        if(data is string str && str == "ShopUI")
         {
-            Transform group = Instantiate(weapenGroup).transform;
-            group.parent = weapenPanel;
-            List<WeapenBase> weapens = hero.weapenGroup[i];
-            foreach(var weapen in weapens)
+            for(int i = 0; i < weapenPanel.childCount; i++)
             {
-                WeapenUIItem item = Instantiate(weapenPrefab).GetComponent<WeapenUIItem>();
-                item.transform.parent = group.GetChild(2);
-                item.SetWeapen(weapen);
+                if (!weapenPanel.GetChild(i).name.StartsWith("WeapenGroupUI")) continue;
+                Transform list = weapenPanel.GetChild(i).Find("WeapenList");
+                while(list.childCount != 0)
+                    GameEntry.ObjectPoolComponent.Release(list.GetChild(0).gameObject);
+                GameEntry.ObjectPoolComponent.Release(weapenPanel.GetChild(i).gameObject);
+            }
+            HeroController hero = RoomController.instance.localPlayer.hero;
+            for (int i = 0; i < hero.weapenGroup.Count; i++)
+            {
+                List<WeapenModel> weapens = hero.weapenGroup[i+1];
+                if (weapens.Count == 0) continue;
+                Transform group = GameEntry.ObjectPoolComponent.Get("WeapenGroupUI").transform;
+                group.parent = weapenPanel;
+                foreach (var weapen in weapens)
+                {
+                    WeapenUIItem item = GameEntry.ObjectPoolComponent.Get("WeapenUI").GetComponent<WeapenUIItem>();
+                    item.transform.SetParent(group.Find("WeapenList"));
+                    item.SetWeapen(weapen.weapen);
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 public struct ProductData
 {
-    public Weapen weapen;
-    public string imgPath;
+    public WeapenBase weapen;
+    public string name;
     public int cost;
 }

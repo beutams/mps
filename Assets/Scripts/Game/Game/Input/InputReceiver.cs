@@ -8,11 +8,15 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     {
         if (!RoomController.instance.gameReady) return;
         InputManager.instance.CameraMove();
-        ReceiverGather();
         ReceiverShop();
-        ReceiverMove();
-        ReceiverFire();
-        ReceiverSkill();
+        if (!openShop)
+        {
+            ReceiverGather();
+            ReceiverMove();
+            ReceiverFire();
+            ReceiverSkill();
+        }
+
     }
     public void ReceiverGather()
     {

@@ -9,11 +9,16 @@ public class UIBase : MonoBehaviour, ID
     [SerializeField] protected int id;
     public int ID => id;
     public IDType searchName => idType;
-    public virtual void Init()
+    public virtual void OnOpen()
     {
+        Debug.Log($"UIComponent : {gameObject.name} is Open");
         GameObject canvas = GameObject.Find("Canvas");
         if(canvas != null)
             transform.SetParent(canvas.transform);
+    }
+    public virtual void OnClose()
+    {
+        Debug.Log($"UIComponent : {gameObject.name} is Close");
     }
     public virtual void Close()
     {

@@ -14,9 +14,9 @@ public class CreateRoomUI : UIBase
     [SerializeField] protected TMP_Dropdown maxPlayers;
     [SerializeField] protected Button createButton;
     [SerializeField] protected Button cancelButton;
-    public override void Init()
+    public override void OnOpen()
     {
-        base.Init();
+        base.OnOpen();
         hallSubUI = FindAnyObjectByType<HallSubUI>();
         createButton.onClick.AddListener(OnCreateClick);
         cancelButton.onClick.AddListener(OnCancelClick);

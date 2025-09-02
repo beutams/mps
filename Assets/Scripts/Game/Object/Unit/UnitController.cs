@@ -42,6 +42,7 @@ public class UnitController : GameObjectController
     #region Behaviour
     protected override void Update()
     {
+        base.Update();
         if (!RoomController.instance.gameReady) return;
         if (isMove)
         {

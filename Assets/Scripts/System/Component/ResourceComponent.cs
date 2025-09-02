@@ -107,7 +107,18 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
 #endif
         
     }
-#endregion
+    public Sprite GetWeapenImage(string name)
+    {
+#if UNITY_EDITOR
+        string path = $"Assets\\Res\\WeapenIcon\\{name}.png";
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path.Replace('\\', '/'));
+        return sprite;
+#else
+        return null;
+#endif
+
+    }
+    #endregion
     protected Stack<T> GetAllAssets<T>(string path, string suffix) where T : UnityEngine.Object
     {
         Stack<string> directories = new Stack<string>();

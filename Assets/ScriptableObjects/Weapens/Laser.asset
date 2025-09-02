@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7878875b7011cd4469566e1028802c03, type: 3}
-  m_Name: Weapen
+  m_Name: Laser
   m_EditorClassIdentifier: 
-  weapon: 
   bullet: Bullet
-  maxBulletCount: 8
-  fireInterval: 0.05
-  loadTime: 1
+  maxBulletCount: 10
+  fireInterval: 0.3
+  loadTime: 3
   autoLoad: 1
-  bulletCount: 0
-  id: 0
+  id: 2
   idType: 5

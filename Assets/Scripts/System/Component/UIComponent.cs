@@ -27,21 +27,29 @@ public class UIComponent : BaseComponent<UIComponent>
     {
         if(uiStack.Count > 0)
             uiStack.Peek()?.gameObject.SetActive(false);
-        uiStack.Push(Instantiate(uiDic[ui].gameObject).GetComponent<UIBase>());
-        uiStack.Peek().Init();
+        uiStack.Push(GameEntry.ObjectPoolComponent.Get("UIBase",uiDic[ui].name).GetComponent<UIBase>());
+        uiStack.Peek().OnOpen();
         uiStack.Peek().gameObject.SetActive(true);
+        GameEntry.EventComponent.Notify(GameEvent.UIOpenEvent, ui);
     }
     public void CloseUI(UIBase ui)
     {
         if (uiStack.Peek() != ui) return;
-        uiStack.Pop();
+        UIBase obj = uiStack.Pop();
         uiStack.Peek().gameObject.SetActive(true);
+        obj.OnClose();
+        GameEntry.ObjectPoolComponent.Release(obj.gameObject);
+        GameEntry.EventComponent.Notify(GameEvent.UICloseEvent, ui);
     }
     public void CloseUI(string ui)
     {
-        if (uiStack.Peek().name != ui) return;
-        uiStack.Pop();
+        string name = uiStack.Peek().name.Split("_")[1];
+        if (name != ui) return;
+        UIBase obj = uiStack.Pop();
         uiStack.Peek().gameObject.SetActive(true);
+        obj.OnClose();
+        GameEntry.ObjectPoolComponent.Release(obj.gameObject);
+        GameEntry.EventComponent.Notify(GameEvent.UICloseEvent, ui);
     }
 }
 

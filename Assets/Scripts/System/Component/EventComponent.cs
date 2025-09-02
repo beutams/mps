@@ -43,7 +43,8 @@ public enum GameEvent
     ClientConnectEvent, //客户端连入服务器
     ClientDisconnectEvent, //客户端断开连接
     //Game
-    ClientChangeSceneSuccessEvent
-
+    ClientChangeSceneSuccessEvent,
+    UICloseEvent,
+    UIOpenEvent
 }
 
