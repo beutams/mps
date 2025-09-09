@@ -13,6 +13,12 @@ public class Bullet : MonoBehaviour
 
     private UnityEvent onDestory;
     private UnityEvent<GameObjectController> onCollision;
+
+    private Quaternion startRotation;
+    private void Awake()
+    {
+        startRotation = transform.rotation;
+    }
     private void Update()
     {
         if (!RoomController.instance.gameReady) return;
@@ -23,6 +29,8 @@ public class Bullet : MonoBehaviour
     {
         transform.position = position;
         transform.rotation = rotation;
+        Quaternion x = Quaternion.AngleAxis(startRotation.eulerAngles.x, Vector3.right);
+        transform.rotation *= x;
     }
     public void SetTarget(GameObjectController target,Vector3 direction,Player player)
     {
@@ -57,7 +65,7 @@ public class Bullet : MonoBehaviour
     private void Destory()
     {
         onDestory?.Invoke();
-        Destroy(gameObject);
+        GameEntry.ObjectPoolComponent.Release(gameObject);
     }
     private void OnCollisionEnter(Collision collision)
     {

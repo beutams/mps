@@ -69,7 +69,7 @@ CapsuleCollider:
   m_Radius: 1
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: -0.00000011920929}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &1626176264597505307
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 3
-  m_AngularDrag: 0.05
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -115,6 +115,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 02d9d36e31f4f8c4e992555e5d8097db, type: 2}
   abilities: []
   isMove: 0
+  cornerAngleThreshold: 120
 --- !u!114 &-4337506043713362976
 MonoBehaviour:
   m_ObjectHideFlags: 0

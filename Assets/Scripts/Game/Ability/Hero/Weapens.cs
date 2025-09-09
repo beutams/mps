@@ -3,7 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapens", menuName = "ScriptableObject/Unit/Weapens")]
 public class Weapens : Ability
 {
-    public List<WeapenBase> weapens;
     public override bool CanDo(Vector3 target)
     {
         return InputManager.instance.GetFire();
@@ -18,7 +17,7 @@ public class Weapens : Ability
         HeroController heroController = owner as HeroController;
         foreach(var item in heroController.weapenGroup[heroController.GetCurrentGroup()])
         {
-            item.weapen.Fire(owner, null, target);
+            item.weapen.Fire(null, target,item);
         }
     }
     public override void Do(GameObjectController target)
@@ -27,7 +26,7 @@ public class Weapens : Ability
         HeroController heroController = owner as HeroController;
         foreach (var item in heroController.weapenGroup[heroController.GetCurrentGroup()])
         {
-            item.weapen.Fire(owner, target, target.transform.position);
+            item.weapen.Fire(target, target.transform.position, item);
         }
     }
 }

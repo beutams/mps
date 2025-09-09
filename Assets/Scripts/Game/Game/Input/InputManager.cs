@@ -83,7 +83,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
             index += 8;
         return index;
     }
-    public bool GetFire() => fireAction.WasPressedThisFrame();
+    public bool GetFire() => fireAction.IsPressed();
     public bool GetMove() => moveAction.WasPressedThisFrame();
     public bool GetLock() => lockAction.IsPressed();
     public int GetWeapen()

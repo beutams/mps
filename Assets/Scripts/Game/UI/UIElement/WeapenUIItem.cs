@@ -24,6 +24,7 @@ public class WeapenUIItem : MonoBehaviour
     public void Update()
     {
         bulletCount.text = weapen.bulletCount.ToString();
-        reloadBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, weapen.fireTimer.GetProgress() * loadBarWidth);
+        float progress = weapen.bulletCount == 0 && weapen.autoLoad ? weapen.loadTimer.GetProgress() : weapen.fireTimer.GetProgress();
+        reloadBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, progress * loadBarWidth);
     }
 }

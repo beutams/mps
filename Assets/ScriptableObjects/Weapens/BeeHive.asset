@@ -17,5 +17,6 @@ MonoBehaviour:
   fireInterval: 5
   loadTime: 0
   autoLoad: 0
+  turnSpeed: 10
   id: 1
   idType: 5

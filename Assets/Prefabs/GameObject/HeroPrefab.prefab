@@ -107,10 +107,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 2
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2498746686173808625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +129,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 0bbbb6fa33cbc5f44909ce0b7099ccd3, type: 2}
   abilities: []
   isMove: 0
+  cornerAngleThreshold: 120
 --- !u!114 &7664496213491721304
 MonoBehaviour:
   m_ObjectHideFlags: 0

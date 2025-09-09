@@ -10,6 +10,8 @@ public abstract class WeapenBase : ScriptableObject, ID
     public Timer fireTimer;
     public Timer loadTimer;
     protected Player player;
+
+    public float turnSpeed;
     public int bulletCount { get; private set; }
     [Header("ID")]
     [SerializeField] protected int id;
@@ -33,12 +35,12 @@ public abstract class WeapenBase : ScriptableObject, ID
             loadTimer.Pause();
         }
     }
-    public void Fire(GameObjectController self,GameObjectController target,Vector3 targetPosition)
+    public void Fire(GameObjectController target,Vector3 targetPosition,WeapenModel model)
     {
         if(bulletCount > 0 && fireTimer.IsDone())
         {
             bulletCount--;
-            FireInner(self,target, targetPosition);
+            FireInner(target, targetPosition, model);
             fireTimer.Reset();
         }
         if(bulletCount <= 0 && !loadTimer.isRun())
@@ -47,11 +49,11 @@ public abstract class WeapenBase : ScriptableObject, ID
             loadTimer.Lanuch();
         }
     }
-    public void FireInner(GameObjectController self,GameObjectController target, Vector3 targetPosition)
+    public void FireInner(GameObjectController target, Vector3 targetPosition, WeapenModel model)
     {
         Bullet obj = GameEntry.ObjectPoolComponent.Get(bullet).GetComponent<Bullet>();
-        obj.Init(self.transform.position, self.transform.rotation);
-        obj.SetTarget(target, targetPosition, player);
+        obj.Init(model.transform.position, model.transform.rotation);
+        obj.SetTarget(target, targetPosition - model.transform.position, player);
     }
     public void Load()
     {

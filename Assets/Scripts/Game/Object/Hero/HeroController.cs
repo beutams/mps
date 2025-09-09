@@ -53,7 +53,7 @@ public class HeroController : UnitController
         {
             weapenGroup[model.group].Remove(model);
             model.group = index;
-            weapenGroup[index].Add(model);
+            weapenGroup[index].Add(model); 
         }
     }
 }

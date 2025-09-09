@@ -56,8 +56,11 @@ public class GameUI : UIBase, ID
             {
                 if (!weapenPanel.GetChild(i).name.StartsWith("WeapenGroupUI")) continue;
                 Transform list = weapenPanel.GetChild(i).Find("WeapenList");
-                while(list.childCount != 0)
-                    GameEntry.ObjectPoolComponent.Release(list.GetChild(0).gameObject);
+                for(int j = 0; j < list.childCount; j++)
+                {
+                    if (list.GetChild(j).gameObject.activeSelf)
+                        GameEntry.ObjectPoolComponent.Release(list.GetChild(0).gameObject);
+                }
                 GameEntry.ObjectPoolComponent.Release(weapenPanel.GetChild(i).gameObject);
             }
             HeroController hero = RoomController.instance.localPlayer.hero;

@@ -24,10 +24,7 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
         {
             if(hit.collider != null)
             {
-                foreach (var unit in RoomController.instance.localPlayer.unitList)
-                {
-                    unit.SetMoveTarget(null, hit.point);
-                }
+                GroupMovementManager.instance.CaclTargetPoint(RoomController.instance.localPlayer.unitList, hit.point);
             }
         }
     }
