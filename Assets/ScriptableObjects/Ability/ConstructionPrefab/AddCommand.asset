@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7004dc18b3cac54faa0e2908607853b, type: 3}
-  m_Name: AutoSpawn
+  m_Script: {fileID: 11500000, guid: 042d0f4a1e47b0c4c958a717dbf8d0b6, type: 3}
+  m_Name: AddCommand
   m_EditorClassIdentifier: 
-  time: 45
+  time: 180
   autoRun: 1
-  spawnPosition: {x: 11, y: 0, z: 11}
-  prefabs: []
-  targetPoint: {x: 51, y: 0, z: 51}
-  intevalTime: 0.5
+  command: 1

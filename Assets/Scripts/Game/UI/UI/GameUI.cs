@@ -21,7 +21,7 @@ public class GameUI : UIBase, ID
 
     private void Start()
     {
-        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent,(_) => OnReadyInit());
+        OnReadyInit();
         GameEntry.EventComponent.Subscribe(GameEvent.UICloseEvent, UpdateWeapen);
     }
     private void Update()

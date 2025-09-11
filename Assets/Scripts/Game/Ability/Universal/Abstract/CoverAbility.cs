@@ -60,4 +60,8 @@ public class CoverAbility : Ability
     {
         return timer.GetProgress();
     }
+    public virtual void Lanuch()
+    {
+        timer.Lanuch();
+    }
 }

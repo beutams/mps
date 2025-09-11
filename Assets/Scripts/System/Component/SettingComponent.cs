@@ -40,6 +40,9 @@ public class SettingData
     [HideInInspector] public float[] noCamp;
     [HideInInspector] public float[] partner;
     [HideInInspector] public float[] enemy;
+    [Header("Game")]
+    public int maxPopulation = 10;
+    public int maxCommand = 3;
 }
 [Serializable]
 public class SettingDataNotSave

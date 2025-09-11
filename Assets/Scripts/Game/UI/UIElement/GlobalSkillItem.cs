@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GlobalSkillItem : MonoBehaviour, IPointerClickHandler
+public class GlobalSkillItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected Image mask;
     [SerializeField] protected Image skill;
@@ -13,14 +13,10 @@ public class GlobalSkillItem : MonoBehaviour, IPointerClickHandler
     protected int index;
     protected float progress = 0;
 
-    private void Start()
-    {
-        mask.type = Image.Type.Filled;
-        mask.fillAmount = 1;
-    }
+    protected CoverAbility ability;
     private void Update()
     {
-        progress = data.ability.GetProgress();
+        progress = ability.GetProgress();
         if(progress > 0)
         {
             mask.fillAmount = progress;
@@ -32,24 +28,30 @@ public class GlobalSkillItem : MonoBehaviour, IPointerClickHandler
     }
     public void DoSkill(GameObjectController obj, Vector3 targetPosition)
     {
-        if (data.ability.CanDo())
-            data.ability.Do();
-        else if (data.ability.CanDo(obj))
-            data.ability.Do(obj);
-        else if (data.ability.CanDo(targetPosition))
-            data.ability.Do(targetPosition);
+        if (ability.CanDo())
+            ability.Do();
+        else if (ability.CanDo(obj))
+            ability.Do(obj);
+        else if (ability.CanDo(targetPosition))
+            ability.Do(targetPosition);
     }
     public void Init(GlobalSkillData data,int index)
     {
         this.data = data;
-        data.ability = Instantiate(data.ability);
-        data.ability.Init(null);
+        ability = Instantiate(data.ability);
+        ability.Init(null);
+        ability.Lanuch();
         this.index = index;
         skill.sprite = GameEntry.ResourceComponent.GetImage(data.imgPath);
         gameObject.SetActive(true);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
     {
         
     }

@@ -130,7 +130,7 @@ public class UnitController : GameObjectController
         if (pathPoint == null ||pathPoint.Length <= 0) return;
         Vector3 turnForward = Vector3.RotateTowards(transform.forward, velocity, unitStats.rotateForce * Time.deltaTime, 0f);
         transform.rotation = Quaternion.LookRotation(turnForward);
-        transform.position += velocity.normalized * UnitStats.speed * Time.deltaTime;
+        transform.position += velocity * Time.deltaTime;
     }
     private void EndMove()
     {
@@ -165,6 +165,21 @@ public class UnitController : GameObjectController
     protected override void Logout()
     {
         player.unitList.Remove(this);
+    }
+    protected override void SpawnInit()
+    {
+        base.SpawnInit();
+        CheckPopulation();
+    }
+    protected virtual void CheckPopulation()
+    {
+        if(this is not HeroController)
+        {
+            if (RoomController.instance.localPlayer.population >= GameEntry.SettingComponent.settingData.maxPopulation)
+                GameEntry.ObjectPoolComponent.Release(gameObject);
+            else
+                RoomController.instance.localPlayer.population++;
+        }
     }
     #endregion
 

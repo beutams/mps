@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccafd354405c4424991af81f756786a0, type: 3}
-  m_Name: ConstructionStats
+  m_Name: MainBase
   m_EditorClassIdentifier: 
   abilities:
   - {fileID: 11400000, guid: 9d5c4b89aa0761c43b06869992efeeec, type: 2}
-  healthPerfab: {fileID: 5865935096257579933, guid: df3fbe2277ff51f4eb2d46f791df7d57, type: 3}
-  objName: "\u901A\u7528\u5EFA\u7B51"
-  imgPath: Assets\Dependency\ScienceFictionGUI\Textures\icons\Resources_Icon_01.png
+  healthPerfab: {fileID: 5865935096257579933, guid: f055509ddea27744e836d9d56ec113a7, type: 3}
+  objName: "\u6307\u6325\u4E2D\u5FC3"
+  imgPath: 
   maxHealth: 100
   defense: 5
   radius: 3
-  searchRadius: 10
+  searchRadius: 0
   canMove: 0
-  canAttack: 1
+  canAttack: 0
   id: 1
   idType: 4
-  type: 0

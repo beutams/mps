@@ -4,12 +4,16 @@ public abstract class AutoAbility : Ability
 {
     protected Timer timer;
     public float time;
+    public bool autoRun;
 
     protected GameObjectController target;
     protected Vector3 position;
+
+    private bool run;
     public override void Init(GameObjectController owner)
     {
         base.Init(owner);
+        run = false;
         timer = new Timer();
         timer.Init(time, null, true, false);
         TimerManager.instance.AddTimer(timer);
@@ -18,6 +22,8 @@ public abstract class AutoAbility : Ability
     {
         Clear();
         this.target = target;
+        if(autoRun)
+            run = true;
         timer.ChangeInit(time, OnTimerCompleteGameObject, true, true);
         timer.Lanuch();
     }
@@ -50,5 +56,11 @@ public abstract class AutoAbility : Ability
     {
         position = Vector3.zero;
         target = null;
+    }
+    public override bool CanDo()
+    {
+        if(autoRun)
+            return !run;
+        return false;
     }
 }

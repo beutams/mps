@@ -37,13 +37,13 @@ public abstract class WeapenBase : ScriptableObject, ID
     }
     public void Fire(GameObjectController target,Vector3 targetPosition,WeapenModel model)
     {
-        if(bulletCount > 0 && fireTimer.IsDone())
+        if(bulletCount > 0 && fireTimer != null && fireTimer.IsDone())
         {
             bulletCount--;
             FireInner(target, targetPosition, model);
             fireTimer.Reset();
         }
-        if(bulletCount <= 0 && !loadTimer.isRun())
+        if(bulletCount <= 0 && loadTimer != null && !loadTimer.isRun())
         {
             loadTimer.Reset();
             loadTimer.Lanuch();
@@ -52,8 +52,7 @@ public abstract class WeapenBase : ScriptableObject, ID
     public void FireInner(GameObjectController target, Vector3 targetPosition, WeapenModel model)
     {
         Bullet obj = GameEntry.ObjectPoolComponent.Get(bullet).GetComponent<Bullet>();
-        obj.Init(model.transform.position, model.transform.rotation);
-        obj.SetTarget(target, targetPosition - model.transform.position, player);
+        obj.Init(model.transform.position, model.transform.rotation, target, player);
     }
     public void Load()
     {

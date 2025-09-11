@@ -28,7 +28,7 @@ public class SpawnOnce : Ability
     }
     private void Spawn()
     {
-        foreach(var item in perfabs)
+        foreach (var item in perfabs)
         {
             GameObject obj = GameEntry.ObjectPoolComponent.Get(item.name);
             obj.transform.position = spawnPosition;

@@ -16,16 +16,20 @@ public class Player : NetworkBehaviour
     #endregion
 
     #region 属性
-    public PlayerSite site {  get; set; }
+    public PlayerSite site { get; set; }
     public ArmoryData armory { get; set; }
-    public HeroController hero {  get; private set; }
+    public HeroController hero { get; private set; }
     public Dictionary<int, GlobalSkillData> globalSkills = new Dictionary<int, GlobalSkillData>();
     public Transform units { get; set; }
     public Transform constructions { get; set; }
-    public List<UnitController> unitList {  get; private set; }
-    public List<ConstructionController> constructionList {  get; private set; }
-    public int property {  get; set; }
+    public List<UnitController> unitList { get; private set; }
+    public List<ConstructionController> constructionList { get; private set; }
+    public int property { get; set; }
     public int population { get; set; }
+    public int command { get; set; }
+
+    public void AddCommand(int num) { command = Mathf.Clamp(command + num, 0, GameEntry.SettingComponent.settingData.maxCommand); }
+    public void AddPopulation(int num) { population = Mathf.Clamp(population + num, 0, GameEntry.SettingComponent.settingData.maxPopulation); }
     #endregion
 
     private void Awake()

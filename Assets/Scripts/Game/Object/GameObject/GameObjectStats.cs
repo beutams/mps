@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class GameObjectStats : ScriptableObject, ID, IArmoryObject
+public class GameObjectStats : ScriptableObject, ID
 {
     [Header("能力")]
     public List<Ability> abilities;
@@ -20,9 +20,6 @@ public class GameObjectStats : ScriptableObject, ID, IArmoryObject
     [SerializeField] protected IDType idType;
     public int ID => id;
     public IDType searchName => idType;
-    [Header("Armory")]
-    [SerializeField] protected ArmorySubUI.ArmoryType type;
-    public ArmorySubUI.ArmoryType Type => type;
 
     public T[] GetAbilities<T>() where T : Ability
     {
