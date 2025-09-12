@@ -4,7 +4,7 @@ public class MissileBullet : Bullet
 {
     public override void Move()
     {
-        if (data.tail && target != null)
+        if (target != null)
         {
             Vector3 cos = Vector3.Dot(transform.forward, target.transform.position) * (target.transform.position - transform.position).normalized;
             Vector3 sin = transform.forward - cos;

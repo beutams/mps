@@ -18,6 +18,9 @@ public class GameUI : UIBase, ID
     [SerializeField] protected Image icon;
     [Header("WeapenPanel")]
     [SerializeField] protected Transform weapenPanel;
+    [Header("MiniMap")]
+    [SerializeField] protected RectTransform rect;
+    [SerializeField] protected RectTransform miniMap;
 
     private void Start()
     {
@@ -28,6 +31,7 @@ public class GameUI : UIBase, ID
     {
         if (!RoomController.instance.gameReady) return;
         UpdateInfo();
+        UpdateMiniMap();
     }
     public void OnReadyInit()
     {
@@ -78,5 +82,26 @@ public class GameUI : UIBase, ID
                 }
             }
         }
+    }
+    public void UpdateMiniMap()
+    {
+        float angleX = 90 - Camera.main.transform.rotation.eulerAngles.x;
+        float height = Camera.main.transform.position.y;
+        float forwardOffset = Mathf.Tan(Mathf.Deg2Rad * angleX) * height;
+        float angleY = Camera.main.transform.rotation.eulerAngles.y;
+        Vector3 targetPosition = new Vector3(Mathf.Sin(angleY) * forwardOffset, 0, Mathf.Cos(angleY) * forwardOffset) + Camera.main.transform.position;
+        Vector3 percent = targetPosition / GameEntry.SettingComponent.settingData.mapSize;
+        Vector3 percentClamp = (percent - new Vector3(0.5f, 0, 0.5f)) * 2;
+        rect.localPosition = new Vector3(miniMap.rect.width * percentClamp.x / 2, miniMap.rect.height * percentClamp.z / 2);
+
+        this.targetPosition = targetPosition;
+    }
+
+    protected Vector3 targetPosition;
+    public void OnDrawGizmos()
+    {
+        if (RoomController.instance == null || !RoomController.instance.gameReady) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(Camera.main.transform.position, new Vector3(targetPosition.x,0,targetPosition.z));
     }
 }

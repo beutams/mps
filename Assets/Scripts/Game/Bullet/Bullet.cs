@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public abstract class Bullet : MonoBehaviour
 {
-    public BulletData data { get; set; }
+    public BulletData data;
     public GameObjectController target { get; protected set; }
     public Player player { get; protected set; }
     //自身
