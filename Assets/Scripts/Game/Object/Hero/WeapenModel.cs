@@ -7,7 +7,12 @@ public class WeapenModel : MonoBehaviour
     public float directionAngle;
     public float includedAngle;
 
+    protected Quaternion startQuaternion;
     public int group { get; set; }
+    private void Awake()
+    {
+        startQuaternion = transform.localRotation;
+    }
 
     private void Update()
     {
@@ -23,9 +28,9 @@ public class WeapenModel : MonoBehaviour
         Quaternion constrainedRotation = ApplyRotationLimits(targetRotation);
         float difference = Quaternion.Angle(transform.rotation, constrainedRotation);
         if(difference < 1f) 
-            transform.rotation = constrainedRotation;
+            transform.rotation = constrainedRotation * startQuaternion;
         else
-            transform.rotation = Quaternion.Slerp(transform.rotation, constrainedRotation, weapen.turnSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation * Quaternion.Inverse(startQuaternion), constrainedRotation, weapen.turnSpeed * Time.deltaTime) * startQuaternion;
 
         this.targetVector = targetVector;
     }

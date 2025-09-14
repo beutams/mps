@@ -15,6 +15,7 @@ public abstract class Bullet : MonoBehaviour
     public UnityAction onStart;
 
     protected Quaternion startRotation;
+    protected 
     #region Init
     private void Awake()
     {
