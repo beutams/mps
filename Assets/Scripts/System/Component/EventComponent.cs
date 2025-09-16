@@ -45,6 +45,7 @@ public enum GameEvent
     //Game
     ClientChangeSceneSuccessEvent,
     UICloseEvent,
-    UIOpenEvent
+    UIOpenEvent,
+    GameSelectBuildEvent,
 }
 
