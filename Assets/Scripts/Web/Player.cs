@@ -25,11 +25,10 @@ public class Player : NetworkBehaviour
     public List<UnitController> unitList { get; private set; }
     public List<ConstructionController> constructionList { get; private set; }
     public int property { get; set; }
-    public int population { get; set; }
+    public int population { get { return unitList.Count; }}
     public int command { get; set; }
 
     public void AddCommand(int num) { command = Mathf.Clamp(command + num, 0, GameEntry.SettingComponent.settingData.maxCommand); }
-    public void AddPopulation(int num) { population = Mathf.Clamp(population + num, 0, GameEntry.SettingComponent.settingData.maxPopulation); }
     #endregion
 
     private void Awake()

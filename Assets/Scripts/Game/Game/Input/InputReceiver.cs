@@ -3,20 +3,19 @@ using UnityEngine;
 
 public class InputReceiver : SingletonMonoBehaviour<InputReceiver> 
 {
-    protected bool openShop;
     private void Update()
     {
         if (!RoomController.instance.gameReady) return;
         InputManager.instance.CameraMove();
         ReceiverShop();
-        if (!openShop)
+        ReceiverEsc();
+        if (GameEntry.UIComponent.GetTopUI() is GameUI)
         {
             ReceiverGather();
             ReceiverMove();
             ReceiverFire();
             ReceiverSkill();
         }
-
     }
     public void ReceiverGather()
     {
@@ -28,19 +27,31 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
             }
         }
     }
+    public void ReceiverEsc()
+    {
+        if (InputManager.instance.GetEsc())
+        {
+            if (GameEntry.UIComponent.GetTopUI() is GameUI)
+            {
+                GameEntry.UIComponent.ShowUI("EscUI");
+            }
+            else if(GameEntry.UIComponent.GetTopUI() is EscUI)
+            {
+                GameEntry.UIComponent.CloseUI("EscUI");
+            }
+        }
+    }
     public void ReceiverShop()
     {
         if (InputManager.instance.GetShop())
         {
-            if (openShop)
-            {
-                GameEntry.UIComponent.CloseUI("ShopUI");
-                openShop = false;
-            }
-            else
+            if (GameEntry.UIComponent.GetTopUI() is GameUI)
             {
                 GameEntry.UIComponent.ShowUI("ShopUI");
-                openShop = true;
+            }
+            else if (GameEntry.UIComponent.GetTopUI() is ShopUI)
+            {
+                GameEntry.UIComponent.CloseUI("ShopUI");
             }
         }
     }

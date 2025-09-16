@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class ConfigUI : UIBase
 {
-    
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Close();
+    }
 }

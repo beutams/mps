@@ -51,5 +51,9 @@ public class UIComponent : BaseComponent<UIComponent>
         GameEntry.ObjectPoolComponent.Release(obj.gameObject);
         GameEntry.EventComponent.Notify(GameEvent.UICloseEvent, ui);
     }
+    public UIBase GetTopUI()
+    {
+        return uiStack.Peek();
+    }
 }
 

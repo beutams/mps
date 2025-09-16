@@ -166,21 +166,6 @@ public class UnitController : GameObjectController
     {
         player.unitList.Remove(this);
     }
-    protected override void SpawnInit()
-    {
-        base.SpawnInit();
-        CheckPopulation();
-    }
-    protected virtual void CheckPopulation()
-    {
-        if(this is not HeroController)
-        {
-            if (RoomController.instance.localPlayer.population >= GameEntry.SettingComponent.settingData.maxPopulation)
-                GameEntry.ObjectPoolComponent.Release(gameObject);
-            else
-                RoomController.instance.localPlayer.population++;
-        }
-    }
     #endregion
 
     private void OnDrawGizmos()

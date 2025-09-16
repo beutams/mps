@@ -249,15 +249,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Config",
-                    "type": "Button",
-                    "id": "205409f0-c44d-4703-945d-efd2353aec74",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Exit",
                     "type": "Button",
                     "id": "c831ee5b-f951-4d49-aa93-9c707a44dbe2",
@@ -762,17 +753,6 @@
                     "action": "WeapenSwitchAuto9",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "a1612271-5336-40a3-b3a8-d34ab7f5c594",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Config",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

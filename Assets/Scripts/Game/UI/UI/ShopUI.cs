@@ -39,6 +39,7 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler, IPointerCl
     {
         timer = new Timer();
         timer.Init(3f, OnTimerComplete, false, false);
+        TimerManager.instance.AddTimer(timer);
     }
     private string GetData(string key,string value)
     {
@@ -55,7 +56,8 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler, IPointerCl
             {
                 cost = int.Parse(GetData(kvp.Key, "Cost")),
                 name = GetData(kvp.Key, "Name"),
-                weapen = GameEntry.ResourceComponent.GetDataResource("WeapenBase", GetData(kvp.Key, "Name")) as Weapen 
+                weapen = GameEntry.ResourceComponent.GetDataResource("WeapenBase", GetData(kvp.Key, "Name")) as Weapen,
+                info = GetData(kvp.Key, "Info"),
             };
             item.Refresh(data);
         }
@@ -92,13 +94,24 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler, IPointerCl
         last = currentItem;
         info.gameObject.SetActive(false);
         if(last != null)
+        {
             timer.Reset();
+            timer.Lanuch();
+        }
+        else
+        {
+            timer.Pause();
+            info.gameObject.SetActive(false);
+        }
     }
     public void OnTimerComplete()
     {
+        timer.Pause();
         Vector3 position = Input.mousePosition;
         info.position = new Vector3(position.x - info.rect.width / 2,position.y - info.rect.height /2, 0);
         info.gameObject.SetActive(true);
+        info.GetChild(0).GetComponent<Image>().sprite = currentItem.GetWeapenImage();
+        info.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{currentItem.GetData().name}\n{currentItem.GetData().info}";
     }
     public T RaycastItem<T>() where T : MonoBehaviour
     {
@@ -118,7 +131,7 @@ public class ShopUI : UIBase, IPointerDownHandler, IPointerUpHandler, IPointerCl
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (eventData.button != PointerEventData.InputButton.Left)
+        if (eventData.button != PointerEventData.InputButton.Left || currentItem == null)
             return;
         isDrag = false;
         dragImage.gameObject.SetActive(false);

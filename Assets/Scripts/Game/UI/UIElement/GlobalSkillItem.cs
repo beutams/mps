@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GlobalSkillItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GlobalSkillItem : MonoBehaviour
 {
     [SerializeField] protected Image mask;
     [SerializeField] protected Image skill;
+    [SerializeField] protected Image backImage;
     protected GlobalSkillData data;
     protected int index;
     protected float progress = 0;
@@ -23,7 +24,7 @@ public class GlobalSkillItem : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
         else
         {
-            progress = 0;
+            mask.fillAmount = 0;
         }
     }
     public void DoSkill(GameObjectController obj, Vector3 targetPosition)
@@ -42,17 +43,13 @@ public class GlobalSkillItem : MonoBehaviour, IPointerEnterHandler, IPointerExit
         ability.Init(null);
         ability.Lanuch();
         this.index = index;
-        skill.sprite = GameEntry.ResourceComponent.GetImage(data.imgPath);
+        Sprite sprite = GameEntry.ResourceComponent.GetImage(data.imgPath);
+        skill.sprite = sprite;
+        backImage.sprite = sprite;
         gameObject.SetActive(true);
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
+    public GlobalSkillData GetData()
     {
-        
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        
+        return data;
     }
 }

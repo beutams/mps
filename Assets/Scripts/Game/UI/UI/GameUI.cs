@@ -13,9 +13,6 @@ public class GameUI : UIBase, ID
     [SerializeField] protected TextMeshProUGUI property;
     [Header("Sount")]
     [SerializeField] protected TextMeshProUGUI sount;
-    [Header("HeroPanel")]
-    [SerializeField] protected Image health;
-    [SerializeField] protected Image icon;
     [Header("WeapenPanel")]
     [SerializeField] protected Transform weapenPanel;
     [Header("MiniMap")]
@@ -49,7 +46,7 @@ public class GameUI : UIBase, ID
     }
     public void UpdateInfo()
     {
-        population.text = RoomController.instance.localPlayer.population + "/10";
+        population.text = $"{RoomController.instance.localPlayer.population}/{GameEntry.SettingComponent.settingData.maxUnits}";
         property.text = RoomController.instance.localPlayer.property.ToString();
     }
     public void UpdateWeapen(object data)
@@ -104,4 +101,5 @@ public class GameUI : UIBase, ID
         Gizmos.color = Color.red;
         Gizmos.DrawLine(Camera.main.transform.position, new Vector3(targetPosition.x,0,targetPosition.z));
     }
+
 }

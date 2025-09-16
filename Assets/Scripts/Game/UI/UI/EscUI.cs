@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,10 +25,11 @@ public class EscUI : UIBase
     }
     public void OnConfigClick()
     {
-
+        GameEntry.UIComponent.ShowUI("ConfigUI");
     }
     public void OnExitClick()
     {
-        GameEntry.SceneComponent.LoadScene("MainScene");
+        GameEntry.ProcedureComponent.Change<ChangeSceneProcedure>("MainScene");
+        NetworkClient.Disconnect();
     }
 }

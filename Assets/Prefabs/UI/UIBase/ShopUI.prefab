@@ -346,7 +346,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   id: 0
   shopContent: {fileID: 8335080633071823878}
   weapenContent: {fileID: 1603940849240312026}
-  info: {fileID: 3103088066337513914}
+  info: {fileID: 6989753503580848809}
   dragImage: {fileID: 3909659797993072236}
   property: {fileID: 583917963600004815}
 --- !u!1 &817918716460431629
@@ -446,9 +446,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 253.19778, y: -88.95502}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0}
   m_SizeDelta: {x: 506.3956, y: 177.91}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &9062162910815016835
 CanvasRenderer:
   m_ObjectHideFlags: 0

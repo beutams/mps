@@ -43,6 +43,9 @@ public class SettingData
     [Header("Game")]
     public int maxPopulation = 10;
     public int maxCommand = 3;
+    public int maxUnits = 10;
+    [Header("Shop")]
+    public float stayTime = 2f;
 }
 [Serializable]
 public class SettingDataNotSave

@@ -34,6 +34,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     private InputAction weapenSwitchAuto7Action;
     private InputAction weapenSwitchAuto8Action;
     private InputAction weapenSwitchAuto9Action;
+    private InputAction exit;
     private void Start()
     {
         gatherAction = asset.FindAction("Gather");
@@ -64,6 +65,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         weapenSwitchAuto7Action = asset.FindAction("WeapenSwitchAuto7");
         weapenSwitchAuto8Action = asset.FindAction("WeapenSwitchAuto8");
         weapenSwitchAuto9Action = asset.FindAction("WeapenSwitchAuto9");
+        exit = asset.FindAction("Exit");
     }
     private HeroController hero => RoomController.instance.localPlayer.hero;
 
@@ -86,6 +88,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     public bool GetFire() => fireAction.IsPressed();
     public bool GetMove() => moveAction.WasPressedThisFrame();
     public bool GetLock() => lockAction.IsPressed();
+    public bool GetEsc() => exit.WasPerformedThisFrame();
     public int GetWeapen()
     {
         if (weapen1Action.IsPressed()) return 1;

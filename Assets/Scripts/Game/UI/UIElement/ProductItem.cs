@@ -4,12 +4,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
-public class ProductItem : MonoBehaviour
+public class ProductItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     protected ProductData data;
     protected Sprite sprite;
+    protected ShopUI shopUI;
     public Image img;
     public TextMeshProUGUI cost;
+
+    protected float timer;
+    protected bool enter;
+    private void Start()
+    {
+        shopUI = GameObject.FindAnyObjectByType<ShopUI>();
+    }
     public void Refresh(ProductData data)
     {
         this.data = data;
@@ -33,4 +41,30 @@ public class ProductItem : MonoBehaviour
     {
         return data;
     }
+
+    #region Info
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        enter = false;
+        timer = 0;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        enter = true;
+    }
+    public void Update()
+    {
+        if (enter)
+        {
+            timer += Time.deltaTime;
+            if (timer > GameEntry.SettingComponent.settingData.stayTime)
+                OnShowInfo();
+        }
+    }
+    public void OnShowInfo()
+    {
+        enter = false;
+    }
+    #endregion
 }

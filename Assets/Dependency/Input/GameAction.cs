@@ -271,15 +271,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Config"",
-                    ""type"": ""Button"",
-                    ""id"": ""205409f0-c44d-4703-945d-efd2353aec74"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""c831ee5b-f951-4d49-aa93-9c707a44dbe2"",
@@ -787,17 +778,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a1612271-5336-40a3-b3a8-d34ab7f5c594"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Config"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""6073f88b-d245-4bc1-b83b-f600c3017f52"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -841,7 +821,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         m_Game_WeapenSwitchAuto7 = m_Game.FindAction("WeapenSwitchAuto7", throwIfNotFound: true);
         m_Game_WeapenSwitchAuto8 = m_Game.FindAction("WeapenSwitchAuto8", throwIfNotFound: true);
         m_Game_WeapenSwitchAuto9 = m_Game.FindAction("WeapenSwitchAuto9", throwIfNotFound: true);
-        m_Game_Config = m_Game.FindAction("Config", throwIfNotFound: true);
         m_Game_Exit = m_Game.FindAction("Exit", throwIfNotFound: true);
     }
 
@@ -931,7 +910,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_WeapenSwitchAuto7;
     private readonly InputAction m_Game_WeapenSwitchAuto8;
     private readonly InputAction m_Game_WeapenSwitchAuto9;
-    private readonly InputAction m_Game_Config;
     private readonly InputAction m_Game_Exit;
     public struct GameActions
     {
@@ -964,7 +942,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         public InputAction @WeapenSwitchAuto7 => m_Wrapper.m_Game_WeapenSwitchAuto7;
         public InputAction @WeapenSwitchAuto8 => m_Wrapper.m_Game_WeapenSwitchAuto8;
         public InputAction @WeapenSwitchAuto9 => m_Wrapper.m_Game_WeapenSwitchAuto9;
-        public InputAction @Config => m_Wrapper.m_Game_Config;
         public InputAction @Exit => m_Wrapper.m_Game_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
@@ -1056,9 +1033,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @WeapenSwitchAuto9.started += instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.performed += instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.canceled += instance.OnWeapenSwitchAuto9;
-            @Config.started += instance.OnConfig;
-            @Config.performed += instance.OnConfig;
-            @Config.canceled += instance.OnConfig;
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
@@ -1147,9 +1121,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @WeapenSwitchAuto9.started -= instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.performed -= instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.canceled -= instance.OnWeapenSwitchAuto9;
-            @Config.started -= instance.OnConfig;
-            @Config.performed -= instance.OnConfig;
-            @Config.canceled -= instance.OnConfig;
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
@@ -1199,7 +1170,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         void OnWeapenSwitchAuto7(InputAction.CallbackContext context);
         void OnWeapenSwitchAuto8(InputAction.CallbackContext context);
         void OnWeapenSwitchAuto9(InputAction.CallbackContext context);
-        void OnConfig(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
     }
 }
