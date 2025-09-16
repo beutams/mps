@@ -1,4 +1,5 @@
 using Mirror;
+using Unity.Services.Analytics.Platform;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,16 +21,17 @@ public abstract class Bullet : MonoBehaviour
     private void Awake()
     {
         startRotation = transform.rotation;
-        curTime = 0;
-        speed = data.startSpeed;
     }
     public virtual void Init(Vector3 position, Quaternion rotation, GameObjectController target, Player player)
     {
+        gameObject.SetActive(true);
         Quaternion x = Quaternion.AngleAxis(startRotation.eulerAngles.x, Vector3.right);
         transform.position = position;
         transform.rotation = rotation * x;
         this.player = player; 
         this.target = target;
+        curTime = 0;
+        speed = data.startSpeed;
         onStart?.Invoke();
     }
     #endregion

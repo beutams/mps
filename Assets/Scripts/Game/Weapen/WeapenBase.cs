@@ -1,7 +1,7 @@
 using UnityEngine;
 public abstract class WeapenBase : ScriptableObject, ID
 {
-    public string bullet = "Bullet";
+    public string bullet = "DirectBullet";
     public int maxBulletCount;
     public float fireInterval;
     public float loadTime;
