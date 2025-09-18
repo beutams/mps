@@ -44,6 +44,7 @@ public class SettingData
     public int maxPopulation = 10;
     public int maxCommand = 3;
     public int maxUnits = 10;
+    public int groupNumber = 5;
     [Header("Shop")]
     public float stayTime = 2f;
 }

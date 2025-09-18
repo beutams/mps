@@ -99,4 +99,11 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
         if ((skills & 2) == 2) GlobalSkill.instance.DoSkill(2);
         if ((skills & 4) == 4) GlobalSkill.instance.DoSkill(3);
     }
+    public void ReceiverWeapenSwitchAuto()
+    {
+        int index = 0;
+        index = InputManager.instance.GetWeapenSwitch();
+        if (index != 0)
+            RoomController.instance.localPlayer.hero.ChangeAutoStatu(index);
+    }
 }

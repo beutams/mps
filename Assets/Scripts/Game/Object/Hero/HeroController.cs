@@ -6,6 +6,7 @@ public class HeroController : UnitController
 {
     public Dictionary<int, List<WeapenModel>> weapenGroup = new Dictionary<int, List<WeapenModel>>();
     public Dictionary<int, WeapenModel> weapenDic = new Dictionary<int, WeapenModel>();
+    public Dictionary<int, bool> autoFireDic = new Dictionary<int, bool>();
     protected int currentGroup = 1;
 
     protected override void Start()
@@ -16,7 +17,7 @@ public class HeroController : UnitController
     protected virtual void InitWeapens()
     {
         weapenGroup.Clear();
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < GameEntry.SettingComponent.settingData.groupNumber; i++)
             weapenGroup.Add(i+1, new List<WeapenModel>());
         Transform weapens = transform.Find("Weapens");
         for(int i = 0;i < weapens.childCount; i++)
@@ -55,5 +56,9 @@ public class HeroController : UnitController
             model.group = index;
             weapenGroup[index].Add(model); 
         }
+    }
+    public void ChangeAutoStatu(int index)
+    {
+        autoFireDic[index] = !autoFireDic[index];
     }
 }

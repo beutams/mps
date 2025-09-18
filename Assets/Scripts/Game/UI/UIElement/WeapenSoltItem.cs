@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class WeapenSoltItem : MonoBehaviour
 {
+    public WeapenModel model { get; set; }
     public Image weapen;
     public int cost;
     protected int index;
@@ -18,5 +19,9 @@ public class WeapenSoltItem : MonoBehaviour
         RoomController.instance.localPlayer.hero.UnEquip(index);
         RoomController.instance.localPlayer.property += cost;
         cost = 0;
+    }
+    public void ChangeGroup(int index)
+    {
+        RoomController.instance.localPlayer.hero.ChangeGroup(index, model);
     }
 }

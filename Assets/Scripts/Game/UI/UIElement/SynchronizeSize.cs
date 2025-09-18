@@ -27,6 +27,7 @@ public class SynchronizeSize : MonoBehaviour
             for(int i = 0; i < synchronizeTarget.childCount; i++)
             {
                 RectTransform rect = synchronizeTarget.GetChild(i).GetComponent<RectTransform>();
+                if (!rect.gameObject.activeSelf) continue;
                 heightR += rect.rect.height;
                 widthR += rect.rect.width;
             }
