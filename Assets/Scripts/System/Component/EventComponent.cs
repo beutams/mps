@@ -47,5 +47,6 @@ public enum GameEvent
     UICloseEvent,
     UIOpenEvent,
     GameSelectBuildEvent,
+    BuildSelectEvent,
 }
 
