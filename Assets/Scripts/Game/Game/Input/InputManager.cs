@@ -117,6 +117,7 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     }
     public void CameraMove()
     {
+        if (!GameEntry.UIComponent.IsGameUI()) return;
         float x = Input.mousePosition.x / Screen.width;
         float y = Input.mousePosition.y / Screen.height;
         float xDir = x < 0.05f && x > -0.1 ? -1 : 0;

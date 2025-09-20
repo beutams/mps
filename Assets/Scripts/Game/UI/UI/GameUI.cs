@@ -71,6 +71,7 @@ public class GameUI : UIBase, ID
                 if (weapens.Count == 0) continue;
                 Transform group = GameEntry.ObjectPoolComponent.Get("WeapenGroupUI").transform;
                 group.parent = weapenPanel;
+                group.name += i+1;
                 foreach (var weapen in weapens)
                 {
                     WeapenUIItem item = GameEntry.ObjectPoolComponent.Get("WeapenUI").GetComponent<WeapenUIItem>();

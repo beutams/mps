@@ -5,11 +5,11 @@ public class Weapens : Ability
 {
     public override bool CanDo(Vector3 target)
     {
-        return InputManager.instance.GetFire();
+        return InputManager.instance.GetFire() && GameEntry.UIComponent.IsGameUI();
     }
     public override bool CanDo(GameObjectController target)
     {
-        return InputManager.instance.GetFire();
+        return InputManager.instance.GetFire() && GameEntry.UIComponent.IsGameUI();
     }
     public override void Do(Vector3 target)
     {

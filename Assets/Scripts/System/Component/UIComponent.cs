@@ -55,5 +55,9 @@ public class UIComponent : BaseComponent<UIComponent>
     {
         return uiStack.Peek();
     }
+    public bool IsGameUI()
+    {
+        return uiStack.Peek().GetType() == typeof(GameUI);
+    }
 }
 

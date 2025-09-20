@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2960191998656843471}
   - component: {fileID: 7863140344305081586}
   - component: {fileID: 4093584255166286390}
-  - component: {fileID: 2157261270299404853}
+  - component: {fileID: 2610822419061426622}
   m_Layer: 0
   m_Name: Space
   m_TagString: Untagged
@@ -52,7 +52,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   stats: {fileID: 11400000, guid: 9d5a256e31781d1469bf26bc234f6da3, type: 2}
-  abilities: []
+  abilities:
+  - {fileID: 0}
 --- !u!114 &7863140344305081586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,8 +86,8 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!136 &2157261270299404853
-CapsuleCollider:
+--- !u!65 &2610822419061426622
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,10 +104,8 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 3.5
-  m_Height: 1
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1583986573660939193
 GameObject:

@@ -176,7 +176,7 @@ public class ShopUI : UIBase, IBeginDragHandler, IEndDragHandler, IDragHandler,I
         {
             groupDragItem.gameObject.SetActive(false);
             groupDragImage.sprite = null;
-            groupDragImage.transform.position = Vector3.zero;
+            groupDragItem.transform.position = Vector3.zero;
             GroupBase result = RaycastItem<GroupBase>();
             if (result != null)
             {
@@ -216,8 +216,8 @@ public class ShopUI : UIBase, IBeginDragHandler, IEndDragHandler, IDragHandler,I
         {
             currentGroupItem = RaycastItem<GroupItem>();
             currentItem = RaycastItem<ProductItem>();
+            WaitTime();
         }
-        WaitTime();
         property.text = RoomController.instance.localPlayer.property.ToString();
     }
     public void WaitTime()
@@ -238,6 +238,11 @@ public class ShopUI : UIBase, IBeginDragHandler, IEndDragHandler, IDragHandler,I
     }
     public void OnTimerComplete()
     {
+        if (isDrag)
+        {
+            timer.Pause();
+            return;
+        }
         timer.Pause();
         Vector3 position = Input.mousePosition;
         info.position = new Vector3(position.x - info.rect.width / 2,position.y - info.rect.height /2, 0);
