@@ -38,7 +38,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     public void RemoveHealthBar(GameObjectController obj)
     {
-        GameEntry.ObjectPoolComponent.Release(obj.gameObject);
+        GameEntry.ObjectPoolComponent.Release(healthImages[obj].gameObject);
         healthImages.Remove(obj);
     }
     private void DrawMiniMap()
@@ -63,7 +63,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     public void RemoveMiniMapItem(GameObjectController obj)
     {
-        GameEntry.ObjectPoolComponent.Release(obj.gameObject);
+        GameEntry.ObjectPoolComponent.Release(minimapItems[obj].gameObject);
         minimapItems.Remove(obj);
     }
 }

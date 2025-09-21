@@ -18,7 +18,7 @@ public abstract class GameObjectController : NetworkBehaviour
     #endregion
 
     #region 属性
-    public List<Ability> abilities;
+    public List<Ability> abilities { get; protected set; }
     public GameObjectEvents events { get; protected set; }
     public GameObjectStatus status { get; protected set; }
     public Player player { get; set; }
@@ -90,7 +90,6 @@ public abstract class GameObjectController : NetworkBehaviour
         StopAbility();
         Logout();
         QuadTreeManager.instance.Delete(this);
-        Destory();
     }
     protected virtual void SpawnInit()
     {
@@ -180,7 +179,7 @@ public abstract class GameObjectController : NetworkBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            events.onDead?.Invoke();
+            GameEntry.ObjectPoolComponent.Release(gameObject);
         }
     }
     public virtual float GetHealth()

@@ -1,4 +1,5 @@
 using ExcelDataReader;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -31,7 +32,7 @@ public static class ExcelReader
         }
 
     }
-    public static Dictionary<string,string> Read(string tableName, string key)
+    public static Dictionary<string,string> ReadOneItem(string tableName, string key)
     {
         string dataStr = dataDic[tableName][key];
         string[] datas = dataStr.Split('&');
@@ -47,14 +48,14 @@ public static class ExcelReader
         }
         return datasDic;
     }
-    public static string ReadValue(string tableName,string key,string value)
+    public static string ReadOneItemValue(string tableName,string key,string value)
     {
-        Dictionary<string,string> datas = Read(tableName, key);
+        Dictionary<string,string> datas = ReadOneItem(tableName, key);
         return datas[value];
     }
-    public static List<string> GetList(string tableName,string key, string value)
+    public static List<string> ReadOneItemValueToList(string tableName,string key, string value)
     {
-        Dictionary<string, string> datas = Read(tableName, key);
+        Dictionary<string, string> datas = ReadOneItem(tableName, key);
         string data = datas[value];
         if (typeDic[tableName][value].StartsWith("List"))
         {
@@ -63,6 +64,14 @@ public static class ExcelReader
             return subDatas.ToList();
         }
         return null;
+    }
+    public static IEnumerable<KeyValuePair<string,string>> ReadAllItem(string tableName)
+    {
+        Dictionary<string, string> datas = dataDic[tableName];
+        foreach(var item in datas)
+        {
+            yield return item;
+        }
     }
     public static List<string> ReadFromExcel(string path)
     {

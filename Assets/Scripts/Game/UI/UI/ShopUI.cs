@@ -64,7 +64,7 @@ public class ShopUI : UIBase, IBeginDragHandler, IEndDragHandler, IDragHandler,I
     }
     private string GetData(string key,string value)
     {
-        return ExcelReader.ReadValue("ShopData", key, value);
+        return ExcelReader.ReadOneItemValue("ShopData", key, value);
     }
     private void InitShopData()
     {
@@ -86,7 +86,7 @@ public class ShopUI : UIBase, IBeginDragHandler, IEndDragHandler, IDragHandler,I
     //# small,300,300 | small,400,400
     private void InitWeapenData()
     {
-        List<string> soltData = ExcelReader.GetList("HeroData", RoomController.instance.localPlayer.armory.hero.ToString(),"Solt");
+        List<string> soltData = ExcelReader.ReadOneItemValueToList("HeroData", RoomController.instance.localPlayer.armory.hero.ToString(),"Solt");
         int i = 0;
         foreach(var solt in soltData)
         {

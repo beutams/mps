@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7863140344305081586}
   - component: {fileID: 4093584255166286390}
   - component: {fileID: 8800076101687861691}
+  - component: {fileID: -9210789730996801694}
   m_Layer: 0
   m_Name: MainBase
   m_TagString: Untagged
@@ -52,10 +53,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   stats: {fileID: 11400000, guid: 9d5a256e31781d1469bf26bc234f6da3, type: 2}
-  abilities:
-  - {fileID: 11400000, guid: 9d5c4b89aa0761c43b06869992efeeec, type: 2}
-  - {fileID: 11400000, guid: 8197850340392df46bb758c5a4f538bb, type: 2}
-  - {fileID: 11400000, guid: 3597179240ecd444ab7f599c112f4241, type: 2}
 --- !u!114 &7863140344305081586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +106,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 1, z: 7}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &-9210789730996801694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636397898312157364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299bbc9945c58e24389b116c59a5205f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1583986573660939193
 GameObject:
   m_ObjectHideFlags: 0

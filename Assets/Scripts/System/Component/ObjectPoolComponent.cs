@@ -64,18 +64,32 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
             return null;
         }
     }
+    
     public void Release(GameObject obj)
     {
+        if (obj == null) return;
+        
+        // 检查是否有GameObjectController组件，如果有则触发onDead事件
+        var gameObjectController = obj.GetComponent<GameObjectController>();
+        if (gameObjectController != null)
+        {
+            gameObjectController.events?.onDead?.Invoke();
+            Debug.Log($"ObjectPool: 触发 {obj.name} 的onDead事件");
+        }
+        
         if (poolDic.ContainsKey(obj.name))
         {
             obj.SetActive(false);
             if(!obj.TryGetComponent<RectTransform>(out _))
                 obj.transform.SetParent(transform);
             poolDic[obj.name].Enqueue(obj);
+            Debug.Log($"ObjectPool: {obj.name} 已回收到对象池");
         }
         else
         {
+            Debug.LogWarning($"ObjectPool: 对象 {obj.name} 不在池中，直接销毁");
             Destroy(obj);
         }
     }
+
 }

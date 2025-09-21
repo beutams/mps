@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccafd354405c4424991af81f756786a0, type: 3}
+  m_Name: Space
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: 15fa7484e06eb1f498b5341808299d27, type: 2}
+  healthPerfab: {fileID: 5865935096257579933, guid: f055509ddea27744e836d9d56ec113a7, type: 3}
+  objName: "\u6307\u6325\u4E2D\u5FC3"
+  imgPath: 
+  maxHealth: 100
+  defense: 5
+  radius: 3
+  searchRadius: 0
+  canMove: 0
+  canAttack: 0
+  id: 1
+  idType: 4

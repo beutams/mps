@@ -296,6 +296,11 @@ MonoBehaviour:
     - 0
     - 0
     - 1
+    maxPopulation: 10
+    maxCommand: 3
+    maxUnits: 10
+    groupNumber: 5
+    stayTime: 2
 --- !u!1 &4527564024810447360
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +579,7 @@ MonoBehaviour:
   ReliableMaxMessageSize: 297433
   UnreliableMaxMessageSize: 1194
   debugLog: 0
-  statisticsGUI: 1
+  statisticsGUI: 0
   statisticsLog: 0
 --- !u!114 &7854430542190704740
 MonoBehaviour:

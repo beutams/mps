@@ -104,8 +104,7 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
         return sprite;
 #else
         return null;
-#endif
-        
+#endif  
     }
     public Sprite GetWeapenImage(string name)
     {
@@ -116,7 +115,16 @@ public class ResourceComponent : BaseComponent<ResourceComponent>
 #else
         return null;
 #endif
-
+    }
+    public Sprite GetConstructionImage(string name)
+    {
+#if UNITY_EDITOR
+        string path = $"Assets\\Res\\Construction\\{name}.png";
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path.Replace('\\', '/'));
+        return sprite;
+#else
+        return null;
+#endif
     }
     #endregion
     protected Stack<T> GetAllAssets<T>(string path, string suffix) where T : UnityEngine.Object
