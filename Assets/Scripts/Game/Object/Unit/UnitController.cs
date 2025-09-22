@@ -86,7 +86,21 @@ public class UnitController : GameObjectController
     }
     private void NavMeshSet()
     {
-        if (NavMesh.CalculatePath(new Vector3(position.x, 0, position.z), targetPosition, NavMesh.AllAreas, path))
+        // 保持起始点的Y轴高度，只将目标点投影到NavMesh上
+        Vector3 startPos = position;
+        Vector3 targetPos = targetPosition;
+        
+        // 如果目标位置没有Y轴信息，尝试采样NavMesh高度
+        if (Mathf.Approximately(targetPos.y, 0f))
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(targetPos, out hit, 5f, NavMesh.AllAreas))
+            {
+                targetPos = hit.position;
+            }
+        }
+        
+        if (NavMesh.CalculatePath(startPos, targetPos, NavMesh.AllAreas, path))
         {
             pathPoint = path.corners;
             if(path.corners.Length >= 3)
@@ -122,15 +136,29 @@ public class UnitController : GameObjectController
     private void ORCAStep()
     {
         if (pathPoint == null || pathPoint.Length <= 0) return;
-        velocity = orcaAgent.Step(position, velocity, (pathPoint[0] - position).normalized * UnitStats.speed, !isMove);
+        
+        // 计算3D目标方向，但ORCA只处理XZ平面
+        Vector3 targetDirection3D = (pathPoint[0] - position).normalized;
+        Vector3 targetDirectionXZ = new Vector3(targetDirection3D.x, 0, targetDirection3D.z).normalized;
+        
+        velocity = orcaAgent.Step(position, velocity, targetDirectionXZ * UnitStats.speed, !isMove);
     }
 
     private void DoMove()
     {
         if (pathPoint == null ||pathPoint.Length <= 0) return;
-        Vector3 turnForward = Vector3.RotateTowards(transform.forward, velocity, unitStats.rotateForce * Time.deltaTime, 0f);
+        
+        // 保持原有的2D移动逻辑，只在XZ平面计算方向和旋转
+        Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
+        Vector3 turnForward = Vector3.RotateTowards(transform.forward, horizontalVelocity, unitStats.rotateForce * Time.deltaTime, 0f);
         transform.rotation = Quaternion.LookRotation(turnForward);
-        transform.position += velocity * Time.deltaTime;
+        
+        // XZ平面移动
+        Vector3 newPosition = transform.position + horizontalVelocity * Time.deltaTime;
+        
+        // Y轴适应地形高度
+        newPosition = AlignToGround(newPosition);
+        transform.position = newPosition;
     }
     private void EndMove()
     {
@@ -147,6 +175,33 @@ public class UnitController : GameObjectController
         else
             conerPoints = null;
         pathPoint = Enumerable.Skip(pathPoint, 1).ToArray();
+    }
+    #endregion
+    #region Terrain Adaptation
+    
+    /// <summary>
+    /// 将位置对齐到地面
+    /// </summary>
+    private Vector3 AlignToGround(Vector3 position)
+    {
+        // 首先尝试NavMesh采样获取精确地面高度
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(position, out navHit, 5f, NavMesh.AllAreas))
+        {
+            position.y = navHit.position.y;
+            return position;
+        }
+        
+        // 如果NavMesh失败，使用射线检测
+        RaycastHit hit;
+        if (Physics.Raycast(position + Vector3.up * 5f, Vector3.down, out hit, 10f))
+        {
+            position.y = hit.point.y;
+            return position;
+        }
+        
+        // 都失败则保持当前Y位置
+        return position;
     }
     #endregion
 
