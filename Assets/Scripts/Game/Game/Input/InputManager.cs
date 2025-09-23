@@ -104,15 +104,15 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     }
     public int GetWeapenSwitch()
     {
-        if (weapenSwitchAuto1Action.IsPressed()) return 1;
-        if (weapenSwitchAuto2Action.IsPressed()) return 2;
-        if (weapenSwitchAuto3Action.IsPressed()) return 3;
-        if (weapenSwitchAuto4Action.IsPressed()) return 4;
-        if (weapenSwitchAuto5Action.IsPressed()) return 5;
-        if (weapenSwitchAuto6Action.IsPressed()) return 6;
-        if (weapenSwitchAuto7Action.IsPressed()) return 7;
-        if (weapenSwitchAuto8Action.IsPressed()) return 8;
-        if (weapenSwitchAuto9Action.IsPressed()) return 9;
+        if (weapenSwitchAuto1Action.WasPerformedThisFrame()) return 1;
+        if (weapenSwitchAuto2Action.WasPerformedThisFrame()) return 2;
+        if (weapenSwitchAuto3Action.WasPerformedThisFrame()) return 3;
+        if (weapenSwitchAuto4Action.WasPerformedThisFrame()) return 4;
+        if (weapenSwitchAuto5Action.WasPerformedThisFrame()) return 5;
+        if (weapenSwitchAuto6Action.WasPerformedThisFrame()) return 6;
+        if (weapenSwitchAuto7Action.WasPerformedThisFrame()) return 7;
+        if (weapenSwitchAuto8Action.WasPerformedThisFrame()) return 8;
+        if (weapenSwitchAuto9Action.WasPerformedThisFrame()) return 9;
         return -1;
     }
     public void CameraMove()

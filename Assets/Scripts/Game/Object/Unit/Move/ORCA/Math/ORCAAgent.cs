@@ -65,8 +65,7 @@ public class ORCAAgent
         }
         neighborAgents.Clear();
         List<GameObjectController> list = new List<GameObjectController>();
-        QuadTreeManager.instance.Find(new Vector2(position.x - unitController.stats.searchRadius, position.y - unitController.stats.searchRadius)
-            , new Vector2(position.x + unitController.stats.searchRadius, position.y + unitController.stats.searchRadius), ref list);
+        QuadTreeManager.instance.Find(position, unitController.stats.searchRadius, ref list);
         foreach(var agent in list)
         {
             if (agent is UnitController && Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius)

@@ -15,6 +15,7 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
             ReceiverMove();
             ReceiverFire();
             ReceiverSkill();
+            ReceiverWeapenSwitchAuto();
         }
     }
     public void ReceiverGather()
@@ -101,9 +102,11 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     }
     public void ReceiverWeapenSwitchAuto()
     {
-        int index = 0;
-        index = InputManager.instance.GetWeapenSwitch();
-        if (index != 0)
+        int index = InputManager.instance.GetWeapenSwitch();
+        if (index != -1)
+        {
             RoomController.instance.localPlayer.hero.ChangeAutoStatu(index);
+        }
+
     }
 }

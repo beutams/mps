@@ -6,7 +6,6 @@ public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
 {
     public bool showGizmos;
     private QuadTreeNode root;
-
     private void Start()
     {
         InitTree();
@@ -23,9 +22,13 @@ public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
     {
         root.Delete(obj);
     }
-    public void Find(Vector2 min, Vector2 max, ref List<GameObjectController> list)
+    public void Find(Vector2 position, float radius, ref List<GameObjectController> list)
     {
-        root.Find(min, max, ref list);
+        root.Find(new Vector2(position.x - radius, position.y - radius), new Vector2(position.x + radius, position.y + radius), ref list);
+    }
+    public GameObjectController FindNearest(Vector2 position, float radius)
+    {
+        return null;
     }
     public QuadTreeNode FindTarget(GameObjectController obj)
     {
@@ -42,5 +45,9 @@ public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
         Gizmos.color = Color.white;
         root.DrawGizmos();
     }
-
+}
+public enum QuadTreeType
+{
+    Object,
+    Bullet,
 }

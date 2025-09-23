@@ -12,6 +12,7 @@ public abstract class WeapenBase : ScriptableObject, ID
     protected Player player;
 
     public float turnSpeed;
+    public float fireDistance;
     public int bulletCount { get; private set; }
     [Header("ID")]
     [SerializeField] protected int id;
