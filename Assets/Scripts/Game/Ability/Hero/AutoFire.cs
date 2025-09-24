@@ -18,7 +18,11 @@ public class AutoFire : Ability
             {
                 foreach(var weapen in RoomController.instance.localPlayer.hero.weapenGroup[item.Key])
                 {
-                    GameObjectController target = QuadTreeManager.instance.FindNearest(Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance);
+                    QuadTreeStat target = null;
+                    if (weapen.weapen.canIntercept)
+                        target = QuadTreeManager.instance.FindNearest(QuadTreeType.Object, Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance);
+                    if(target == null)
+                        target = QuadTreeManager.instance.FindNearest(QuadTreeType.Object,Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance);
                     weapen.weapen.Fire(target, Vector3.zero, weapen);
                 }
             }

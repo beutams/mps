@@ -26,7 +26,7 @@ public class Weapens : Ability
         HeroController heroController = owner as HeroController;
         foreach (var item in heroController.weapenGroup[heroController.GetCurrentGroup()])
         {
-            item.weapen.Fire(target, target.transform.position, item);
+            item.weapen.Fire(target.quadTreeStat, target.transform.position, item);
         }
     }
 }

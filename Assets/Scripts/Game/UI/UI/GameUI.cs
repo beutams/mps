@@ -52,7 +52,8 @@ public class GameUI : UIBase, ID
     }
     public void UpdateWeapen(object data)
     {
-        if(data is string str && str == "ShopUI")
+        weapenGroups.Clear();
+        if (data is string str && str == "ShopUI")
         {
             for(int i = 0; i < weapenPanel.childCount; i++)
             {
@@ -73,7 +74,6 @@ public class GameUI : UIBase, ID
                 Transform group = GameEntry.ObjectPoolComponent.Get("WeapenGroupUI").transform;
                 weapenGroups.Add(i+1,group.GetComponent<WeapenGroup>());
                 group.parent = weapenPanel;
-                group.name += i+1;
                 foreach (var weapen in weapens)
                 {
                     WeapenUIItem item = GameEntry.ObjectPoolComponent.Get("WeapenUI").GetComponent<WeapenUIItem>();

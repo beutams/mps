@@ -1,4 +1,5 @@
 using Mirror;
+using System.Security.Principal;
 using Unity.Services.Analytics.Platform;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +7,8 @@ using UnityEngine.Events;
 public abstract class Bullet : MonoBehaviour
 {
     public BulletData data;
-    public GameObjectController target { get; protected set; }
+    public QuadTreeStat target { get; protected set; }
+    public QuadTreeStat quadStat { get; protected set; }
     public Player player { get; protected set; }
     
     //自身
@@ -22,10 +24,13 @@ public abstract class Bullet : MonoBehaviour
     private void Awake()
     {
         startRotation = transform.rotation;
+        quadStat = GetComponent<QuadTreeStat>();
     }
     
-    public virtual void Init(Vector3 position, Quaternion rotation, GameObjectController target, Player player)
+    public virtual void Init(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player)
     {
+        if (data.isEntity)
+            QuadTreeManager.instance.Insert(QuadTreeType.Bullet, quadStat);
         gameObject.SetActive(true);
         
         // 设置子弹位置
@@ -68,13 +73,20 @@ public abstract class Bullet : MonoBehaviour
         if (curTime < data.liveTime)
             curTime += Time.deltaTime;
         else
+        {
             GameEntry.ObjectPoolComponent.Release(gameObject);
+            if (data.isEntity)
+                QuadTreeManager.instance.Delete(QuadTreeType.Bullet, quadStat);
+        }
+
     }
 
     public virtual void OnCollisionEnter(Collision collision)
     {
         onCollision?.Invoke(collision);
         GameEntry.ObjectPoolComponent.Release(gameObject);
+        if (data.isEntity)
+            QuadTreeManager.instance.Delete(QuadTreeType.Bullet, quadStat);
     }
     
     /// <summary>

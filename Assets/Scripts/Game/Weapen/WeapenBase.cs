@@ -13,6 +13,8 @@ public abstract class WeapenBase : ScriptableObject, ID
 
     public float turnSpeed;
     public float fireDistance;
+    public bool canIntercept;
+
     public int bulletCount { get; private set; }
     [Header("ID")]
     [SerializeField] protected int id;
@@ -36,7 +38,7 @@ public abstract class WeapenBase : ScriptableObject, ID
             loadTimer.Pause();
         }
     }
-    public void Fire(GameObjectController target,Vector3 targetPosition,WeapenModel model)
+    public void Fire(QuadTreeStat target,Vector3 targetPosition,WeapenModel model)
     {
         if(bulletCount > 0 && fireTimer != null && fireTimer.IsDone())
         {
@@ -50,7 +52,7 @@ public abstract class WeapenBase : ScriptableObject, ID
             loadTimer.Lanuch();
         }
     }
-    public void FireInner(GameObjectController target, Vector3 targetPosition, WeapenModel model)
+    public void FireInner(QuadTreeStat target, Vector3 targetPosition, WeapenModel model)
     {
         Bullet obj = GameEntry.ObjectPoolComponent.Get(bullet).GetComponent<Bullet>();
         obj.Init(model.transform.position, model.transform.rotation, target, player);

@@ -13,6 +13,8 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
     public bool gameReady {  get; set; }
     public Dictionary<PlayerSite, Player> playerDic { get; set; }
     public UnityEvent onGameReady;
+
+    protected int endFlag = 0;
     protected virtual void Awake()
     {
         DontDestroyOnLoad(this);
@@ -51,6 +53,34 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
     {
         gameReady = true;
         GameEntry.EventComponent.Notify(GameEvent.ClientChangeSceneSuccessEvent);
+    }
+    private void Update()
+    {
+        if (gameReady)
+        {
+            if (noCampPlayer.constructionList.Count == 0)
+            {
+                endFlag = 1;
+                GameEntry.UIComponent.ShowUI("WinUI");
+            }
+            else if (localPlayer.constructionList.Count == 0)
+            {
+                endFlag = 2;
+                GameEntry.UIComponent.ShowUI("FailUI");
+            }
+            if(endFlag != 0)
+            {
+                if (isServer)
+                    NetworkManager.singleton.StopHost();
+                else
+                    NetworkManager.singleton.StopClient();
+            }
+        }
+    }
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        GameEntry.ProcedureComponent.Change<MenuProcedure>();
     }
 }
 public enum PlayerSite : byte

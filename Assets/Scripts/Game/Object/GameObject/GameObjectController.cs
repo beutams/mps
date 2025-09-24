@@ -25,6 +25,7 @@ public abstract class GameObjectController : NetworkBehaviour
     public GameObjectController target { get; protected set; }
     public Vector3 targetPosition { get; protected set; }
     public float attackDistance { get; protected set; }
+    public QuadTreeStat quadTreeStat { get; protected set; }
     #endregion
 
     #region 初始化
@@ -33,10 +34,13 @@ public abstract class GameObjectController : NetworkBehaviour
         InitEvents();
         InitStats();
         InitAbility();
+        InitQuadTree();
     }
-    protected virtual void Start()
+    protected void InitQuadTree()
     {
-        QuadTreeManager.instance.Insert(this);
+        quadTreeStat = GetComponent<QuadTreeStat>();
+        quadTreeStat.radius = stats.radius;
+        QuadTreeManager.instance.Insert(QuadTreeType.Object, quadTreeStat);
     }
     protected virtual void InitStats()
     {
@@ -89,7 +93,7 @@ public abstract class GameObjectController : NetworkBehaviour
     {
         StopAbility();
         Logout();
-        QuadTreeManager.instance.Delete(this);
+        QuadTreeManager.instance.Delete(QuadTreeType.Object,quadTreeStat);
     }
     protected virtual void SpawnInit()
     {

@@ -9,9 +9,8 @@ public class HeroController : UnitController
     public Dictionary<int, bool> autoFireDic = new Dictionary<int, bool>();
     protected int currentGroup = 1;
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         InitWeapens();
     }
     protected virtual void InitWeapens()

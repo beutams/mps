@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Build.Player;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,33 +7,35 @@ public class QuadTreeNode
 {
     public float size;
     public Vector2 center;
-    public List<GameObjectController> objList;
+    public List<QuadTreeStat> objList;
     public QuadTreeNode[] children;
     public QuadTreeNode parent;
     private int depth;
+    private QuadTreeType type;
     public bool isDivide => children != null;
-    public QuadTreeNode()
+    public QuadTreeNode(QuadTreeType type)
     {
         size = 0;
         center = Vector2.zero;
-        objList = new List<GameObjectController>();
+        objList = new List<QuadTreeStat>();
         depth = 0;
+        this.type = type;
     }
     public QuadTreeNode(float size, Vector2 center, int depth, QuadTreeNode parent) 
     {
-        objList = new List<GameObjectController>();
+        objList = new List<QuadTreeStat>();
         this.size = size;
         this.center = center;
         this.depth = depth;
         this.parent = parent;
     }
     #region 插入
-    public void Insert(GameObjectController obj)
+    public void Insert(QuadTreeStat obj)
     {
         //0在外边 1在里面 2在边上
         int stat = 0;
-        stat = Overlaps(obj.transform.position, obj.stats.radius) ? 1 : stat;
-        stat = CrossSplitLine(obj.transform.position, obj.stats.radius) ? 2 : stat;
+        stat = Overlaps(obj.position, obj.radius) ? 1 : stat;
+        stat = CrossSplitLine(obj.position, obj.radius) ? 2 : stat;
         if((stat == 1 && !isDivide && (objList.Count < GameEntry.SettingComponent.settingData.maxObject || depth == GameEntry.SettingComponent.settingData.maxDepth)) || (stat == 2))
         {
             if (!objList.Contains(obj))
@@ -61,11 +64,11 @@ public class QuadTreeNode
         children[1] = new QuadTreeNode(halfSize, RT, depth + 1, this);
         children[2] = new QuadTreeNode(halfSize, LB, depth + 1, this);
         children[3] = new QuadTreeNode(halfSize, RB, depth + 1, this);
-        List<GameObjectController> objs = new List<GameObjectController>();
-        foreach (GameObjectController obj in objList)
+        List<QuadTreeStat> objs = new List<QuadTreeStat>();
+        foreach (QuadTreeStat obj in objList)
             objs.Add(obj);
         objList.Clear();
-        foreach (GameObjectController obj in objs)
+        foreach (QuadTreeStat obj in objs)
             Insert(obj);
     }
     private bool Overlaps(Vector3 position, float radius)
@@ -101,7 +104,7 @@ public class QuadTreeNode
     #endregion
 
     #region 删除
-    public void Delete(GameObjectController obj)
+    public void Delete(QuadTreeStat obj)
     {
         QuadTreeNode node = FindObj(obj);
         if (node == null) return;
@@ -148,7 +151,7 @@ public class QuadTreeNode
     #endregion
 
     #region 查找
-    public void Find(Vector2 minObj, Vector2 maxObj,ref List<GameObjectController> list)
+    public void Find(Vector2 minObj, Vector2 maxObj,ref List<QuadTreeStat> list)
     {
         float minX = center.x - size / 2;
         float maxX = center.x + size / 2;
@@ -166,7 +169,7 @@ public class QuadTreeNode
                 list.Add(obj);
         }
     }
-    public QuadTreeNode FindObj(GameObjectController obj)
+    public QuadTreeNode FindObj(QuadTreeStat obj)
     {
         if (objList.Contains(obj))
             return this;
@@ -192,17 +195,17 @@ public class QuadTreeNode
         if (!RoomController.instance.gameReady) return;
         if (objList.Count != 0)
         {
-            List<GameObjectController> controllers = new List<GameObjectController>();
+            List<QuadTreeStat> controllers = new List<QuadTreeStat>();
             foreach (var obj in objList)
             {
-                if (!Overlaps(obj.transform.position, obj.stats.radius) || ChildOverlaps(obj.transform.position, obj.stats.radius))
+                if (!Overlaps(obj.position, obj.radius) || ChildOverlaps(obj.position, obj.radius))
                 {
                     controllers.Add(obj);
                 }
             }
             foreach(var obj in controllers)
             {
-                QuadTreeNode node = QuadTreeManager.instance.FindTarget(obj);
+                QuadTreeNode node = QuadTreeManager.instance.FindTarget(type,obj);
                 objList.Remove(obj);
                 node.objList.Add(obj);
                 if(!node.isDivide && node.objList.Count > GameEntry.SettingComponent.settingData.maxObject)
@@ -219,10 +222,10 @@ public class QuadTreeNode
             foreach (var child in children)
                 child.Update();
     }
-    public QuadTreeNode FindTarget(GameObjectController obj)
+    public QuadTreeNode FindTarget(QuadTreeStat obj)
     {
         QuadTreeNode node;
-        if (Overlaps(obj.transform.position, obj.stats.radius))
+        if (Overlaps(obj.transform.position, obj.radius))
         {
             if (isDivide)
             {
@@ -263,7 +266,7 @@ public class QuadTreeNode
             foreach(var item in objList)
             {
 
-                Gizmos.DrawWireCube(item.transform.position, new Vector3(item.stats.radius*2, item.stats.radius * 2, item.stats.radius * 2));
+                Gizmos.DrawWireCube(item.transform.position, new Vector3(item.radius*2, item.radius * 2, item.radius * 2));
             }
         }
     }
