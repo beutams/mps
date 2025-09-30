@@ -72,6 +72,7 @@ public class OnlineRoomController : RoomController, ID
         Debug.Log($"AddNoCampPlayer");
         playerDic[PlayerSite.NoCamp] = player.GetComponent<Player>();
         player.transform.position = Vector3.zero;
+        noCampPlayer = player.GetComponent<Player>();
     }
     IEnumerator WaitOnSceneLoad()
     {

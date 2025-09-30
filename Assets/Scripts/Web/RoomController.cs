@@ -25,29 +25,40 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
     public virtual void OnGameStart()
     {
         Debug.Log($"Client OnGameStart,PlayerNumber : {playerDic.Count()}");
+        List<GameObjectInit> objs = FindObjectsByType<GameObjectInit>(FindObjectsSortMode.None).ToList();
         foreach (var player in playerDic)
         {
+            GameObjectInit cur = null;
             player.Value.playerItem = Instantiate(player.Value.playerItem, Vector3.zero, Quaternion.identity);
             player.Value.playerItem.name = player.Value.playerItem.name.ToString() + player.Key.ToString();
             player.Value.playerItem.SetParent(GameObject.Find("GameObjects").transform);
             player.Value.units = player.Value.playerItem.transform.GetChild(0);
             player.Value.constructions = player.Value.playerItem.transform.GetChild(1);
-            GameObjectInit[] objs = FindObjectsByType<GameObjectInit>(FindObjectsSortMode.None);
             foreach (GameObjectInit obj in objs)
             {
                 if (obj.site == player.Key)
                 {
+                    cur = obj;
                     foreach (var gobj in obj.objList)
                     {
                         gobj.events.onSpawn?.Invoke(player.Value);
                     }
                 }
             }
+            objs.Remove(cur);
+        }
+        if(objs.Count > 0)
+        {
             foreach (var obj in objs)
             {
+                foreach(var gobj in obj.objList)
+                {
+                    Destroy(gobj.gameObject);
+                }
                 Destroy(obj.gameObject);
             }
         }
+
     }
     public virtual void Ready()
     {
@@ -68,7 +79,7 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
                 endFlag = 2;
                 GameEntry.UIComponent.ShowUI("FailUI");
             }
-            if(endFlag != 0)
+            if (endFlag != 0)
             {
                 if (isServer)
                     NetworkManager.singleton.StopHost();
