@@ -116,6 +116,11 @@ public class HallSubUI : SubUIBase
     {
         PlayerInfo[] infos = msg.data;
         Debug.Log("UpdateRoom:" + msg.ToString());
+        foreach(var obj in playerDic.Values)
+        {
+            GameEntry.ObjectPoolComponent.Release(obj.gameObject);
+        }
+        playerDic.Clear();
         foreach(var info in infos)
         {
             if (!playerDic.ContainsKey(info))

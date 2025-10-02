@@ -19,6 +19,7 @@ public class GameUI : UIBase, ID
     [SerializeField] protected RectTransform rect;
     [SerializeField] protected RectTransform miniMap;
 
+    protected Dictionary<int,WeapenGroup> weapenGroups = new Dictionary<int, WeapenGroup>();
     private void Start()
     {
         OnReadyInit();
@@ -51,7 +52,8 @@ public class GameUI : UIBase, ID
     }
     public void UpdateWeapen(object data)
     {
-        if(data is string str && str == "ShopUI")
+        weapenGroups.Clear();
+        if (data is string str && str == "ShopUI")
         {
             for(int i = 0; i < weapenPanel.childCount; i++)
             {
@@ -70,8 +72,8 @@ public class GameUI : UIBase, ID
                 List<WeapenModel> weapens = hero.weapenGroup[i+1];
                 if (weapens.Count == 0) continue;
                 Transform group = GameEntry.ObjectPoolComponent.Get("WeapenGroupUI").transform;
+                weapenGroups.Add(i+1,group.GetComponent<WeapenGroup>());
                 group.parent = weapenPanel;
-                group.name += i+1;
                 foreach (var weapen in weapens)
                 {
                     WeapenUIItem item = GameEntry.ObjectPoolComponent.Get("WeapenUI").GetComponent<WeapenUIItem>();
@@ -79,6 +81,7 @@ public class GameUI : UIBase, ID
                     item.SetWeapen(weapen.weapen);
                 }
             }
+            RefreshAutoWeapen();
         }
     }
     public void UpdateMiniMap()
@@ -94,7 +97,13 @@ public class GameUI : UIBase, ID
 
         this.targetPosition = targetPosition;
     }
-
+    public void RefreshAutoWeapen()
+    {
+        foreach(var kvp in weapenGroups)
+        {
+            kvp.Value.Refresh(RoomController.instance.localPlayer.hero.autoFireDic[kvp.Key]);
+        }
+    }
     protected Vector3 targetPosition;
     public void OnDrawGizmos()
     {

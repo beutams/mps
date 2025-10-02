@@ -9,16 +9,18 @@ public class HeroController : UnitController
     public Dictionary<int, bool> autoFireDic = new Dictionary<int, bool>();
     protected int currentGroup = 1;
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         InitWeapens();
     }
     protected virtual void InitWeapens()
     {
         weapenGroup.Clear();
         for(int i = 0; i < GameEntry.SettingComponent.settingData.groupNumber; i++)
+        {
             weapenGroup.Add(i+1, new List<WeapenModel>());
+            autoFireDic.Add(i + 1, false);
+        }
         Transform weapens = transform.Find("Weapens");
         for(int i = 0;i < weapens.childCount; i++)
         {
@@ -60,5 +62,10 @@ public class HeroController : UnitController
     public void ChangeAutoStatu(int index)
     {
         autoFireDic[index] = !autoFireDic[index];
+        GameObject.FindAnyObjectByType<GameUI>().RefreshAutoWeapen();
+    }
+    public bool WeapenCanAutoFire(int index)
+    {
+        return autoFireDic[index] && currentGroup != index;
     }
 }

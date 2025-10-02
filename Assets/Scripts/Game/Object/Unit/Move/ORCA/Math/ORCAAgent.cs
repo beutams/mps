@@ -64,14 +64,13 @@ public class ORCAAgent
                 neighborObstacles.Add(obs);
         }
         neighborAgents.Clear();
-        List<GameObjectController> list = new List<GameObjectController>();
-        QuadTreeManager.instance.Find(new Vector2(position.x - unitController.stats.searchRadius, position.y - unitController.stats.searchRadius)
-            , new Vector2(position.x + unitController.stats.searchRadius, position.y + unitController.stats.searchRadius), ref list);
+        List<QuadTreeStat> list = new List<QuadTreeStat>();
+        QuadTreeManager.instance.Find(QuadTreeType.Object,position, unitController.stats.searchRadius, ref list);
         foreach(var agent in list)
         {
-            if (agent is UnitController && Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius)
+            if (agent.TryGetComponent(out UnitController unit) && Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius)
             {
-                neighborAgents.Add(((UnitController)agent).orcaAgent);
+                neighborAgents.Add((unit).orcaAgent);
             }
         }
     }

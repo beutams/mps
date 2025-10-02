@@ -1,9 +1,6 @@
 using Mirror;
-using Mirror.Examples.Basic;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
@@ -37,11 +34,16 @@ public class Player : NetworkBehaviour
         constructionList = new List<ConstructionController>();
         unitList = new List<UnitController>();
     }
+    
     public void AddObject(GameObjectController controller)
     {
-        AddObjectServer(controller);
+        if (isServer)
+        {
+            AddObjectServer(controller);
+        }
+
     }
-    [Command]
+    [Command(requiresAuthority = false)]
     public void AddObjectServer(GameObjectController controller)
     {
         AddObjectClient(controller);
@@ -49,6 +51,7 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void AddObjectClient(GameObjectController controller)
     {
+        Debug.Log($"Player: {site} Add Object {controller}");
         if (controller is HeroController && hero == null)
         {
             hero = controller as HeroController;
@@ -65,6 +68,7 @@ public class Player : NetworkBehaviour
             controller.transform.SetParent(constructions);
         }
     }
+
     public void InitArmoryData()
     {
         InitArmoryDataServer();

@@ -32,11 +32,17 @@ public class OnlineRoomController : RoomController, ID
     [ClientCallback]
     public override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"Client OnSceneLoaded");
+        Debug.Log($"Client OnSceneLoaded: {scene.name}");
         if (scene.name == "GameScene")
         {
             StartCoroutine(WaitOnSceneLoad());
         }
+        
+/*        // 通知场景加载追踪器
+        if (SceneLoadTracker.Instance != null)
+        {
+            SceneLoadTracker.Instance.NotifySceneLoaded(scene.name);
+        }*/
     }
     public void InitLocalPlayer()
     {
@@ -66,6 +72,7 @@ public class OnlineRoomController : RoomController, ID
         Debug.Log($"AddNoCampPlayer");
         playerDic[PlayerSite.NoCamp] = player.GetComponent<Player>();
         player.transform.position = Vector3.zero;
+        noCampPlayer = player.GetComponent<Player>();
     }
     IEnumerator WaitOnSceneLoad()
     {
