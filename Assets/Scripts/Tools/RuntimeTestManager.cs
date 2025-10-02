@@ -316,3 +316,4 @@ public class RuntimeTestManager : MonoBehaviour
         TestGameEntrySystem();
     }
 }
+
