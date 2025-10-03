@@ -1,6 +1,7 @@
 using Mirror;
 using System.Security.Principal;
 using Unity.Services.Analytics.Platform;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,30 +31,19 @@ public abstract class Bullet : MonoBehaviour
     public virtual void Init(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player)
     {
         if (data.isEntity)
+        {
+            quadStat.radius = 0.1f;
+            quadStat.player = player;
             QuadTreeManager.instance.Insert(QuadTreeType.Bullet, quadStat);
+        }
         gameObject.SetActive(true);
-        
-        // 设置子弹位置
         transform.position = position;
-        
-        // 计算飞行方向
         Vector3 flyDirection = rotation * Vector3.forward;
-        
-        // 让capsule的上方(Y轴)指向飞行方向
-        // 这样capsule的长轴就会与飞行方向对齐
         transform.rotation = Quaternion.LookRotation(Vector3.up, flyDirection);
-        
-        // 如果capsule的长轴是Z轴方向，使用这个：
-        // transform.rotation = Quaternion.LookRotation(flyDirection, Vector3.up);
-        
         this.player = player; 
         this.target = target;
         curTime = 0;
         speed = data.startSpeed;
-        
-        Debug.Log($"子弹发射 - 位置: {position}");
-        Debug.Log($"子弹旋转 - 飞行方向: {flyDirection}, 最终旋转: {transform.rotation.eulerAngles}");
-        Debug.Log($"子弹朝向 - Forward: {transform.forward}, Up: {transform.up}, Right: {transform.right}");
         
         onStart?.Invoke();
     }

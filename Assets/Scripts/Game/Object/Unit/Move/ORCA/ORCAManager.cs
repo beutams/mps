@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class ORCAManager : SingletonMonoBehaviour<ORCAManager>
 {
     public List<Obstacle> allObstacles = new List<Obstacle>();
     public Dictionary<GameObject, List<Obstacle>> obstaclesDic;
-
     private void Awake()
     {
         obstaclesDic = new Dictionary<GameObject, List<Obstacle>>();

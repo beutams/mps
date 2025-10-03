@@ -68,4 +68,12 @@ public class HeroController : UnitController
     {
         return autoFireDic[index] && currentGroup != index;
     }
+    protected override void Update()
+    {
+        base.Update();
+        foreach(var model in weapenGroup[currentGroup])
+        {
+            model.TurnTowardsMouse();
+        }
+    }
 }

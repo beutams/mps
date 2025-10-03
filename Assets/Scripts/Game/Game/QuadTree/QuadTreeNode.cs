@@ -157,10 +157,7 @@ public class QuadTreeNode
         float maxX = center.x + size / 2;
         float minY = center.y - size / 2;
         float maxY = center.y + size / 2;
-        if((minX > minObj.x && minX < maxObj.x && minY > minObj.y && minY < maxObj.y)
-            || (minX > minObj.x && minX < maxObj.x && maxY > minObj.y && maxY < maxObj.y)
-            || (maxX > minObj.x && maxX < maxObj.x && minY > minObj.y && minY < maxObj.y)
-            || (maxX > minObj.x && maxX < maxObj.x && maxY > minObj.y && maxY < maxObj.y))
+        if(!(maxObj.x < minX || minObj.x > maxX || maxObj.y < minY || minObj.y > maxY))
         {
             if (isDivide)
                 foreach (var child in children)
@@ -206,6 +203,8 @@ public class QuadTreeNode
             foreach(var obj in controllers)
             {
                 QuadTreeNode node = QuadTreeManager.instance.FindTarget(type,obj);
+                if (node == null)
+                    continue;
                 objList.Remove(obj);
                 node.objList.Add(obj);
                 if(!node.isDivide && node.objList.Count > GameEntry.SettingComponent.settingData.maxObject)
@@ -266,7 +265,7 @@ public class QuadTreeNode
             foreach(var item in objList)
             {
 
-                Gizmos.DrawWireCube(item.transform.position, new Vector3(item.radius*2, item.radius * 2, item.radius * 2));
+                Gizmos.DrawSphere(item.transform.position, item.radius);
             }
         }
     }

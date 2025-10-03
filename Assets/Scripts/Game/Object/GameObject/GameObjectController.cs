@@ -32,14 +32,12 @@ public abstract class GameObjectController : NetworkBehaviour
     protected virtual void Awake()
     {
         InitEvents();
-        InitStats();
-        InitAbility();
-        InitQuadTree();
     }
     protected void InitQuadTree()
     {
         quadTreeStat = GetComponent<QuadTreeStat>();
         quadTreeStat.radius = stats.radius;
+        quadTreeStat.player = player;
         QuadTreeManager.instance.Insert(QuadTreeType.Object, quadTreeStat);
     }
     protected virtual void InitStats()
@@ -87,6 +85,9 @@ public abstract class GameObjectController : NetworkBehaviour
     protected virtual void OnObjectSpawn(Player player)
     {
         PlayerInit(player);
+        InitStats();
+        InitAbility();
+        InitQuadTree();
         SpawnInit();
     }
     protected virtual void OnObjectDead()

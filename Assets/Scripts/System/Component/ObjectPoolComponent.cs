@@ -56,6 +56,7 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
             }
             result.name = keyName;
             result.SetActive(true);
+            
             return result;
         }
         catch (Exception e)
@@ -65,13 +66,13 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
         }
     }
     
-    public void Release(GameObject obj)
+    public void Release(GameObject obj, bool notDead = false)
     {
         if (obj == null) return;
         
         // 检查是否有GameObjectController组件，如果有则触发onDead事件
         var gameObjectController = obj.GetComponent<GameObjectController>();
-        if (gameObjectController != null)
+        if (gameObjectController != null && !notDead)
         {
             gameObjectController.events?.onDead?.Invoke();
             Debug.Log($"ObjectPool: 触发 {obj.name} 的onDead事件");

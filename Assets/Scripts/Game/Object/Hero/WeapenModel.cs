@@ -30,13 +30,6 @@ public class WeapenModel : MonoBehaviour
         // 获取父对象（英雄模型）
         parentModel = GetParentModel();
     }
-
-    private void Update()
-    {
-        if (weapen == null) return;
-        TurnTowardsMouse();
-    }
-    
     /// <summary>
     /// 获取父模型的Transform（通常是英雄）
     /// </summary>
@@ -60,13 +53,15 @@ public class WeapenModel : MonoBehaviour
     /// <summary>
     /// 让武器在原来旋转的基础上转向鼠标方向
     /// </summary>
-    public void TurnTowardsMouse()
+    public void TurnTowardsMouse(Vector3 pos = default)
     {
-        // 1. 获取鼠标在3D世界中的位置
-        Vector3 mouseWorldPosition = GetMouseWorldPosition();
+        if (weapen == null) return;
+
+        if(pos == default)
+            pos = GetMouseWorldPosition();
         
         // 2. 计算从武器到鼠标的方向向量
-        Vector3 directionToMouse = (mouseWorldPosition - transform.position).normalized;
+        Vector3 directionToMouse = (pos - transform.position).normalized;
         
         // 3. 计算目标旋转（仅Y轴旋转，保持水平）
         float targetYAngle = Mathf.Atan2(directionToMouse.x, directionToMouse.z) * Mathf.Rad2Deg;
@@ -80,8 +75,6 @@ public class WeapenModel : MonoBehaviour
         // 6. 匀速旋转到目标方向
         ApplyUniformRotation(targetRotation);
         
-        // 保存目标位置用于调试
-        targetVector = mouseWorldPosition;
     }
     
     /// <summary>
@@ -170,10 +163,6 @@ public class WeapenModel : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!showDebugGizmos || weapen == null) return;
-        
-        // 绘制射向鼠标的线条（绿色）
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, targetVector);
         
         // 绘制武器当前朝向（红色）
         Gizmos.color = Color.red;

@@ -9,13 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cbcadcae173a764dae4b20d632ac98e, type: 3}
-  m_Name: DirectBulletData
+  m_Script: {fileID: 11500000, guid: 2acd3c52635f1f34a81c0fe5c46d9e33, type: 3}
+  m_Name: AutoFire
   m_EditorClassIdentifier: 
-  liveTime: 5
-  startSpeed: 3
-  accelerateSpeed: 1
-  turnSpeed: 0
-  isEntity: 1
-  id: 0
-  idType: 0

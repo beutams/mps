@@ -31,7 +31,9 @@ public class ProductItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     public WeapenBase GetWeapen()
     {
-        return data.weapen;
+        WeapenBase weapen = Instantiate(data.weapen);
+        weapen.name = data.name;
+        return weapen;
     }
     public int GetCost()
     {

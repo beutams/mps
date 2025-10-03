@@ -23,6 +23,9 @@ public class UnitController : GameObjectController
     public float cornerAngleThreshold = 120f;
     protected Vector3 position => transform.position;
     public UnitStats unitStats => stats as UnitStats;
+
+    public float curVelocity {  get; protected set; }
+    public float curTrun {  get; protected set; }
     protected override void OnObjectSpawn(Player player)
     {
         base.OnObjectSpawn(player);
@@ -146,11 +149,19 @@ public class UnitController : GameObjectController
 
     private void DoMove()
     {
-        if (pathPoint == null ||pathPoint.Length <= 0) return;
+        if (pathPoint == null ||pathPoint.Length <= 0)
+        {
+            curVelocity = 0;
+            curTrun = 0;
+            return;
+        }
         
         // 保持原有的2D移动逻辑，只在XZ平面计算方向和旋转
         Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
         Vector3 turnForward = Vector3.RotateTowards(transform.forward, horizontalVelocity, unitStats.rotateForce * Time.deltaTime, 0f);
+
+        curVelocity = horizontalVelocity.magnitude;
+        curTrun = Mathf.Atan(horizontalVelocity.z / horizontalVelocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.LookRotation(turnForward);
         
         // XZ平面移动
@@ -229,14 +240,12 @@ public class UnitController : GameObjectController
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, pathPoint[0]);
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + velocity);
+        Gizmos.DrawLine(transform.position, transform.position + velocity);//黄色寻路
 
         Gizmos.color = Color.blue;
         orcaAgent.OnDrawGizmos();
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + velocity);
+        Gizmos.DrawLine(transform.position, transform.position + velocity); //蓝色orca
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(targetPosition, stats.radius);
     }
 }
