@@ -225,9 +225,20 @@ public abstract class GameObjectController : NetworkBehaviour
     }
     public virtual bool CanStay()
     {
-        if (targetPosition != Vector3.zero && target == null && Tools.GetDistance(transform.position, targetPosition) < 0.3f)
+        if (targetPosition != Vector3.zero && target == null)
         {
-            return status.Change<GameObjectStayStatu>();
+            // 对于UnitController，使用其moveTargetRadius作为判断距离
+            float checkDistance = 0.3f;
+            UnitController unitController = this as UnitController;
+            if (unitController != null)
+            {
+                checkDistance = unitController.moveTargetRadius;
+            }
+            
+            if (Tools.GetDistance(transform.position, targetPosition) < checkDistance)
+            {
+                return status.Change<GameObjectStayStatu>();
+            }
         }
         return false;
     }

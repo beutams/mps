@@ -19,6 +19,7 @@ public class UnitController : GameObjectController
     public bool isMove;
 
     protected float r;
+    public float moveTargetRadius => r;
 
     public float cornerAngleThreshold = 120f;
     protected Vector3 position => transform.position;
@@ -179,6 +180,11 @@ public class UnitController : GameObjectController
             EndMoveInner();
         }
     }
+    public bool IsReachedTargetPosition()
+    {
+        if (targetPosition == Vector3.zero) return false;
+        return Tools.GetDistance(transform.position, targetPosition) < r;
+    }
     private void EndMoveInner()
     {
         if (pathPoint.Length >= 3)
@@ -186,6 +192,26 @@ public class UnitController : GameObjectController
         else
             conerPoints = null;
         pathPoint = Enumerable.Skip(pathPoint, 1).ToArray();
+    }
+    public void FaceTarget()
+    {
+        if (target == null) return;
+        
+        // 计算朝向目标的方向（只在XZ平面）
+        Vector3 directionToTarget = target.transform.position - transform.position;
+        directionToTarget.y = 0; // 保持在水平面
+        
+        if (directionToTarget.sqrMagnitude > 0.001f) // 避免除零
+        {
+            // 平滑旋转朝向目标
+            Vector3 targetForward = Vector3.RotateTowards(
+                transform.forward, 
+                directionToTarget.normalized, 
+                unitStats.rotateForce * Time.deltaTime, 
+                0f
+            );
+            transform.rotation = Quaternion.LookRotation(targetForward);
+        }
     }
     #endregion
     #region Terrain Adaptation

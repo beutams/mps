@@ -35,5 +35,14 @@ public class GameObjectAttackStatu : AGameObjectStatu<GameObjectStatus>
             if (obj.controller.CanMove())
                 return;
         }
+        else
+        {
+            // 攻击时面向目标
+            UnitController unitController = obj.controller as UnitController;
+            if (unitController != null)
+            {
+                unitController.FaceTarget();
+            }
+        }
     }
 }
