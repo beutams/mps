@@ -14,9 +14,10 @@ public class Split : BulletEffect
         {
             Bullet sub = GameEntry.ObjectPoolComponent.Get(subBullet).GetComponent<Bullet>();
             Vector3 position = bullet.transform.position + new Vector3(Random.Range(-splitDistance, splitDistance), Random.Range(-splitDistance, splitDistance), Random.Range(-splitDistance, splitDistance));
-            Vector3 direction = bullet.transform.forward + new Vector3(0, Random.Range(-splitAngle, splitAngle), 0);
-            sub.Init(position, Quaternion.Euler(direction), bullet.target, bullet.player);
+            Vector3 originalFlyDirection = bullet.GetFlyDirection();
+            Quaternion newRotation = Quaternion.LookRotation(Vector3.up, Quaternion.Euler(0, Random.Range(-splitAngle, splitAngle), 0) * originalFlyDirection);
+            sub.Init(position, newRotation, bullet.target, bullet.player,false);
         }
-
+        GameEntry.ObjectPoolComponent.Release(gameObject);
     }
 }

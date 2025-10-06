@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class BulletEffect : MonoBehaviour
 {
     protected Bullet bullet;
-    protected void Start()
+    protected void Awake()
     {
         bullet = GetComponent<Bullet>();
         bullet.onStart += OnBulletStart;

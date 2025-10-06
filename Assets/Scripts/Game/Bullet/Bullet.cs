@@ -1,4 +1,5 @@
 using Mirror;
+using System.Collections;
 using System.Security.Principal;
 using Unity.Services.Analytics.Platform;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -28,7 +29,7 @@ public abstract class Bullet : MonoBehaviour
         quadStat = GetComponent<QuadTreeStat>();
     }
     
-    public virtual void Init(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player)
+    public virtual void Init(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player, bool model)
     {
         if (data.isEntity)
         {
@@ -38,13 +39,22 @@ public abstract class Bullet : MonoBehaviour
         }
         gameObject.SetActive(true);
         transform.position = position;
-        Vector3 flyDirection = rotation * Vector3.forward;
-        transform.rotation = Quaternion.LookRotation(Vector3.up, flyDirection);
+        if (model)
+        {
+            Vector3 flyDirection = rotation * Vector3.forward;
+            transform.rotation = Quaternion.LookRotation(Vector3.up, flyDirection);
+        }
+        else
+            transform.rotation = rotation;
         this.player = player; 
         this.target = target;
         curTime = 0;
         speed = data.startSpeed;
-        
+        StartCoroutine(DoEffectCorotine());
+    }
+    public IEnumerator DoEffectCorotine()
+    {
+        yield return null;
         onStart?.Invoke();
     }
     #endregion

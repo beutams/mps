@@ -8,6 +8,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 public abstract class GameObjectController : NetworkBehaviour
 {
     public GameObjectStats stats;
+    public GameObjectAnimator animator;
     protected bool isSelect;
     #region 设定
 
@@ -43,6 +44,7 @@ public abstract class GameObjectController : NetworkBehaviour
     protected virtual void InitStats()
     {
         status = GetComponent<GameObjectStatus>();
+        animator = GetComponent<GameObjectAnimator>();
         currentHealth = stats.maxHealth;
     }
     protected virtual void InitEvents()

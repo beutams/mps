@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DirectBulletData
   m_EditorClassIdentifier: 
   liveTime: 5
-  startSpeed: 3
-  accelerateSpeed: 1
+  startSpeed: 10
+  accelerateSpeed: 10
   turnSpeed: 0
   isEntity: 1
   id: 0

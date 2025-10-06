@@ -13,12 +13,14 @@ public class MiniMap : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        isDrag = true;
+        if(eventData.button == PointerEventData.InputButton.Left) 
+            isDrag = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        isDrag = false;
+        if (eventData.button == PointerEventData.InputButton.Left)
+            isDrag = false;
     }
     private void Update()
     {

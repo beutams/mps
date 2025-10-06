@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class InputManager : SingletonMonoBehaviour<InputManager>
 {
@@ -67,8 +68,6 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         weapenSwitchAuto9Action = asset.FindAction("WeapenSwitchAuto9");
         exit = asset.FindAction("Exit");
     }
-    private HeroController hero => RoomController.instance.localPlayer.hero;
-
     public bool GetGather() => gatherAction.WasPerformedThisFrame();
     public bool GetShop() => shopAction.WasPerformedThisFrame();
     public bool GetExit() => exitAction.IsPressed();
@@ -85,7 +84,13 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
             index += 8;
         return index;
     }
-    public bool GetFire() => fireAction.IsPressed();
+    public bool GetFire() 
+    {
+        // 如果点击在UI上，不返回开火状态
+        if (Tools.IsPointerOverUI()) return false;
+        
+        return fireAction.IsPressed();
+    }
     public bool GetMove() => moveAction.WasPressedThisFrame();
     public bool GetLock() => lockAction.IsPressed();
     public bool GetEsc() => exit.WasPerformedThisFrame();

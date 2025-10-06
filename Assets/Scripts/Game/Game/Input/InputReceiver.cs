@@ -68,6 +68,9 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
         if (RoomController.instance.localPlayer.hero == null) return;
         if (InputManager.instance.GetMove() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
+            // 如果点击在UI上，不执行移动逻辑
+            if (Tools.IsPointerOverUI()) return;
+            
             if (hit.collider.CompareTag("GameObject"))
             {
                 RoomController.instance.localPlayer.hero.SetMoveTarget(hit.transform.GetComponent<GameObjectController>(), hit.point);
@@ -81,6 +84,7 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     public void ReceiverFire()
     {
         if (RoomController.instance.localPlayer.hero == null) return;
+        
         if (InputManager.instance.GetFire() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         {
             if (hit.collider.CompareTag("GameObject"))

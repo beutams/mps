@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public static class Tools
 {
@@ -105,4 +106,41 @@ public static class Tools
         }
         return result;
     }
+    public static bool IsPointerOverUI()
+    {
+        if (EventSystem.current == null) return false;
+
+        // 使用GraphicRaycaster进行UI检测
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = Input.mousePosition;
+
+        var results = new System.Collections.Generic.List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        // 检查是否有真正的UI元素被点击
+        foreach (var result in results)
+        {
+            GameObject obj = result.gameObject;
+
+            // 只检测真正的UI组件，排除地形、3D对象等
+            if (obj.GetComponent<UnityEngine.UI.Button>() != null ||
+                obj.GetComponent<UnityEngine.UI.Image>() != null ||
+                obj.GetComponent<UnityEngine.UI.Text>() != null ||
+                obj.GetComponent<TMPro.TextMeshProUGUI>() != null ||
+                obj.GetComponent<UnityEngine.UI.InputField>() != null ||
+                obj.GetComponent<TMPro.TMP_InputField>() != null ||
+                obj.GetComponent<UnityEngine.UI.Toggle>() != null ||
+                obj.GetComponent<UnityEngine.UI.Slider>() != null ||
+                obj.GetComponent<UnityEngine.UI.Scrollbar>() != null ||
+                obj.GetComponent<UnityEngine.UI.ScrollRect>() != null ||
+                obj.GetComponent<UnityEngine.UI.RawImage>() != null ||
+                obj.GetComponent<UnityEngine.UI.Dropdown>() != null)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

@@ -41,6 +41,7 @@ public class HeroController : UnitController
         GameObject obj = GameEntry.ObjectPoolComponent.Get(weapen.name);
         obj.transform.SetParent(weapenDic[index].transform);
         obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
     public void UnEquip(int index)
     {

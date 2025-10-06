@@ -227,4 +227,9 @@ public class WeapenModel : MonoBehaviour
         float weaponYAngle = GetCurrentAngle();
         return Mathf.DeltaAngle(parentYAngle, weaponYAngle);
     }
+    public void OnFire()
+    {
+        Animator animator = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
+        animator.Play("Shoot");
+    }
 }

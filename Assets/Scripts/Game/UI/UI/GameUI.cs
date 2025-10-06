@@ -57,12 +57,12 @@ public class GameUI : UIBase, ID
         {
             for(int i = 0; i < weapenPanel.childCount; i++)
             {
-                if (!weapenPanel.GetChild(i).name.StartsWith("WeapenGroupUI")) continue;
+                if (!weapenPanel.GetChild(i).name.StartsWith("WeapenGroupUI") || !weapenPanel.GetChild(i).gameObject.activeSelf) continue;
                 Transform list = weapenPanel.GetChild(i).Find("WeapenList");
                 for(int j = 0; j < list.childCount; j++)
                 {
                     if (list.GetChild(j).gameObject.activeSelf)
-                        GameEntry.ObjectPoolComponent.Release(list.GetChild(0).gameObject);
+                        GameEntry.ObjectPoolComponent.Release(list.GetChild(j).gameObject);
                 }
                 GameEntry.ObjectPoolComponent.Release(weapenPanel.GetChild(i).gameObject);
             }
@@ -71,13 +71,15 @@ public class GameUI : UIBase, ID
             {
                 List<WeapenModel> weapens = hero.weapenGroup[i+1];
                 if (weapens.Count == 0) continue;
-                Transform group = GameEntry.ObjectPoolComponent.Get("WeapenGroupUI").transform;
-                weapenGroups.Add(i+1,group.GetComponent<WeapenGroup>());
-                group.parent = weapenPanel;
+                WeapenGroup group = GameEntry.ObjectPoolComponent.Get("WeapenGroupUI").GetComponent<WeapenGroup>();
+                group.Init(i + 1);
+                weapenGroups.Add(i+1,group);
+                group.transform.parent = weapenPanel;
+                group.transform.SetSiblingIndex(i);
                 foreach (var weapen in weapens)
                 {
                     WeapenUIItem item = GameEntry.ObjectPoolComponent.Get("WeapenUI").GetComponent<WeapenUIItem>();
-                    item.transform.SetParent(group.Find("WeapenList"));
+                    item.transform.SetParent(group.transform.Find("WeapenList"));
                     item.SetWeapen(weapen.weapen);
                 }
             }

@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class GameObjectAnimator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected Animator animator;
+    public virtual void Play(string name)
     {
-        
+        animator?.Play(name);
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        animator = transform.GetComponent<Animator>();
     }
 }
