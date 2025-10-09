@@ -83,7 +83,7 @@ public class GameUI : UIBase, ID
                     item.SetWeapen(weapen.weapen);
                 }
             }
-            RefreshAutoWeapen();
+            RefreshWeapen();
         }
     }
     public void UpdateMiniMap()
@@ -99,7 +99,7 @@ public class GameUI : UIBase, ID
 
         this.targetPosition = targetPosition;
     }
-    public void RefreshAutoWeapen()
+    public void RefreshWeapen()
     {
         foreach(var kvp in weapenGroups)
         {

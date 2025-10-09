@@ -38,8 +38,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     public void RemoveHealthBar(GameObjectController obj)
     {
-        GameEntry.ObjectPoolComponent.Release(healthImages[obj].gameObject);
-        healthImages.Remove(obj);
+        if (healthImages.ContainsKey(obj))
+        {
+            GameEntry.ObjectPoolComponent.Release(healthImages[obj].gameObject);
+            healthImages.Remove(obj);
+        }
     }
     private void DrawMiniMap()
     {

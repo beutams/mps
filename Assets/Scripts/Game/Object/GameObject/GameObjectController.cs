@@ -160,6 +160,7 @@ public abstract class GameObjectController : NetworkBehaviour
     }
     public virtual void GetNearestTarget()
     {
+        if (this is HeroController) return;
         GameObjectController result = null;
         foreach (var player in RoomController.instance.playerDic.Values)
         {
@@ -183,11 +184,10 @@ public abstract class GameObjectController : NetworkBehaviour
     }
     public virtual void UnderAttack(float damage)
     {
-        currentHealth -= damage;
+        if (currentHealth > 0)
+            currentHealth -= damage;
         if (currentHealth <= 0)
-        {
             GameEntry.ObjectPoolComponent.Release(gameObject);
-        }
     }
     public virtual float GetHealth()
     {

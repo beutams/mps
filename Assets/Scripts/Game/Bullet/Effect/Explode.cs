@@ -4,8 +4,29 @@ using UnityEngine;
 
 public class Explode : BulletEffect
 {
-    protected override void OnBulletCollision(Collision collision)
+    public string effectName;
+    public int radius;
+    public float damage;
+    public float time;
+    protected override void OnBulletTrigger(Collider collider)
     {
-        
+        GameObject obj = GameEntry.ObjectPoolComponent.Get(effectName);
+        obj.transform.position = transform.position;
+        obj.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+        StartCoroutine(DestoryCorotine(obj));
+
+        List<QuadTreeStat> list = new List<QuadTreeStat>();
+        QuadTreeManager.instance.Find(QuadTreeType.Object, transform.position, radius, ref list);
+        foreach (QuadTreeStat stat in list)
+        {
+            if (Tools.GetDistance(Tools.V3ToV2(stat.transform.position), Tools.V3ToV2(transform.position)) > radius || stat.player == RoomController.instance.localPlayer)
+                continue;
+            stat.GetComponent<GameObjectController>().UnderAttack(damage);
+        }
+    }
+    protected IEnumerator DestoryCorotine(GameObject obj)
+    {
+        yield return new WaitForSeconds(time);
+        GameEntry.ObjectPoolComponent.Release(obj);
     }
 }

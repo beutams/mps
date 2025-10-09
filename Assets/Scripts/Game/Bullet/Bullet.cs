@@ -17,7 +17,7 @@ public abstract class Bullet : MonoBehaviour
     protected float curTime;
     protected float speed;
 
-    public UnityAction<Collision> onCollision;
+    public UnityAction<Collider> onTrigger;
     public UnityAction onStart;
 
     protected Quaternion startRotation;
@@ -80,10 +80,9 @@ public abstract class Bullet : MonoBehaviour
         }
 
     }
-
-    public virtual void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        onCollision?.Invoke(collision);
+        onTrigger?.Invoke(other);
         GameEntry.ObjectPoolComponent.Release(gameObject);
         if (data.isEntity)
             QuadTreeManager.instance.Delete(QuadTreeType.Bullet, quadStat);

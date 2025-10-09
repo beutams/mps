@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7878875b7011cd4469566e1028802c03, type: 3}
   m_Name: Spear
   m_EditorClassIdentifier: 
-  bullet: Bullet
-  maxBulletCount: 5
-  fireInterval: 1
-  loadTime: 5
+  bullet: SpearBullet
+  maxBulletCount: 20
+  fireInterval: 0.05
+  loadTime: 1
   autoLoad: 1
   turnSpeed: 60
+  fireDistance: 10
+  canIntercept: 0
   id: 3
   idType: 5

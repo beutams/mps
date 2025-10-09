@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 1140730520238656606}
   m_Layer: 0
   m_Name: UnitPrefab
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   stats: {fileID: 11400000, guid: 02d9d36e31f4f8c4e992555e5d8097db, type: 2}
+  animator: {fileID: 0}
   isMove: 0
   cornerAngleThreshold: 120
 --- !u!114 &-4337506043713362976

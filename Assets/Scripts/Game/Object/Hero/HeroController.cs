@@ -60,10 +60,16 @@ public class HeroController : UnitController
             weapenGroup[index].Add(model); 
         }
     }
+    public void ChangeCurGroup(int index)
+    {
+        if(weapenGroup[index].Count > 0)
+            currentGroup = index;
+        GameObject.FindAnyObjectByType<GameUI>().RefreshWeapen();
+    }
     public void ChangeAutoStatu(int index)
     {
         autoFireDic[index] = !autoFireDic[index];
-        GameObject.FindAnyObjectByType<GameUI>().RefreshAutoWeapen();
+        GameObject.FindAnyObjectByType<GameUI>().RefreshWeapen();
     }
     public bool WeapenCanAutoFire(int index)
     {

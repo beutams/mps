@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using UnityEngine;
 
@@ -16,8 +17,19 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
             ReceiverFire();
             ReceiverSkill();
             ReceiverWeapenSwitchAuto();
+            ReceiverChangeWeapen();
         }
     }
+
+    private void ReceiverChangeWeapen()
+    {
+        int index = InputManager.instance.GetWeapen();
+        if (index != -1)
+        {
+            RoomController.instance.localPlayer.hero.ChangeCurGroup(index);
+        }
+    }
+
     public void ReceiverGather()
     {
         if (InputManager.instance.GetGather() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out RaycastHit hit))

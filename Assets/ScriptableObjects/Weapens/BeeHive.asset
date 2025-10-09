@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7878875b7011cd4469566e1028802c03, type: 3}
   m_Name: BeeHive
   m_EditorClassIdentifier: 
-  bullet: Bullet
-  maxBulletCount: 20
-  fireInterval: 5
+  bullet: BeeBullet
+  maxBulletCount: 8
+  fireInterval: 0.5
   loadTime: 0
   autoLoad: 0
   turnSpeed: 30
+  fireDistance: 10
+  canIntercept: 0
   id: 1
   idType: 5

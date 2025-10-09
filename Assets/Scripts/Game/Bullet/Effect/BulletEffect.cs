@@ -9,13 +9,13 @@ public abstract class BulletEffect : MonoBehaviour
     {
         bullet = GetComponent<Bullet>();
         bullet.onStart += OnBulletStart;
-        bullet.onCollision += OnBulletCollision;
+        bullet.onTrigger += OnBulletTrigger;
     }
     protected virtual void OnBulletStart()
     {
 
     }
-    protected virtual void OnBulletCollision(Collision collision)
+    protected virtual void OnBulletTrigger(Collider collider)
     {
 
     }

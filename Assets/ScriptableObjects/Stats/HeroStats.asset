@@ -21,11 +21,11 @@ MonoBehaviour:
   maxHealth: 100
   defense: 1
   radius: 2.5
-  searchRadius: 5
+  searchRadius: 15
   canMove: 1
   canAttack: 1
   id: 1
   idType: 3
-  rotateForce: 5
+  rotateForce: 2
   accelerateForce: 5
   description: "\u6D4B\u8BD5\u7528\u82F1\u96C4\n\u653B\u51FB\u9632\u5FA1\u5747\u8861\nTest\u4E2D..."

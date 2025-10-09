@@ -5,9 +5,9 @@ using UnityEngine;
 public class AttackOnCollision : BulletEffect
 {
     public int damage;
-    protected override void OnBulletCollision(Collision collision)
+    protected override void OnBulletTrigger(Collider collider)
     {
-        if(collision.transform.TryGetComponent(out GameObjectController controller))
+        if(collider.transform.TryGetComponent(out GameObjectController controller))
         {
             if(controller.player != RoomController.instance.localPlayer)
             {

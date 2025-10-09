@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cbcadcae173a764dae4b20d632ac98e, type: 3}
-  m_Name: DirectBulletData
+  m_Name: BeeBullet
   m_EditorClassIdentifier: 
-  liveTime: 5
-  startSpeed: 10
-  accelerateSpeed: 10
-  turnSpeed: 0
+  liveTime: 20
+  startSpeed: 2
+  accelerateSpeed: 3
+  turnSpeed: 2
   isEntity: 1
   id: 0
   idType: 0
