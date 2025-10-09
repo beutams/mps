@@ -78,6 +78,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   stats: {fileID: 11400000, guid: 0bbbb6fa33cbc5f44909ce0b7099ccd3, type: 2}
+  animator: {fileID: 0}
   isMove: 0
   cornerAngleThreshold: 120
 --- !u!114 &7664496213491721304
@@ -184,9 +185,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapen: {fileID: 0}
+  firePoint: {fileID: 0}
+  modelAnchor: {fileID: 5210740251951861674}
   directionAngle: 0
   includedAngle: 120
-  showDebugGizmos: 1
 --- !u!1 &1631440388890245757
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,9 +234,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapen: {fileID: 0}
+  firePoint: {fileID: 0}
+  modelAnchor: {fileID: 5438245019122712210}
   directionAngle: -135
   includedAngle: 210
-  showDebugGizmos: 1
 --- !u!1 &1637371847975081311
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,9 +283,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapen: {fileID: 0}
+  firePoint: {fileID: 0}
+  modelAnchor: {fileID: 5210740251951861674}
   directionAngle: 135
   includedAngle: 210
-  showDebugGizmos: 1
 --- !u!1 &2214124036112325752
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,9 +332,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapen: {fileID: 0}
+  firePoint: {fileID: 0}
+  modelAnchor: {fileID: 5210740251951861674}
   directionAngle: 45
   includedAngle: 270
-  showDebugGizmos: 1
 --- !u!1 &4540604356521377955
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,9 +381,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapen: {fileID: 0}
+  firePoint: {fileID: 0}
+  modelAnchor: {fileID: 5438245019122712210}
   directionAngle: -45
   includedAngle: 270
-  showDebugGizmos: 1
 --- !u!1 &5216430480911630078
 GameObject:
   m_ObjectHideFlags: 0

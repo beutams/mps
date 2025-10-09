@@ -14,6 +14,7 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
         {
             ReceiverGather();
             ReceiverMove();
+            ReceiverTurn();
             ReceiverFire();
             ReceiverSkill();
             ReceiverWeapenSwitchAuto();

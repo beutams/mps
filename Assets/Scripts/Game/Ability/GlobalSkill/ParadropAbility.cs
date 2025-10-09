@@ -7,8 +7,8 @@ public class ParadropAbility : CoverAbility
 {
     public List<string> spawnObjects;
     public List<Vector2> offset;
+    public float waitTime;
     private Timer waitTimer = new Timer();
-    protected float waitTime;
     protected Vector3 point;
     public override void Init(GameObjectController owner)
     {

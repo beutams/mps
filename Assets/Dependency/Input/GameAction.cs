@@ -269,6 +269,15 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""6957a609-72b9-4d7b-a109-2cf363bfae62"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -832,6 +841,17 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""action"": ""Turn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f078193-4e5b-40b6-b978-b60a45c27fb8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -867,6 +887,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         m_Game_WeapenSwitchAuto9 = m_Game.FindAction("WeapenSwitchAuto9", throwIfNotFound: true);
         m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
         m_Game_Turn = m_Game.FindAction("Turn", throwIfNotFound: true);
+        m_Game_Exit = m_Game.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -955,6 +976,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_WeapenSwitchAuto9;
     private readonly InputAction m_Game_Move;
     private readonly InputAction m_Game_Turn;
+    private readonly InputAction m_Game_Exit;
     public struct GameActions
     {
         private @GameAction m_Wrapper;
@@ -986,6 +1008,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         public InputAction @WeapenSwitchAuto9 => m_Wrapper.m_Game_WeapenSwitchAuto9;
         public InputAction @Move => m_Wrapper.m_Game_Move;
         public InputAction @Turn => m_Wrapper.m_Game_Turn;
+        public InputAction @Exit => m_Wrapper.m_Game_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1076,6 +1099,9 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @Turn.started += instance.OnTurn;
             @Turn.performed += instance.OnTurn;
             @Turn.canceled += instance.OnTurn;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -1161,6 +1187,9 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @Turn.started -= instance.OnTurn;
             @Turn.performed -= instance.OnTurn;
             @Turn.canceled -= instance.OnTurn;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -1207,5 +1236,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         void OnWeapenSwitchAuto9(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnTurn(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }

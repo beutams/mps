@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class WeapenModel : MonoBehaviour
 {
-    [Header("武器设置")]
-    public WeapenBase weapen;
-    public Transform firePoint;
-    [SerializeField]private Transform modelAnchor;    
-    [Header("旋转限制")]
+    [SerializeField]
+    private Transform modelAnchor; 
+    
     public float directionAngle;
     public float includedAngle;
-    
+    public Transform firePoint { get; set; }
+    public WeapenBase weapen { get; set; }
+
     protected Quaternion startQuaternion;
     protected Vector3 startPosition;
     protected Vector3 startAnchorPosition;
