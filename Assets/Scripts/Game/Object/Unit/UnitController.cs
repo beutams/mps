@@ -53,7 +53,7 @@ public class UnitController : GameObjectController
     {
         base.Update();
         if (!RoomController.instance.gameReady) return;
-        if (isMove)
+        if (unitStats.canAutoMove && isMove)
         {
             ORCAStep();
             NavMeshStep();
@@ -134,7 +134,7 @@ public class UnitController : GameObjectController
         Vector3 targetDirection3D = (pathPoint[0] - position).normalized;
         Vector3 targetDirectionXZ = new Vector3(targetDirection3D.x, 0, targetDirection3D.z).normalized;
         
-        velocity = orcaAgent.Step(position, velocity, targetDirectionXZ * UnitStats.speed, !isMove);
+        velocity = orcaAgent.Step(position, velocity, targetDirectionXZ * unitStats.speed, !isMove);
     }
 
     private void DoMove()
@@ -204,12 +204,13 @@ public class UnitController : GameObjectController
     public override void PlayerInit(Player player)
     {
         base.PlayerInit(player);
-        ORCAInit();
+        if(unitStats.canAutoMove)
+            ORCAInit();
     }
     private void ORCAInit()
     {
         orcaAgent = new ORCAAgent(player, this);
-        orcaAgent.Init(UnitStats.timeHorizon, UnitStats.obsTimeHorizon, unitStats.radius, UnitStats.speed);
+        orcaAgent.Init(UnitStats.timeHorizon, UnitStats.obsTimeHorizon, unitStats.radius, unitStats.speed);
     }
 
     protected override void Logout()

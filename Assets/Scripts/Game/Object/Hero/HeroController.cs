@@ -39,6 +39,7 @@ public class HeroController : UnitController
         weapenDic[index].group = 1;
         weapenGroup[1].Add(weapenDic[index]);
         GameObject obj = GameEntry.ObjectPoolComponent.Get(weapen.name);
+        weapenDic[index].firePoint = obj.transform.Find("FirePoint");
         obj.transform.SetParent(weapenDic[index].transform);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -82,5 +83,13 @@ public class HeroController : UnitController
         {
             model.TurnTowardsMouse();
         }
+    }
+    public void ReceiveMove(Vector2 dir)
+    {
+        transform.position += Tools.V2ToV3(dir) * unitStats.speed * Time.deltaTime;
+    }
+    public void ReceiveTurn(float dir)
+    {
+        transform.Rotate(Vector3.up * unitStats.rotateForce * dir * Time.deltaTime);
     }
 }

@@ -13,20 +13,14 @@ public class Explode : BulletEffect
         GameObject obj = GameEntry.ObjectPoolComponent.Get(effectName);
         obj.transform.position = transform.position;
         obj.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
-        StartCoroutine(DestoryCorotine(obj));
 
         List<QuadTreeStat> list = new List<QuadTreeStat>();
-        QuadTreeManager.instance.Find(QuadTreeType.Object, transform.position, radius, ref list);
+        QuadTreeManager.instance.Find(QuadTreeType.Object, Tools.V3ToV2(transform.position), radius, ref list);
         foreach (QuadTreeStat stat in list)
         {
             if (Tools.GetDistance(Tools.V3ToV2(stat.transform.position), Tools.V3ToV2(transform.position)) > radius || stat.player == RoomController.instance.localPlayer)
                 continue;
             stat.GetComponent<GameObjectController>().UnderAttack(damage);
         }
-    }
-    protected IEnumerator DestoryCorotine(GameObject obj)
-    {
-        yield return new WaitForSeconds(time);
-        GameEntry.ObjectPoolComponent.Release(obj);
     }
 }

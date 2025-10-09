@@ -33,6 +33,7 @@ public class SelectBuildingUI : UIBase
     {
         base.OnClose();
         ClearBuildingItems();
+        GameEntry.EventComponent.Notify(GameEvent.BuildSelectEvent, null);
     }
     
     private void ClearBuildingItems()

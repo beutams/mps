@@ -78,21 +78,34 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     public void ReceiverMove()
     {
         if (RoomController.instance.localPlayer.hero == null) return;
-        if (InputManager.instance.GetMove() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        if (InputManager.instance.GetMove() == default) return;
+        RoomController.instance.localPlayer.hero.ReceiveMove(InputManager.instance.GetMove());
+    }
+    public void ReceiverTurn()
+    {
+        if (RoomController.instance.localPlayer.hero == null) return;
+        if (InputManager.instance.GetTurn() == default) return;
+        RoomController.instance.localPlayer.hero.ReceiveTurn(InputManager.instance.GetTurn());
+    }
+    /*    public void ReceiverMoveOld()
         {
-            // 如果点击在UI上，不执行移动逻辑
-            if (Tools.IsPointerOverUI()) return;
-            
-            if (hit.collider.CompareTag("GameObject"))
+            if (RoomController.instance.localPlayer.hero == null) return;
+            if (InputManager.instance.GetMove() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
-                RoomController.instance.localPlayer.hero.SetMoveTarget(hit.transform.GetComponent<GameObjectController>(), hit.point);
-            }
-            else if (hit.collider != null)
-            {
-                RoomController.instance.localPlayer.hero.SetMoveTarget(null, hit.point);
+                // 如果点击在UI上，不执行移动逻辑
+                if (Tools.IsPointerOverUI()) return;
+
+                if (hit.collider.CompareTag("GameObject"))
+                {
+                    RoomController.instance.localPlayer.hero.SetMoveTarget(hit.transform.GetComponent<GameObjectController>(), hit.point);
+                }
+                else if (hit.collider != null)
+                {
+                    RoomController.instance.localPlayer.hero.SetMoveTarget(null, hit.point);
+                }
             }
         }
-    }
+    */
     public void ReceiverFire()
     {
         if (RoomController.instance.localPlayer.hero == null) return;

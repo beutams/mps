@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class MissileTarget : MonoBehaviour
 {
-    public Timer timer;
+    protected Timer timer;
+    protected GameObjectController target;
+    protected float damage;
     public void Start()
     {
         timer = new Timer();
     }
-    public void Init(float waitTime, GameObjectController target)
+    public void Init(float waitTime, GameObjectController target, float damage)
     {
+        this.target = target;
+        this.damage = damage;
         transform.parent = target.transform;
-        transform.localPosition = new Vector3(0, -target.GetComponent<CapsuleCollider>().height / 2, 0);
-        timer.Init(waitTime, SpawnMissile, false, false);
+        transform.localPosition = new Vector3(0, 0, 0);
+        timer.Init(waitTime, OnTimerComplete, false, false);
+        timer.Lanuch();
     }
-    public void SpawnMissile()
+    public void OnTimerComplete()
     {
-
+        timer.Reset();
+        timer.Pause();
+        target.UnderAttack(damage);
     }
 }

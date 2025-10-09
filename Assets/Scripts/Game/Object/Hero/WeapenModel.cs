@@ -5,37 +5,30 @@ public class WeapenModel : MonoBehaviour
 {
     [Header("武器设置")]
     public WeapenBase weapen;
-    
+    public Transform firePoint;
+    [SerializeField]private Transform modelAnchor;    
     [Header("旋转限制")]
-    [Tooltip("武器相对于父对象的默认朝向角度（本地Y轴角度）")]
     public float directionAngle;
-    [Tooltip("武器可旋转的角度范围")]
     public float includedAngle;
     
-    [Header("调试")]
-    [SerializeField] private bool showDebugGizmos = true;
-
     protected Quaternion startQuaternion;
+    protected Vector3 startPosition;
+    protected Vector3 startAnchorPosition;
     protected Vector3 targetVector;
     public int group { get; set; }
-    
-    // 父对象的Transform（通常是英雄）
+
     private Transform parentModel;
+
     
     private void Awake()
     {
-        // 保存初始的本地旋转
         startQuaternion = transform.localRotation;
-        
-        // 获取父对象（英雄模型）
+        startAnchorPosition = modelAnchor.position;
+        startPosition = transform.position;
         parentModel = GetParentModel();
     }
-    /// <summary>
-    /// 获取父模型的Transform（通常是英雄）
-    /// </summary>
     private Transform GetParentModel()
     {
-        // 向上查找英雄控制器
         Transform current = transform.parent;
         while (current != null)
         {
@@ -45,14 +38,17 @@ public class WeapenModel : MonoBehaviour
             }
             current = current.parent;
         }
-        
-        // 如果没找到英雄控制器，使用直接父对象
         return transform.parent;
     }
-    
-    /// <summary>
-    /// 让武器在原来旋转的基础上转向鼠标方向
-    /// </summary>
+    private void Update()
+    {
+        UpdatePosition();
+    }
+    public void UpdatePosition()
+    {
+        Vector3 offset = modelAnchor.position - startAnchorPosition;
+        transform.position = startPosition + offset;
+    }
     public void TurnTowardsMouse(Vector3 pos = default)
     {
         if (weapen == null) return;
@@ -76,10 +72,6 @@ public class WeapenModel : MonoBehaviour
         ApplyUniformRotation(targetRotation);
         
     }
-    
-    /// <summary>
-    /// 获取鼠标在3D世界中的位置（假设Y=0平面）
-    /// </summary>
     private Vector3 GetMouseWorldPosition()
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -90,11 +82,6 @@ public class WeapenModel : MonoBehaviour
         
         return worldPosition;
     }
-    
-    /// <summary>
-    /// 应用旋转约束，限制武器只能在指定角度范围内旋转
-    /// 考虑父对象的旋转
-    /// </summary>
     private float ApplyRotationConstraints(float targetYAngle)
     {
         // 获取父对象的世界旋转角度
@@ -114,10 +101,6 @@ public class WeapenModel : MonoBehaviour
         
         return finalAngle;
     }
-    
-    /// <summary>
-    /// 匀速旋转到目标方向，保持在原始旋转的基础上
-    /// </summary>
     private void ApplyUniformRotation(Quaternion targetRotation)
     {
         // 计算最终目标旋转（包含原始旋转）
@@ -156,13 +139,9 @@ public class WeapenModel : MonoBehaviour
         Quaternion newRotation = Quaternion.Euler(0, newYAngle, 0);
         transform.rotation = newRotation * startQuaternion;
     }
-
-    /// <summary>
-    /// 在Scene视图中绘制调试线条
-    /// </summary>
     private void OnDrawGizmos()
     {
-        if (!showDebugGizmos || weapen == null) return;
+        if (weapen == null) return;
         
         // 绘制武器当前朝向（红色）
         Gizmos.color = Color.red;
@@ -196,18 +175,10 @@ public class WeapenModel : MonoBehaviour
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, 0.2f);
     }
-    
-    /// <summary>
-    /// 获取当前武器朝向的角度
-    /// </summary>
     public float GetCurrentAngle()
     {
         return transform.rotation.eulerAngles.y;
     }
-    
-    /// <summary>
-    /// 检查武器是否可以朝向指定角度（世界坐标）
-    /// </summary>
     public bool CanRotateToAngle(float worldAngle)
     {
         float parentWorldYAngle = parentModel != null ? parentModel.rotation.eulerAngles.y : 0f;
@@ -215,10 +186,6 @@ public class WeapenModel : MonoBehaviour
         float angleDifference = Mathf.DeltaAngle(weaponDefaultWorldAngle, worldAngle);
         return Mathf.Abs(angleDifference) <= includedAngle / 2f;
     }
-    
-    /// <summary>
-    /// 获取武器相对于父对象的当前角度
-    /// </summary>
     public float GetRelativeAngle()
     {
         if (parentModel == null) return GetCurrentAngle();

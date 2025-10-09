@@ -9,13 +9,11 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     public InputActionAsset asset;
     private InputAction gatherAction;
     private InputAction shopAction;
-    private InputAction exitAction;
     private InputAction skill1Action;
     private InputAction skill2Action;
     private InputAction skill3Action;
     private InputAction skill4Action;
     private InputAction fireAction;
-    private InputAction moveAction;
     private InputAction lockAction;
     private InputAction weapen1Action;
     private InputAction weapen2Action;
@@ -35,7 +33,9 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
     private InputAction weapenSwitchAuto7Action;
     private InputAction weapenSwitchAuto8Action;
     private InputAction weapenSwitchAuto9Action;
-    private InputAction exit;
+    private InputAction exitAction;
+    private InputAction moveAction;
+    private InputAction turnAction;
     private void Start()
     {
         gatherAction = asset.FindAction("Gather");
@@ -66,7 +66,8 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         weapenSwitchAuto7Action = asset.FindAction("WeapenSwitchAuto7");
         weapenSwitchAuto8Action = asset.FindAction("WeapenSwitchAuto8");
         weapenSwitchAuto9Action = asset.FindAction("WeapenSwitchAuto9");
-        exit = asset.FindAction("Exit");
+        exitAction = asset.FindAction("Exit");
+        turnAction = asset.FindAction("Turn");
     }
     public bool GetGather() => gatherAction.WasPerformedThisFrame();
     public bool GetShop() => shopAction.WasPerformedThisFrame();
@@ -91,9 +92,16 @@ public class InputManager : SingletonMonoBehaviour<InputManager>
         
         return fireAction.IsPressed();
     }
-    public bool GetMove() => moveAction.WasPressedThisFrame();
+    public Vector2 GetMove()
+    {
+        return moveAction.ReadValue<Vector2>();
+    }
+    public float GetTurn()
+    {
+        return turnAction.ReadValue<float>();
+    }
     public bool GetLock() => lockAction.IsPressed();
-    public bool GetEsc() => exit.WasPerformedThisFrame();
+    public bool GetEsc() => exitAction.WasPerformedThisFrame();
     public int GetWeapen()
     {
         if (weapen1Action.IsPressed()) return 1;

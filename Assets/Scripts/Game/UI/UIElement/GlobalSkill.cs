@@ -28,6 +28,19 @@ public class GlobalSkill : SingletonMonoBehaviour<GlobalSkill>
     }
     public void DoSkill(int index)
     {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        {
+            if (hit.collider.CompareTag("GameObject"))
+            {
+                items[index].DoSkill(hit.transform.GetComponent<GameObjectController>(), hit.point);
+                return;
+            }
+            else if (hit.collider != null)
+            {
+                items[index].DoSkill(null, hit.point);
+                return;
+            }
+        }
         items[index].DoSkill(null,Vector3.zero);
     }
     public void ShowInfo()
