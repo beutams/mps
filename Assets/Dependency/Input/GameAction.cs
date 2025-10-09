@@ -91,24 +91,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""Button"",
-                    ""id"": ""e2ff3fae-7b18-49eb-a5f7-f2deabe0d179"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Lock"",
-                    ""type"": ""Button"",
-                    ""id"": ""13713f38-f964-4a38-9f08-0904edde2210"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Weapen1"",
                     ""type"": ""Button"",
                     ""id"": ""b0469d75-f73c-49c3-960a-db0c41b3a2c6"",
@@ -271,13 +253,22 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Exit"",
-                    ""type"": ""Button"",
-                    ""id"": ""c831ee5b-f951-4d49-aa93-9c707a44dbe2"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""81e38050-19fc-4cdc-b2a7-355acc2dc7e0"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Turn"",
+                    ""type"": ""Value"",
+                    ""id"": ""25996df9-23ef-4b0a-a74e-8f4410179c24"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -295,7 +286,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ecb7a36e-6164-44fa-a414-2b84dd232722"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/f1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -317,7 +308,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c82d4920-605d-4cca-be75-5c0824d69bc9"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/f2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -328,7 +319,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9bcfd165-291d-4e1d-9261-117f7f728df6"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/f3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -339,7 +330,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bc89ed44-a795-4233-92d5-c8785bc6d02c"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/f4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -355,28 +346,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ce30eae1-8bb2-48c3-8fe1-5b65df39cd83"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Lock"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f3c85e43-1562-455b-b40f-e78f03c79ab7"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -777,15 +746,92 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""6073f88b-d245-4bc1-b83b-f600c3017f52"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""619005e8-1d6a-406c-ac82-f0b8a2fa46b0"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Exit"",
-                    ""isComposite"": false,
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1092bcab-85c0-4bd7-a5f7-5206cffa2735"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""9c4f1818-e9fb-401c-ace5-de8c4723610b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f00d82d0-c106-48c5-a7e5-b1e83e490e46"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""859e30f0-3142-40ea-b8a4-c7c94ae777f7"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""f78fbbb2-eacf-4f88-9d05-5f89fb204488"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""486c2173-7877-4781-8d8b-f23cd6f22bcc"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""763fede5-d0a5-4a70-8f02-2d394f3c4b9b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -801,8 +847,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         m_Game_Skill3 = m_Game.FindAction("Skill3", throwIfNotFound: true);
         m_Game_Skill4 = m_Game.FindAction("Skill4", throwIfNotFound: true);
         m_Game_Fire = m_Game.FindAction("Fire", throwIfNotFound: true);
-        m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
-        m_Game_Lock = m_Game.FindAction("Lock", throwIfNotFound: true);
         m_Game_Weapen1 = m_Game.FindAction("Weapen1", throwIfNotFound: true);
         m_Game_Weapen2 = m_Game.FindAction("Weapen2", throwIfNotFound: true);
         m_Game_Weapen3 = m_Game.FindAction("Weapen3", throwIfNotFound: true);
@@ -821,7 +865,8 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         m_Game_WeapenSwitchAuto7 = m_Game.FindAction("WeapenSwitchAuto7", throwIfNotFound: true);
         m_Game_WeapenSwitchAuto8 = m_Game.FindAction("WeapenSwitchAuto8", throwIfNotFound: true);
         m_Game_WeapenSwitchAuto9 = m_Game.FindAction("WeapenSwitchAuto9", throwIfNotFound: true);
-        m_Game_Exit = m_Game.FindAction("Exit", throwIfNotFound: true);
+        m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
+        m_Game_Turn = m_Game.FindAction("Turn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -890,8 +935,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Skill3;
     private readonly InputAction m_Game_Skill4;
     private readonly InputAction m_Game_Fire;
-    private readonly InputAction m_Game_Move;
-    private readonly InputAction m_Game_Lock;
     private readonly InputAction m_Game_Weapen1;
     private readonly InputAction m_Game_Weapen2;
     private readonly InputAction m_Game_Weapen3;
@@ -910,7 +953,8 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_WeapenSwitchAuto7;
     private readonly InputAction m_Game_WeapenSwitchAuto8;
     private readonly InputAction m_Game_WeapenSwitchAuto9;
-    private readonly InputAction m_Game_Exit;
+    private readonly InputAction m_Game_Move;
+    private readonly InputAction m_Game_Turn;
     public struct GameActions
     {
         private @GameAction m_Wrapper;
@@ -922,8 +966,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         public InputAction @Skill3 => m_Wrapper.m_Game_Skill3;
         public InputAction @Skill4 => m_Wrapper.m_Game_Skill4;
         public InputAction @Fire => m_Wrapper.m_Game_Fire;
-        public InputAction @Move => m_Wrapper.m_Game_Move;
-        public InputAction @Lock => m_Wrapper.m_Game_Lock;
         public InputAction @Weapen1 => m_Wrapper.m_Game_Weapen1;
         public InputAction @Weapen2 => m_Wrapper.m_Game_Weapen2;
         public InputAction @Weapen3 => m_Wrapper.m_Game_Weapen3;
@@ -942,7 +984,8 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         public InputAction @WeapenSwitchAuto7 => m_Wrapper.m_Game_WeapenSwitchAuto7;
         public InputAction @WeapenSwitchAuto8 => m_Wrapper.m_Game_WeapenSwitchAuto8;
         public InputAction @WeapenSwitchAuto9 => m_Wrapper.m_Game_WeapenSwitchAuto9;
-        public InputAction @Exit => m_Wrapper.m_Game_Exit;
+        public InputAction @Move => m_Wrapper.m_Game_Move;
+        public InputAction @Turn => m_Wrapper.m_Game_Turn;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -973,12 +1016,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Lock.started += instance.OnLock;
-            @Lock.performed += instance.OnLock;
-            @Lock.canceled += instance.OnLock;
             @Weapen1.started += instance.OnWeapen1;
             @Weapen1.performed += instance.OnWeapen1;
             @Weapen1.canceled += instance.OnWeapen1;
@@ -1033,9 +1070,12 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @WeapenSwitchAuto9.started += instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.performed += instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.canceled += instance.OnWeapenSwitchAuto9;
-            @Exit.started += instance.OnExit;
-            @Exit.performed += instance.OnExit;
-            @Exit.canceled += instance.OnExit;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Turn.started += instance.OnTurn;
+            @Turn.performed += instance.OnTurn;
+            @Turn.canceled += instance.OnTurn;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -1061,12 +1101,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Lock.started -= instance.OnLock;
-            @Lock.performed -= instance.OnLock;
-            @Lock.canceled -= instance.OnLock;
             @Weapen1.started -= instance.OnWeapen1;
             @Weapen1.performed -= instance.OnWeapen1;
             @Weapen1.canceled -= instance.OnWeapen1;
@@ -1121,9 +1155,12 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
             @WeapenSwitchAuto9.started -= instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.performed -= instance.OnWeapenSwitchAuto9;
             @WeapenSwitchAuto9.canceled -= instance.OnWeapenSwitchAuto9;
-            @Exit.started -= instance.OnExit;
-            @Exit.performed -= instance.OnExit;
-            @Exit.canceled -= instance.OnExit;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Turn.started -= instance.OnTurn;
+            @Turn.performed -= instance.OnTurn;
+            @Turn.canceled -= instance.OnTurn;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -1150,8 +1187,6 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         void OnSkill3(InputAction.CallbackContext context);
         void OnSkill4(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
-        void OnLock(InputAction.CallbackContext context);
         void OnWeapen1(InputAction.CallbackContext context);
         void OnWeapen2(InputAction.CallbackContext context);
         void OnWeapen3(InputAction.CallbackContext context);
@@ -1170,6 +1205,7 @@ public partial class @GameAction: IInputActionCollection2, IDisposable
         void OnWeapenSwitchAuto7(InputAction.CallbackContext context);
         void OnWeapenSwitchAuto8(InputAction.CallbackContext context);
         void OnWeapenSwitchAuto9(InputAction.CallbackContext context);
-        void OnExit(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
+        void OnTurn(InputAction.CallbackContext context);
     }
 }
