@@ -68,7 +68,7 @@ public class ORCAAgent
         QuadTreeManager.instance.Find(QuadTreeType.Object,position, unitController.stats.searchRadius, ref list);
         foreach(var agent in list)
         {
-            if (agent.TryGetComponent(out UnitController unit) && Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius)
+            if (agent.TryGetComponent(out UnitController unit) && Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) <= unitController.stats.searchRadius && Tools.GetDistance(Tools.V3ToV2(agent.transform.position), position) > 0.01f)
             {
                 neighborAgents.Add((unit).orcaAgent);
             }

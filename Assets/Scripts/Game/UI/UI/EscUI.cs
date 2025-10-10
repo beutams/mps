@@ -1,3 +1,4 @@
+using Michsky.UI.Shift;
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,14 +7,14 @@ using UnityEngine.UI;
 
 public class EscUI : UIBase
 {
-    public Button continueBtn;
-    public Button configBtn;
-    public Button exitBtn;
+    public SettingsButton continueBtn;
+    public SettingsButton configBtn;
+    public SettingsButton exitBtn;
     private void Start()
     {
-        continueBtn.onClick.AddListener(OnContinueClick);
-        configBtn.onClick.AddListener(OnConfigClick);
-        exitBtn.onClick.AddListener(OnExitClick);
+        continueBtn?.onClick.AddListener(OnContinueClick);
+        configBtn?.onClick.AddListener(OnConfigClick);
+        exitBtn?.onClick.AddListener(OnExitClick);
     }
     public void ShowUI(string prefab)
     {

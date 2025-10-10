@@ -25,6 +25,7 @@ MonoBehaviour:
   canAttack: 1
   id: 0
   idType: 4
-  type: 2
+  speed: 2
   rotateForce: 5
   accelerateForce: 5
+  canAutoMove: 1
