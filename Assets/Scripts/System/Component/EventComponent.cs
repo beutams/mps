@@ -23,7 +23,7 @@ public class EventComponent : BaseComponent<EventComponent>
     {
         if (!eventDic.ContainsKey(arg))
             return;
-        Debug.Log($"EventComponent : Notify {arg} Event, Invoke {eventDic[arg].GetInvocationList().Length} Method");
+        Debug.Log($"EventComponent : Notify {arg} Event, Invoke {eventDic[arg]?.GetInvocationList()?.Length} Method");
         eventDic[arg]?.Invoke(data);
     }
 }
