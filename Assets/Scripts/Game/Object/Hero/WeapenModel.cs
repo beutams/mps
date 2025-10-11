@@ -1,7 +1,8 @@
+using Mirror;
 using System;
 using UnityEngine;
 
-public class WeapenModel : MonoBehaviour
+public class WeapenModel : NetworkBehaviour
 {
     [SerializeField]
     private Transform modelAnchor; 
@@ -194,7 +195,13 @@ public class WeapenModel : MonoBehaviour
         float weaponYAngle = GetCurrentAngle();
         return Mathf.DeltaAngle(parentYAngle, weaponYAngle);
     }
-    public void OnFire()
+    [Command(requiresAuthority = false)]
+    public void OnFireServer()
+    {
+        OnFireClient();
+    }
+    [ClientRpc]
+    public void OnFireClient()
     {
         Animator animator = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         animator.Play("Shoot");

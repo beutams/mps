@@ -21,13 +21,7 @@ public class OnlineRoomController : RoomController, ID
             InitLocalPlayer();
             OnGameStart();
             InitPlayerData();
-            localPlayer.InitArmoryData();
         });
-    }
-    [ClientCallback]
-    public override void OnGameStart()
-    {
-        base.OnGameStart();
     }
     [ClientCallback]
     public override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -85,5 +79,6 @@ public class OnlineRoomController : RoomController, ID
         {
             player.property = 1500;
         }
+        localPlayer.InitArmoryData();
     }
 }

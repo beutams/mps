@@ -6,7 +6,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Bullet : MonoBehaviour
+public abstract class Bullet : NetworkBehaviour
 {
     public BulletData data;
     public QuadTreeStat target { get; protected set; }
@@ -28,8 +28,13 @@ public abstract class Bullet : MonoBehaviour
         startRotation = transform.rotation;
         quadStat = GetComponent<QuadTreeStat>();
     }
-    
-    public virtual void Init(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player, bool model)
+    [Command(requiresAuthority = false)]
+    public void InitServer(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player, bool model)
+    {
+        InitClient(position, rotation, target, player, model);
+    }
+    [ClientRpc]
+    public virtual void InitClient(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player, bool model)
     {
         if (data.isEntity)
         {

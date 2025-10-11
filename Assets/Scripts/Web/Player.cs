@@ -78,14 +78,14 @@ public class Player : NetworkBehaviour
     {
         Debug.Log($"Server Init Armory, Player is {site}");
         HeroController controller = GameEntry.ObjectPoolComponent.Get("HeroStats", armory.hero).GetComponent<HeroController>();
-        controller.transform.position = GameObject.Find("HeroStartPoint").transform.position + new Vector3(Random.Range(0,1),0, Random.Range(0, 1));
         NetworkServer.Spawn(controller.gameObject);
         InitArmoryDataClient(controller.gameObject);
     }
     [ClientRpc]
     public virtual void InitArmoryDataClient(GameObject controller)
     {
-        Debug.Log($"Client Init Armory, Player is {site}");
+        Debug.Log($"Client Init Armory, Player is {site},Hero is {controller.name},ArmoryData is {globalSkills}");
+        controller.transform.position = GameObject.Find("HeroStartPoint").transform.position + new Vector3(Random.Range(0, 1), 0, Random.Range(0, 1));
         for (int i = 1; i <= 3; i++)
             globalSkills.Add(i, GameEntry.ResourceComponent.GetDataResource("GlobalSkillData", armory.globalSkills[i - 1]) as GlobalSkillData);
         controller.GetComponent<HeroController>().events.onSpawn?.Invoke(this);

@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 3013864733532253085}
   - component: {fileID: -985765046493684457}
   - component: {fileID: 2103400693054415639}
+  - component: {fileID: 2788576376637368161}
+  - component: {fileID: 914876200808570203}
   m_Layer: 0
   m_Name: SpearBullet
   m_TagString: Untagged
@@ -95,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42e9aaab85e9c84ca9ef8e57ae654ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   data: {fileID: 11400000, guid: dfbc947235878c148ae31af57f3dc38f, type: 2}
 --- !u!114 &-5355820086748115220
 MonoBehaviour:
@@ -108,6 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7736bef74bff5ff41924c465ca420297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &3013864733532253085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +159,57 @@ MonoBehaviour:
   radius: 5
   damage: 10
   time: 1
+--- !u!114 &2788576376637368161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572688857462976151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 1370085348
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
+--- !u!114 &914876200808570203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572688857462976151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 2184087157886554006}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  useFixedUpdate: 0
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1001 &148248450035927817
 PrefabInstance:
   m_ObjectHideFlags: 0

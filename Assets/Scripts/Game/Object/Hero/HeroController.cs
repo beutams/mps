@@ -1,5 +1,7 @@
+using Mirror;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class HeroController : UnitController
@@ -34,15 +36,14 @@ public class HeroController : UnitController
     }
     public void Equip(int index, WeapenBase weapen)
     {
+        Debug.Log($"HeroControler : Equip {weapen.name}");
         if (weapenDic[index].weapen != null) return;
         weapenDic[index].weapen = weapen;
         weapenDic[index].group = 1;
         weapenGroup[1].Add(weapenDic[index]);
         GameObject obj = GameEntry.ObjectPoolComponent.Get(weapen.name);
-        weapenDic[index].firePoint = obj.transform.Find("FirePoint");
-        obj.transform.SetParent(weapenDic[index].transform);
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        NetworkServer.Spawn(obj);
+        SpawnModelServer(index, obj.transform);
     }
     public void UnEquip(int index)
     {
@@ -92,4 +93,21 @@ public class HeroController : UnitController
     {
         transform.Rotate(Vector3.up * unitStats.rotateForce * dir * Time.deltaTime);
     }
+    #region Network
+    [Command(requiresAuthority = false)]
+    public void SpawnModelServer(int index,Transform obj)
+    {
+        Debug.Log($"HeroControler Server: Equip {obj}");
+        SpawnModelClent(index, obj.transform);
+    }
+    [ClientRpc]
+    public void SpawnModelClent(int index, Transform obj)
+    {
+        Debug.Log($"HeroControler Client: Equip {obj}");
+        weapenDic[index].firePoint = obj.Find("FirePoint");
+        obj.SetParent(weapenDic[index].transform);
+        obj.localPosition = Vector3.zero;
+        obj.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+    #endregion
 }
