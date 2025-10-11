@@ -13,7 +13,7 @@ public class UnitController : GameObjectController
     protected NavMeshPath path;
 
     public ORCAAgent orcaAgent;
-    protected Vector3 velocity;
+    public Vector3 velocity { get; protected set; }
 
     protected Timer followTimer;
     public bool isMove;
