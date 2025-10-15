@@ -23,7 +23,7 @@ public class Attack : AutoAbility
         base.OnTimerCompleteGameObject();
         if(target != null)
         {
-            target.UnderAttack(atk);
+            target.UnderAttackServer(atk);
             owner.animator.Play("Attack");
         }
     }

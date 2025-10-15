@@ -24,6 +24,6 @@ public class MissileTarget : MonoBehaviour
     {
         timer.Reset();
         timer.Pause();
-        target.UnderAttack(damage);
+        target.UnderAttackServer(damage);
     }
 }

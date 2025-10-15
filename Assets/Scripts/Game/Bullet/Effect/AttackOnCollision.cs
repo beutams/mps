@@ -11,7 +11,7 @@ public class AttackOnCollision : BulletEffect
         {
             if(controller.player != RoomController.instance.localPlayer)
             {
-                controller.UnderAttack(damage);
+                controller.UnderAttackServer(damage);
             }
         }
     }

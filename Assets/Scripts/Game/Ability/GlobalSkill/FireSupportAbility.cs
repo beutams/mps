@@ -41,7 +41,7 @@ public class FireSupportAbility : CoverAbility
         {
             if (Tools.GetDistance(Tools.V3ToV2(stat.transform.position), Tools.V3ToV2(point)) > radius || stat.player == RoomController.instance.localPlayer)
                 continue;
-            stat.GetComponent<GameObjectController>().UnderAttack(damage);
+            stat.GetComponent<GameObjectController>().UnderAttackServer(damage);
         }
     }
 }

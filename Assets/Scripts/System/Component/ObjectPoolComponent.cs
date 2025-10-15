@@ -1,3 +1,4 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,27 +8,46 @@ using UnityEngine;
 
 public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
 {
-    private Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
+    public Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
+    protected ObjectPoolNetworkTools networkTools;
+
+    private void Awake()
+    {
+        networkTools = GetComponent<ObjectPoolNetworkTools>();
+    }
     public GameObject Get(string key,string name = null)
     {
         try
         {
             string keyName = name == null ? key : $"{key}_{name}";
+            bool isNew = false;
             GameObject result;
             if (poolDic.ContainsKey(keyName))
             {
                 if (poolDic[keyName].Count > 0)
                     result = poolDic[keyName].Dequeue();
                 else
-                    result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key,name));
+                {
+                    result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
+                    isNew = true;
+                }
             }
             else
             {
                 poolDic.Add(keyName, new Queue<GameObject>());
                 result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
+                isNew = true;
             }
             result.name = keyName;
             result.SetActive(true);
+
+            if (result.TryGetComponent<NetworkObject>(out var pooled))
+            {
+                if (isNew)
+                    NetworkServer.Spawn(result);
+                pooled.CommandSetPoolKey(keyName);
+            }
+            //networkTools.SetStat(result.transform,keyName);
             return result;
         }
         catch (Exception e)
@@ -41,22 +61,32 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
         try
         {
             string keyName = $"{key}_{id}";
+            bool isNew = false;
             GameObject result;
             if (poolDic.ContainsKey(keyName))
             {
                 if (poolDic[keyName].Count > 0)
                     result = poolDic[keyName].Dequeue();
                 else
+                {
                     result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, id));
+                    isNew = true;
+                }
             }
             else
             {
                 poolDic.Add(keyName, new Queue<GameObject>());
                 result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, id));
+                isNew = true;
             }
             result.name = keyName;
             result.SetActive(true);
-            
+            if (result.TryGetComponent<NetworkObject>(out var pooled))
+            {
+                if (isNew)
+                    NetworkServer.Spawn(result);
+                pooled.CommandSetPoolKey(keyName);
+            }
             return result;
         }
         catch (Exception e)
@@ -65,32 +95,31 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
             return null;
         }
     }
-    
-    public void Release(GameObject obj, bool notDead = false)
+    public void Release(GameObject obj, bool notDead = false, bool netCheck = true)
     {
         if (obj == null) return;
-        
-        // 检查是否有GameObjectController组件，如果有则触发onDead事件
+        if (obj.name.Contains('('))
+            obj.name = obj.name.Split('(')[0];
+        if (netCheck && obj.TryGetComponent<NetworkObject>(out var pooled))
+        {
+            pooled.CommandReturnToPool();
+            return;
+        }
         var gameObjectController = obj.GetComponent<GameObjectController>();
         if (gameObjectController != null && !notDead)
         {
             gameObjectController.events?.onDead?.Invoke();
-            Debug.Log($"ObjectPool: 触发 {obj.name} 的onDead事件");
         }
-        
         if (poolDic.ContainsKey(obj.name))
         {
             obj.SetActive(false);
             if(!obj.TryGetComponent<RectTransform>(out _))
                 obj.transform.SetParent(transform);
             poolDic[obj.name].Enqueue(obj);
-            Debug.Log($"ObjectPool: {obj.name} 已回收到对象池");
         }
         else
         {
-            Debug.LogWarning($"ObjectPool: 对象 {obj.name} 不在池中，直接销毁");
             Destroy(obj);
         }
     }
-
 }

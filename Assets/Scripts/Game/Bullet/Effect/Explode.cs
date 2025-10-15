@@ -20,7 +20,7 @@ public class Explode : BulletEffect
         {
             if (Tools.GetDistance(Tools.V3ToV2(stat.transform.position), Tools.V3ToV2(transform.position)) > radius || stat.player == RoomController.instance.localPlayer)
                 continue;
-            stat.GetComponent<GameObjectController>().UnderAttack(damage);
+            stat.GetComponent<GameObjectController>().UnderAttackServer(damage);
         }
     }
 }

@@ -10,6 +10,7 @@ public abstract class GameObjectController : NetworkBehaviour
     public GameObjectStats stats;
     public GameObjectAnimator animator;
     protected bool isSelect;
+    protected bool isDead;
     #region 设定
 
     #endregion
@@ -46,6 +47,7 @@ public abstract class GameObjectController : NetworkBehaviour
         status = GetComponent<GameObjectStatus>();
         animator = GetComponent<GameObjectAnimator>();
         currentHealth = stats.maxHealth;
+        isDead = false;
     }
     protected virtual void InitEvents()
     {
@@ -119,10 +121,6 @@ public abstract class GameObjectController : NetworkBehaviour
         }
     }
     protected abstract void Logout();
-    public virtual void Destory()
-    {
-        Destroy(gameObject);
-    }
     #endregion
 
     #region Ability
@@ -182,12 +180,23 @@ public abstract class GameObjectController : NetworkBehaviour
         }
         target = result;
     }
-    public virtual void UnderAttack(float damage)
+    [Command(requiresAuthority = false)]
+    public virtual void UnderAttackServer(float damage)
+    {
+        if (!authority) return;
+        Debug.Log($"GameObject {gameObject.name} UnderAttack {damage}");
+        UnderAttackClient(damage);
+    }
+    [ClientRpc]
+    public virtual void UnderAttackClient(float damage)
     {
         if (currentHealth > 0)
             currentHealth -= damage;
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
+        {
             GameEntry.ObjectPoolComponent.Release(gameObject);
+            isDead = true;
+        }
     }
     public virtual float GetHealth()
     {

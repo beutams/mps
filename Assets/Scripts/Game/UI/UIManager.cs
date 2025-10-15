@@ -53,6 +53,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     public void AddMiniMapItem(GameObjectController obj, string name)
     {
+        Debug.Log($"Create MiniMapItem {obj},Current Numbet is {minimapItems.Count}");
         GameObject img = GameEntry.ObjectPoolComponent.Get(name);
         minimapItems.Add(obj, img.GetComponent<MiniMapItem>());
         img.transform.SetParent(minimapParent);
@@ -66,6 +67,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     public void RemoveMiniMapItem(GameObjectController obj)
     {
+        Debug.Log($"Remove MiniMapItem {obj},Current Numbet is {minimapItems.Count}");
         GameEntry.ObjectPoolComponent.Release(minimapItems[obj].gameObject);
         minimapItems.Remove(obj);
     }

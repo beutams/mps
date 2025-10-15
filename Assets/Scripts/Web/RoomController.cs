@@ -2,6 +2,7 @@ using Mirror;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -42,6 +43,15 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
                     foreach (var gobj in obj.objList)
                     {
                         gobj.events.onSpawn?.Invoke(player.Value);
+                        if(isServer)
+                        {
+                            if (gobj.TryGetComponent<NetworkObject>(out var pooled))
+                            {
+                                if (gobj.name.Contains('('))
+                                    gobj.name = gobj.name.Split('(')[0];
+                                pooled.CommandSetPoolKey(gobj.name);
+                            }
+                        }
                     }
                 }
             }
@@ -91,7 +101,7 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
     public override void OnStopClient()
     {
         base.OnStopClient();
-        GameEntry.ProcedureComponent.Change<MenuProcedure>();
+        //GameEntry.ProcedureComponent.Change<MenuProcedure>();
     }
 }
 public enum PlayerSite : byte

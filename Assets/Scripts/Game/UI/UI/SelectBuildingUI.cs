@@ -25,8 +25,6 @@ public class SelectBuildingUI : UIBase
             buildingItem.Init(imgPath, name);
             building.Add(buildingItem);
         }
-        
-        Debug.Log($"SelectBuildingUI: 已创建 {building.Count} 个建筑选项");
     }
     
     public override void OnClose()

@@ -22,8 +22,8 @@ public class GameUI : UIBase, ID
     protected Dictionary<int,WeapenGroup> weapenGroups = new Dictionary<int, WeapenGroup>();
     private void Start()
     {
-        OnReadyInit();
         GameEntry.EventComponent.Subscribe(GameEvent.UICloseEvent, UpdateWeapen);
+        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent, OnReadyInit);
     }
     private void Update()
     {
@@ -31,7 +31,7 @@ public class GameUI : UIBase, ID
         UpdateInfo();
         UpdateMiniMap();
     }
-    public void OnReadyInit()
+    public void OnReadyInit(object data)
     {
         InitSkill();
     }

@@ -53,90 +53,47 @@ public class WeapenModel : NetworkBehaviour
     public void TurnTowardsMouse(Vector3 pos = default)
     {
         if (weapen == null) return;
-
         if(pos == default)
             pos = GetMouseWorldPosition();
-        
-        // 2. 计算从武器到鼠标的方向向量
         Vector3 directionToMouse = (pos - transform.position).normalized;
-        
-        // 3. 计算目标旋转（仅Y轴旋转，保持水平）
         float targetYAngle = Mathf.Atan2(directionToMouse.x, directionToMouse.z) * Mathf.Rad2Deg;
-        
-        // 4. 应用旋转限制（相对于父对象的旋转）
         float constrainedYAngle = ApplyRotationConstraints(targetYAngle);
-        
-        // 5. 创建目标旋转（仅Y轴）
         Quaternion targetRotation = Quaternion.Euler(0, constrainedYAngle, 0);
-        
-        // 6. 匀速旋转到目标方向
         ApplyUniformRotation(targetRotation);
-        
     }
     private Vector3 GetMouseWorldPosition()
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
-        // 在Y=0平面上进行射线投射
         float t = -mouseRay.origin.y / mouseRay.direction.y;
         Vector3 worldPosition = mouseRay.origin + mouseRay.direction * t;
-        
         return worldPosition;
     }
     private float ApplyRotationConstraints(float targetYAngle)
     {
-        // 获取父对象的世界旋转角度
         float parentWorldYAngle = parentModel != null ? parentModel.rotation.eulerAngles.y : 0f;
-        
-        // 计算武器相对于父对象的默认朝向（世界坐标）
         float weaponDefaultWorldAngle = parentWorldYAngle + directionAngle;
-        
-        // 计算目标角度与默认朝向的角度差
         float angleDifference = Mathf.DeltaAngle(weaponDefaultWorldAngle, targetYAngle);
-        
-        // 将角度差限制在允许范围内
         float constrainedDifference = Mathf.Clamp(angleDifference, -includedAngle / 2f, includedAngle / 2f);
-        
-        // 计算最终的受限角度（世界坐标）
         float finalAngle = weaponDefaultWorldAngle + constrainedDifference;
         
         return finalAngle;
     }
     private void ApplyUniformRotation(Quaternion targetRotation)
     {
-        // 计算最终目标旋转（包含原始旋转）
         Quaternion finalTargetRotation = targetRotation * startQuaternion;
-        
-        // 获取当前Y轴角度（不包含原始旋转）
         Quaternion currentWithoutStart = transform.rotation * Quaternion.Inverse(startQuaternion);
         float currentYAngle = currentWithoutStart.eulerAngles.y;
-        
-        // 获取目标Y轴角度
         float targetYAngle = targetRotation.eulerAngles.y;
-        
-        // 计算角度差（使用最短路径）
         float angleDifference = Mathf.DeltaAngle(currentYAngle, targetYAngle);
-        
-        // 如果角度差很小，直接设置到目标位置
         if (Mathf.Abs(angleDifference) < 0.5f)
         {
             transform.rotation = finalTargetRotation;
             return;
         }
-        
-        // 计算这一帧应该旋转的角度（匀速）
         float rotationThisFrame = weapen.turnSpeed * Time.deltaTime;
-        
-        // 确定旋转方向
         float rotationDirection = Mathf.Sign(angleDifference);
-        
-        // 限制旋转角度不超过剩余角度
         rotationThisFrame = Mathf.Min(rotationThisFrame, Mathf.Abs(angleDifference));
-        
-        // 计算新的Y角度
         float newYAngle = currentYAngle + rotationDirection * rotationThisFrame;
-        
-        // 应用新的旋转
         Quaternion newRotation = Quaternion.Euler(0, newYAngle, 0);
         transform.rotation = newRotation * startQuaternion;
     }

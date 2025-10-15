@@ -42,7 +42,6 @@ public class HeroController : UnitController
         weapenDic[index].group = 1;
         weapenGroup[1].Add(weapenDic[index]);
         GameObject obj = GameEntry.ObjectPoolComponent.Get(weapen.name);
-        NetworkServer.Spawn(obj);
         SpawnModelServer(index, obj.transform);
     }
     public void UnEquip(int index)

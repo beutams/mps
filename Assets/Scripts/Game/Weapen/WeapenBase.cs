@@ -56,8 +56,7 @@ public abstract class WeapenBase : ScriptableObject, ID
     public void FireInner(QuadTreeStat target, Vector3 targetPosition, WeapenModel model)
     {
         Bullet obj = GameEntry.ObjectPoolComponent.Get(bullet).GetComponent<Bullet>();
-        NetworkServer.Spawn(obj.gameObject);
-        obj.InitClient(model.firePoint.position, model.transform.rotation, target, player,true);
+        obj.InitServer(model.firePoint.position, model.transform.rotation, target, player,true);
         model.OnFireServer();
     }
     public void Load()

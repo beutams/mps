@@ -31,12 +31,6 @@ public class OnlineRoomController : RoomController, ID
         {
             StartCoroutine(WaitOnSceneLoad());
         }
-        
-/*        // 通知场景加载追踪器
-        if (SceneLoadTracker.Instance != null)
-        {
-            SceneLoadTracker.Instance.NotifySceneLoaded(scene.name);
-        }*/
     }
     public void InitLocalPlayer()
     {

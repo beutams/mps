@@ -134,7 +134,7 @@ public class UnitController : GameObjectController
         Vector3 targetDirection3D = (pathPoint[0] - position).normalized;
         Vector3 targetDirectionXZ = new Vector3(targetDirection3D.x, 0, targetDirection3D.z).normalized;
         
-        velocity = orcaAgent.Step(position, velocity, targetDirectionXZ * unitStats.speed, !isMove);
+        velocity = orcaAgent.Step(position, velocity, targetDirectionXZ * unitStats.speed, !isMove && unitStats.canAutoMove);
     }
 
     private void DoMove()
@@ -204,8 +204,7 @@ public class UnitController : GameObjectController
     public override void PlayerInit(Player player)
     {
         base.PlayerInit(player);
-        if(unitStats.canAutoMove)
-            ORCAInit();
+        ORCAInit();
     }
     private void ORCAInit()
     {
