@@ -160,22 +160,22 @@ public abstract class GameObjectController : NetworkBehaviour
     {
         if (this is HeroController) return;
         GameObjectController result = null;
-        foreach (var player in RoomController.instance.playerDic.Values)
+        Player nocamp = RoomController.instance.noCampPlayer;
+        if (nocamp.unitList.Count > 0)
         {
-            if(player == this.player) continue;
-            if (player.unitList.Count > 0)
+            GameObjectController min = Tools.GetNearestGameObject(nocamp.unitList.ToArray(), this) as UnitController;
+            if (min != null && Tools.GetDistance(min.transform.position, transform.position) < stats.searchRadius)
+                result = min;
+        }
+        if (nocamp.constructionList.Count > 0)
+        {
+            GameObjectController min = Tools.GetNearestGameObject(nocamp.unitList.ToArray(), this) as ConstructionController;
+            if (min != null && Tools.GetDistance(min.transform.position, transform.position) < stats.searchRadius)
             {
-                GameObjectController min = Tools.GetNearestGameObject(player.unitList.ToArray(), this) as UnitController;
-                if (min == null || Tools.GetDistance(min.transform.position, transform.position) > stats.searchRadius) continue;
-                if (result == null) result = min;
-                if(min != null) result = Tools.GetDistance(result.transform.position, transform.position) > Tools.GetDistance(min.transform.position, transform.position) ? min : result;
-            }
-            if(player.constructionList.Count > 0)
-            {
-                GameObjectController min = Tools.GetNearestGameObject(player.unitList.ToArray(), this) as ConstructionController;
-                if (min == null || Tools.GetDistance(min.transform.position, transform.position) > stats.searchRadius) continue;
-                if (result == null) result = min;
-                result = Tools.GetDistance(result.transform.position, transform.position) > Tools.GetDistance(min.transform.position, transform.position) ? min : result;
+                if (result == null)
+                    result = min;
+                else
+                    result = Tools.GetDistance(result.transform.position, transform.position) > Tools.GetDistance(min.transform.position, transform.position) ? min : result;
             }
         }
         target = result;
@@ -184,18 +184,21 @@ public abstract class GameObjectController : NetworkBehaviour
     public virtual void UnderAttackServer(float damage)
     {
         if (!authority) return;
-        Debug.Log($"GameObject {gameObject.name} UnderAttack {damage}");
         UnderAttackClient(damage);
     }
     [ClientRpc]
     public virtual void UnderAttackClient(float damage)
     {
         if (currentHealth > 0)
-            currentHealth -= damage;
+            currentHealth -= damage - stats.defense > 0 ? 1 : damage - stats.defense;
         if (currentHealth <= 0 && !isDead)
         {
-            GameEntry.ObjectPoolComponent.Release(gameObject);
-            isDead = true;
+            if (authority)
+            {
+                GameEntry.ObjectPoolComponent.Release(gameObject);
+                isDead = true;
+            }
+
         }
     }
     public virtual float GetHealth()
