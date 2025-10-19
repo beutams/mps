@@ -60,6 +60,8 @@ public class UnitController : GameObjectController
             DoMove();
             EndMove();
         }
+        else
+            velocity = Vector3.zero;
     }
     #endregion
 
@@ -128,7 +130,11 @@ public class UnitController : GameObjectController
     }
     private void ORCAStep()
     {
-        if (pathPoint == null || pathPoint.Length <= 0) return;
+        if (pathPoint == null || pathPoint.Length <= 0)
+        {
+            velocity = orcaAgent.Step(position, velocity, Vector3.zero, !isMove && unitStats.canAutoMove);
+            return;
+        }
         
         // 计算3D目标方向，但ORCA只处理XZ平面
         Vector3 targetDirection3D = (pathPoint[0] - position).normalized;
@@ -225,7 +231,7 @@ public class UnitController : GameObjectController
         Gizmos.DrawLine(transform.position, pathPoint[0]);
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + velocity);//黄色寻路
-
+        if (!GetComponent<QuadTreeStat>().showGizmos) return;
         Gizmos.color = Color.blue;
         orcaAgent.OnDrawGizmos();
         Gizmos.color = Color.green;

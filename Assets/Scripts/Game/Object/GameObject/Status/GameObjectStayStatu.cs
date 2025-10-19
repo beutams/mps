@@ -7,7 +7,7 @@ public class GameObjectStayStatu : AGameObjectStatu<GameObjectStatus>
         UnitController unitController = obj.controller as UnitController;
         if (unitController != null)
         {
-            unitController.isMove = false;
+            //unitController.isMove = false;
         }
     }
 
@@ -16,7 +16,7 @@ public class GameObjectStayStatu : AGameObjectStatu<GameObjectStatus>
         UnitController unitController = obj.controller as UnitController;
         if (unitController != null)
         {
-            unitController.isMove = true;
+            //unitController.isMove = true;
         }
     }
     public override void OnStep(GameObjectStatus obj)

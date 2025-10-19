@@ -79,14 +79,20 @@ public class HeroController : UnitController
     protected override void Update()
     {
         base.Update();
-        foreach(var model in weapenGroup[currentGroup])
+        UpdateORCA();
+        foreach (var model in weapenGroup[currentGroup])
         {
             model.TurnTowardsMouse();
         }
     }
+    protected void UpdateORCA()
+    {
+        orcaAgent.Step(position, velocity, velocity, !isMove && unitStats.canAutoMove);
+    }
     public void ReceiveMove(Vector2 dir)
     {
-        transform.position += Tools.V2ToV3(dir) * unitStats.speed * Time.deltaTime;
+        velocity = Tools.V2ToV3(dir) * unitStats.speed;
+        transform.position += velocity * Time.deltaTime;
     }
     public void ReceiveTurn(float dir)
     {

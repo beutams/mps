@@ -264,7 +264,7 @@ public class QuadTreeNode
         {
             foreach(var item in objList)
             {
-
+                if (item.showGizmos)
                 Gizmos.DrawSphere(item.transform.position, item.radius);
             }
         }

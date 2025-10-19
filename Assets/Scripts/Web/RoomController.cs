@@ -42,6 +42,7 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
                     cur = obj;
                     foreach (var gobj in obj.objList)
                     {
+                        if (!gobj.gameObject.activeSelf) continue;
                         gobj.events.onSpawn?.Invoke(player.Value);
                         if(isServer)
                         {
