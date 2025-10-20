@@ -3,7 +3,7 @@ using UnityEngine;
 public class UnitStats : GameObjectStats
 {
     [Header("寻路")]
-    public static float timeHorizon = 2f;
+    public static float timeHorizon = 5f;
     public static float obsTimeHorizon = 3f;
     public static float findDistance = 1.5f;
     [Header("移动")]

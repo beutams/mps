@@ -246,13 +246,13 @@ public class ORCAAgent
 
             if(relativePositionSq > combinedRadiusSq) //还没碰撞
             {
-                Vector2 w = relativeVelocity - relativePosition_V;//other -> V
-                float wpAngle = Vector2.Angle(-relativePosition_V, w);
+                Vector2 w = relativeVelocity - relativePosition_V;//B_V圆心指向当前速度
+                float wpAngle = Vector2.Angle(-relativePosition_V, w); //w与相对距离的夹角，判断是否圆调整
                 float cutoffAngle = Tools.CosRectToAngle(combinedRadius_V, relativePosition_V.magnitude) * 180 / Mathf.PI;
                 if(wpAngle < cutoffAngle)//cutoff圆调整
                 {
                     line.direction = Tools.RotateRight90(w.normalized);
-                    u = w.normalized * combinedRadius_V - w;
+                    u = w.normalized * (combinedRadius_V - w.magnitude);
                 }
                 else
                 {
@@ -274,12 +274,10 @@ public class ORCAAgent
             }
             else //已经碰撞
             {
-                Vector2 w = relativeVelocity - relativePosition_V * agentTimeHorizon * agentTimeHorizon;
+                //B_V圆心指向当前速度的向量，向圆外切线方向调整
+                Vector2 w = relativeVelocity - relativePosition_V;// * agentTimeHorizon * agentTimeHorizon;                 
                 line.direction = Tools.RotateRight90(w.normalized);
-                u = (combinedRadius_V * agentTimeHorizon * agentTimeHorizon - w.magnitude) * w.normalized;
-                /*                Vector2 w = relativeVelocity - relativePosition_V * agentTimeHorizon;
-                                line.direction = Tools.RotateRight90(-relativePosition_V);
-                                u = - relativePosition_V.normalized * radius * agentTimeHorizon - w;*/
+                u = (combinedRadius_V /** agentTimeHorizon * agentTimeHorizon*/ - w.magnitude) * w.normalized;
             }
             line.point = velocity + (other.isStop ? 1f : 0.5f) * u;
             orcaLines.Add(line);

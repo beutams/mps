@@ -145,13 +145,7 @@ public class UnitController : GameObjectController
 
     private void DoMove()
     {
-        if (pathPoint == null ||pathPoint.Length <= 0)
-        {
-            curVelocity = 0;
-            curTrun = 0;
-            return;
-        }
-        
+
         // 保持原有的2D移动逻辑，只在XZ平面计算方向和旋转
         Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
         Vector3 turnForward = Vector3.RotateTowards(transform.forward, horizontalVelocity, unitStats.rotateForce * Time.deltaTime, 0f);
@@ -166,7 +160,7 @@ public class UnitController : GameObjectController
     private void EndMove()
     {
         if (pathPoint == null || pathPoint.Length <= 0) return;
-        if (Vector3.Distance(position, pathPoint[0]) < r)
+        if (Tools.GetDistance(Tools.V3ToV2(position), Tools.V3ToV2(pathPoint[0])) < r)
         {
             EndMoveInner();
         }
@@ -226,14 +220,14 @@ public class UnitController : GameObjectController
 
     private void OnDrawGizmos()
     {
-        if (pathPoint == null || pathPoint.Count() == 0) return;
+        if(pathPoint == null || pathPoint.Length == 0) return;
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, pathPoint[0]);
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + velocity);//黄色寻路
         if (!GetComponent<QuadTreeStat>().showGizmos) return;
         Gizmos.color = Color.blue;
-        orcaAgent.OnDrawGizmos();
+        orcaAgent?.OnDrawGizmos();
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + velocity); //蓝色orca
 
