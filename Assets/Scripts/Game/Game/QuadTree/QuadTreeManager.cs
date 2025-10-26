@@ -55,6 +55,7 @@ public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
         QuadTreeStat minItem = null;
         foreach(var item in list)
         {
+            if (item.GetComponent<HeroController>() != null) continue;
             if (player == item.player) continue;
             float dis = Tools.GetDistance(position, Tools.V3ToV2(item.position));
             if (dis < min)

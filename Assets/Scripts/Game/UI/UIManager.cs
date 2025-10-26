@@ -33,7 +33,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void AddHealthBar(GameObjectController obj, string name)
     {
         GameObject img = GameEntry.ObjectPoolComponent.Get(name);
-        healthImages.Add(obj, img.GetComponent<HealthImage>());
+        HealthImage hImg = img.GetComponent<HealthImage>();
+        hImg.distance = obj.stats.healthDistance;
+        healthImages.Add(obj, hImg);
         img.transform.SetParent(healthBarCanvas);
     }
     public void RemoveHealthBar(GameObjectController obj)

@@ -10,6 +10,7 @@ public class GameObjectStats : ScriptableObject, ID
     public string imgPath;
     public float maxHealth;
     public float defense;
+    public float healthDistance;
     [Header("数值")]
     public float radius;
     public float searchRadius;

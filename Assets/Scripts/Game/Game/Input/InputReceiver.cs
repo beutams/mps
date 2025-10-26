@@ -79,14 +79,18 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     public void ReceiverMove()
     {
         if (RoomController.instance.localPlayer.hero == null) return;
-        if (InputManager.instance.GetMove() == default) return;
-        RoomController.instance.localPlayer.hero.ReceiveMove(InputManager.instance.GetMove());
+        if (InputManager.instance.GetMove() == default)
+            RoomController.instance.localPlayer.hero.ReceiveMove(Vector3.zero);
+        else
+            RoomController.instance.localPlayer.hero.ReceiveMove(InputManager.instance.GetMove());
     }
     public void ReceiverTurn()
     {
         if (RoomController.instance.localPlayer.hero == null) return;
-        if (InputManager.instance.GetTurn() == default) return;
-        RoomController.instance.localPlayer.hero.ReceiveTurn(InputManager.instance.GetTurn());
+        if (InputManager.instance.GetTurn() == default)
+            RoomController.instance.localPlayer.hero.ReceiveTurn(0);
+        else
+            RoomController.instance.localPlayer.hero.ReceiveTurn(InputManager.instance.GetTurn());
     }
     /*    public void ReceiverMoveOld()
         {

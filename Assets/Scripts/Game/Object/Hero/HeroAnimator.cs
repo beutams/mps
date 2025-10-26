@@ -13,7 +13,8 @@ public class HeroAnimator : MonoBehaviour
     }
     void Update()
     {
-        animator.SetFloat("Velocity", controller.curVelocity);
+        animator.SetFloat("VelocityX", controller.curVelocity.x);
+        animator.SetFloat("VelocityY", controller.curVelocity.z);
         animator.SetFloat("Rotation", controller.curTrun);
     }
 }

@@ -20,12 +20,15 @@ MonoBehaviour:
   imgPath: Assets\Dependency\ScienceFictionGUI\Textures\icons\Resources_Icon_01.png
   maxHealth: 100
   defense: 1
+  healthDistance: 3
   radius: 2.5
   searchRadius: 15
   canMove: 1
   canAttack: 1
   id: 1
   idType: 3
-  rotateForce: 2
+  speed: 2
+  rotateForce: 20
   accelerateForce: 5
+  canAutoMove: 0
   description: "\u6D4B\u8BD5\u7528\u82F1\u96C4\n\u653B\u51FB\u9632\u5FA1\u5747\u8861\nTest\u4E2D..."

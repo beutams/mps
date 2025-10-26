@@ -19,6 +19,7 @@ MonoBehaviour:
   imgPath: Assets\Dependency\ScienceFictionGUI\Textures\icons\Resources_Icon_01.png
   maxHealth: 100
   defense: 1
+  healthDistance: 1
   radius: 1
   searchRadius: 12
   canMove: 1

@@ -25,11 +25,12 @@ public class UnitController : GameObjectController
     protected Vector3 position => transform.position;
     public UnitStats unitStats => stats as UnitStats;
 
-    public float curVelocity {  get; protected set; }
+    public Vector3 curVelocity {  get; protected set; }
     public float curTrun {  get; protected set; }
     protected override void OnObjectSpawn(Player player)
     {
         base.OnObjectSpawn(player);
+        if (this is HeroController) return;
         UIManager.instance.AddHealthBar(this, unitHealthBar);
         UIManager.instance.AddMiniMapItem(this, unitMiniMap);
     }
@@ -52,7 +53,7 @@ public class UnitController : GameObjectController
     protected override void Update()
     {
         base.Update();
-        if (!RoomController.instance.gameReady) return;
+        if (!RoomController.instance.gameReady || this is HeroController) return;
         if (unitStats.canAutoMove && isMove)
         {
             ORCAStep();
@@ -147,7 +148,7 @@ public class UnitController : GameObjectController
     {
         if (pathPoint == null ||pathPoint.Length <= 0)
         {
-            curVelocity = 0;
+            curVelocity = Vector3.zero;
             curTrun = 0;
             return;
         }
@@ -156,7 +157,7 @@ public class UnitController : GameObjectController
         Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
         Vector3 turnForward = Vector3.RotateTowards(transform.forward, horizontalVelocity, unitStats.rotateForce * Time.deltaTime, 0f);
 
-        curVelocity = horizontalVelocity.magnitude;
+        curVelocity = horizontalVelocity;
         curTrun = Mathf.Atan(horizontalVelocity.z / horizontalVelocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.LookRotation(turnForward);
         

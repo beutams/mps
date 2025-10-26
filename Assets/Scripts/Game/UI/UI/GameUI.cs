@@ -20,7 +20,7 @@ public class GameUI : UIBase, ID
     [SerializeField] protected RectTransform miniMap;
 
     protected Dictionary<int,WeapenGroup> weapenGroups = new Dictionary<int, WeapenGroup>();
-    private void Start()
+    private void Awake()
     {
         GameEntry.EventComponent.Subscribe(GameEvent.UICloseEvent, UpdateWeapen);
         GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent, OnReadyInit);

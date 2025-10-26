@@ -5,7 +5,7 @@ using UnityEngine;
 public class AutoFire : Ability
 {
     [Header("预判设置")]
-    public float predictionTime = 0.5f; // 预判时间（秒）
+    public float predictionTime = 5f; // 预判时间（秒）
     
     public override void Init(GameObjectController owner)
     {
@@ -26,9 +26,10 @@ public class AutoFire : Ability
                     {
                         QuadTreeStat target = null;
                         if (weapen.weapen.canIntercept)
-                            target = QuadTreeManager.instance.FindNearest(QuadTreeType.Object, Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance, owner.player);
+                            target = QuadTreeManager.instance.FindNearest(QuadTreeType.Bullet, Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance, owner.player);
                         if(target == null)
-                            target = QuadTreeManager.instance.FindNearest(QuadTreeType.Object,Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance, owner.player);
+                            //target = QuadTreeManager.instance.FindNearest(QuadTreeType.Object,Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance, owner.player);
+                            target = QuadTreeManager.instance.FindNearest(QuadTreeType.Object, Tools.V3ToV2(weapen.transform.position), weapen.weapen.fireDistance, null);
                         if (target != null && Tools.GetDistance(Tools.V3ToV2(target.position), Tools.V3ToV2(weapen.transform.position)) < owner.stats.searchRadius)
                         {
                             // 计算预判位置
