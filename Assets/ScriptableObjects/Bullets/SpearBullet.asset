@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   liveTime: 5
   startSpeed: 10
-  accelerateSpeed: 10
+  accelerateSpeed: 0
   turnSpeed: 0
   isEntity: 0
   id: 0

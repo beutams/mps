@@ -6,11 +6,15 @@ using UnityEngine;
 
 public class HeroController : UnitController
 {
+    public static string heroHealthBar = "HeroHealthBar";
+    public static string heroMiniMap = "UnitMiniMapItem";
+
     public Dictionary<int, List<WeapenModel>> weapenGroup = new Dictionary<int, List<WeapenModel>>();
     public Dictionary<int, WeapenModel> weapenDic = new Dictionary<int, WeapenModel>();
     public Dictionary<int, bool> autoFireDic = new Dictionary<int, bool>();
     protected int currentGroup = 1;
 
+    private float dir;
     protected void Start()
     {
         InitWeapens();
@@ -43,6 +47,7 @@ public class HeroController : UnitController
         weapenGroup[1].Add(weapenDic[index]);
         GameObject obj = GameEntry.ObjectPoolComponent.Get(weapen.name);
         SpawnModelServer(index, obj.transform);
+        weapenDic[index].firePoint = obj.transform.Find("FirePoint");
     }
     public void UnEquip(int index)
     {
@@ -92,11 +97,21 @@ public class HeroController : UnitController
     public void ReceiveMove(Vector2 dir)
     {
         velocity = Tools.V2ToV3(dir) * unitStats.speed;
-        transform.position += velocity * Time.deltaTime;
+        Vector3 worldVelocity = transform.TransformDirection(velocity);
+        transform.position += worldVelocity * Time.deltaTime;
+        curVelocity = velocity;
     }
     public void ReceiveTurn(float dir)
     {
         transform.Rotate(Vector3.up * unitStats.rotateForce * dir * Time.deltaTime);
+        curTrun = dir;
+        this.dir = dir;
+    }
+    protected override void OnObjectSpawn(Player player)
+    {
+        base.OnObjectSpawn(player);
+        UIManager.instance.AddHealthBar(this, heroHealthBar);
+        UIManager.instance.AddMiniMapItem(this, heroMiniMap);
     }
     #region Network
     [Command(requiresAuthority = false)]

@@ -87,6 +87,11 @@ public abstract class Bullet : NetworkBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if(other.TryGetComponent(out GameObjectController controller))
+        {
+            if (controller.player == player)
+                return;
+        }
         onTrigger?.Invoke(other);
         GameEntry.ObjectPoolComponent.Release(gameObject);
         if (data.isEntity)
