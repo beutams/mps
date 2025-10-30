@@ -159,8 +159,8 @@ public abstract class GameObjectController : NetworkBehaviour
     public virtual void GetNearestTarget()
     {
         if (this is HeroController) return;
-        GameObjectController result = null;
-        Player nocamp = RoomController.instance.noCampPlayer;
+        target = QuadTreeManager.instance.FindNearest(QuadTreeType.Object, Tools.V3ToV2(transform.position), stats.searchRadius, player)?.GetComponent<GameObjectController>();
+/*        Player nocamp = RoomController.instance.noCampPlayer;
         if (nocamp.unitList.Count > 0)
         {
             GameObjectController min = Tools.GetNearestGameObject(nocamp.unitList.ToArray(), this) as UnitController;
@@ -178,7 +178,7 @@ public abstract class GameObjectController : NetworkBehaviour
                     result = Tools.GetDistance(result.transform.position, transform.position) > Tools.GetDistance(min.transform.position, transform.position) ? min : result;
             }
         }
-        target = result;
+        target = result;*/
     }
     [Command(requiresAuthority = false)]
     public virtual void UnderAttackServer(float damage)
@@ -190,7 +190,7 @@ public abstract class GameObjectController : NetworkBehaviour
     public virtual void UnderAttackClient(float damage)
     {
         if (currentHealth > 0)
-            currentHealth -= damage - stats.defense > 0 ? 1 : damage - stats.defense;
+            currentHealth -= damage - stats.defense <= 1 ? 1 : damage - stats.defense;
         if (currentHealth <= 0 && !isDead)
         {
             if (authority)

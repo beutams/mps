@@ -23,7 +23,8 @@ public class GameUI : UIBase, ID
     private void Awake()
     {
         GameEntry.EventComponent.Subscribe(GameEvent.UICloseEvent, UpdateWeapen);
-        GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent, OnReadyInit);
+        //GameEntry.EventComponent.Subscribe(GameEvent.ClientChangeSceneSuccessEvent, OnReadyInit);
+        StartCoroutine(OnReadyInit());
     }
     private void Update()
     {
@@ -31,8 +32,9 @@ public class GameUI : UIBase, ID
         UpdateInfo();
         UpdateMiniMap();
     }
-    public void OnReadyInit(object data)
+    IEnumerator OnReadyInit()
     {
+        yield return null;
         InitSkill();
     }
     public void InitSkill()

@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 public class UnitController : GameObjectController
 {
     public static string unitHealthBar = "UnitHealthBar";
@@ -103,6 +104,10 @@ public class UnitController : GameObjectController
                 conerPoints = path.corners.Take(3).ToArray();
             else
                 conerPoints = null;
+        }
+        if (pathPoint.Length > 0)
+        {
+            targetPosition = pathPoint[pathPoint.Length - 1];
         }
     }
     private void NavMeshStep()
