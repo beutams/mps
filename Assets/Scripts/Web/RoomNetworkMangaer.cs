@@ -97,6 +97,8 @@ public class RoomNetworkMangaer : MonoBehaviour
             NetworkServer.AddPlayerForConnection(playerConn.Key, player.gameObject);
             roomController.AddPlayer(playerConn.Value, player.gameObject);
         }
+        GameEntry.UIComponent.Clear();
+        UIGroup.Clear();
         NetworkManager.singleton.ServerChangeScene("GameScene");
 }
     #endregion
@@ -113,13 +115,15 @@ public class RoomNetworkMangaer : MonoBehaviour
                 hallSubUI.OnUpdateRoom(msg);
                 break;
             case ClientMessageOption.Started:
-                SceneManager.sceneLoaded += (scene,mode) => 
-                { 
-                    FindAnyObjectByType<OnlineRoomController>().OnSceneLoaded(scene, mode); 
-                };
+                SceneManager.sceneLoaded += OnSceneLoad;
                 Debug.Log($"Client Message : Started");
                 break;
         }
+    }
+    protected void OnSceneLoad(Scene scene,LoadSceneMode mode)
+    {
+        FindAnyObjectByType<OnlineRoomController>()?.OnSceneLoaded(scene, mode);
+        SceneManager.sceneLoaded -= OnSceneLoad;
     }
     #endregion
 }

@@ -59,5 +59,13 @@ public class UIComponent : BaseComponent<UIComponent>
     {
         return uiStack.Peek().GetType() == typeof(GameUI);
     }
+    public void Clear()
+    {
+        while (uiStack.Count > 0)
+        {
+            Destroy(uiStack.Pop().gameObject);
+            //GameEntry.ObjectPoolComponent.Release(uiStack.Pop().gameObject);
+        }
+    }
 }
 

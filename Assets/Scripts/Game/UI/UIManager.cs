@@ -20,6 +20,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
     private void Update()
     {
+        if (RoomController.instance == null) return;
         DrawHealthBar();
         DrawMiniMap();
     }

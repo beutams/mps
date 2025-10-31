@@ -7,7 +7,7 @@ public class EndGameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameEntry.ProcedureComponent.Change<EndGameProcedure>();
     }
 
     // Update is called once per frame

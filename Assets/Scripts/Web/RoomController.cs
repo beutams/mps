@@ -78,7 +78,7 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
     }
     private void Update()
     {
-/*        if (gameReady)
+        if (gameReady)
         {
             if (noCampPlayer.constructionList.Count == 0)
             {
@@ -97,12 +97,16 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
                 else
                     NetworkManager.singleton.StopClient();
             }
-        }*/
+        }
     }
     public override void OnStopClient()
     {
         base.OnStopClient();
         //GameEntry.ProcedureComponent.Change<MenuProcedure>();
+    }
+    public void EndGame()
+    {
+        gameReady = false;
     }
 }
 public enum PlayerSite : byte

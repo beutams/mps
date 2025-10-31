@@ -23,4 +23,9 @@ public class UIGroup : MonoBehaviour
     {
         return group;
     }
+    public static void Clear()
+    {
+        globalDic.Clear();
+        SubUIBase.allTitles.Clear();
+    }
 }

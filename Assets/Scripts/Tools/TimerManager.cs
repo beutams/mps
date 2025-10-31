@@ -17,6 +17,7 @@ public class TimerManager : SingletonMonoBehaviour<TimerManager>
     }
     private void Update()
     {
+        if (RoomController.instance == null) return;
         for(int i = 0; i < timers.Count; i++)
         {
             timers[i].Step(Time.deltaTime);

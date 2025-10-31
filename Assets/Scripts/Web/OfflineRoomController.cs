@@ -33,6 +33,7 @@ public class OfflineRoomController : RoomController, ID
             InitNoCamp();
             InitLocalPlayer();
             OnGameStart();
+            GameEntry.ObjectPoolComponent.Clear();
         }
     }
 }

@@ -122,4 +122,16 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
             Destroy(obj);
         }
     }
+    public void Clear()
+    {
+        foreach(var item in poolDic.Values)
+        {
+            for(int i = 0; i < item.Count; i++)
+            {
+                var obj = item.Dequeue();
+                if(obj != null)
+                    item.Enqueue(obj);
+            }
+        }
+    }
 }

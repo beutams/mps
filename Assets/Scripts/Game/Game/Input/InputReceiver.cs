@@ -6,7 +6,7 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
 {
     private void Update()
     {
-        if (!RoomController.instance.gameReady) return;
+        if (RoomController.instance == null || !RoomController.instance.gameReady) return;
         InputManager.instance.CameraMove();
         ReceiverShop();
         ReceiverEsc();

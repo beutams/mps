@@ -23,7 +23,7 @@ public class QuadTreeManager : SingletonMonoBehaviour<QuadTreeManager>
     }
     private void Update()
     {
-        if (!RoomController.instance.gameReady) return;
+        if (RoomController.instance == null || !RoomController.instance.gameReady) return;
         foreach (var root in quadTrees)
         {
             root.Value.Update();

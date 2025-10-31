@@ -227,6 +227,7 @@ MonoBehaviour:
   - ChangeSceneProcedure
   - MenuProcedure
   - GameProcedure
+  - EndGameProcedure
 --- !u!1 &4511180142771536978
 GameObject:
   m_ObjectHideFlags: 0
