@@ -59,7 +59,10 @@ public abstract class Bullet : NetworkBehaviour
     }
     public IEnumerator DoEffectCorotine()
     {
+        Debug.Log($"DoEffectCorotine started, enabled={enabled}, activeSelf={gameObject.activeSelf}, activeInHierarchy={gameObject.activeInHierarchy}");
         yield return null;
+        Debug.Log($"After yield return null, enabled={enabled}, activeSelf={gameObject.activeSelf}, activeInHierarchy={gameObject.activeInHierarchy}");
+        Debug.Log("Bullet OnStart");
         onStart?.Invoke();
     }
     #endregion

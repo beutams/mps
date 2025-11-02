@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: SpearBullet
   maxBulletCount: 20
-  fireInterval: 0.05
+  fireInterval: 0.5
   loadTime: 1
   autoLoad: 1
   turnSpeed: 60

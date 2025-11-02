@@ -130,9 +130,9 @@ public class InputReceiver : SingletonMonoBehaviour<InputReceiver>
     public void ReceiverSkill()
     {
         byte skills = InputManager.instance.GetSkill();
-        if ((skills & 1) == 1) GlobalSkill.instance.DoSkill(1);
-        if ((skills & 2) == 2) GlobalSkill.instance.DoSkill(2);
-        if ((skills & 4) == 4) GlobalSkill.instance.DoSkill(3);
+        if ((skills & 1) == 1) GlobalSkill.instance.DoSkill(0);
+        if ((skills & 2) == 2) GlobalSkill.instance.DoSkill(1);
+        if ((skills & 4) == 4) GlobalSkill.instance.DoSkill(2);
     }
     public void ReceiverWeapenSwitchAuto()
     {

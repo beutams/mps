@@ -105,8 +105,10 @@ public class HallSubUI : SubUIBase
     }
     protected void OnExitClick()
     {
-        isSercer = false;
-        NetworkClient.Disconnect();
+        if(isSercer)
+            NetworkManager.singleton.StopHost();
+        else
+            NetworkClient.Disconnect();
     }
     #endregion
 

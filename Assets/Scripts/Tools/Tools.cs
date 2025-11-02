@@ -88,7 +88,10 @@ public static class Tools
     {
         Vector2 v1 = linePoint1 - point;
         Vector2 v2 = linePoint2 - linePoint1;
+        //Vector3 p = Vector2.Dot(v1, v2.normalized) * v2.normalized;
         return Mathf.Sqrt(Pow2(Vector2.Dot(v1, v2)) + Pow2(v1));
+        //float distance = Mathf.Sqrt(Pow2(v1) - Pow2(p));
+        //return distance;
     }
     public static MonoBehaviour GetNearestGameObject(MonoBehaviour[] objs,MonoBehaviour self)
     {

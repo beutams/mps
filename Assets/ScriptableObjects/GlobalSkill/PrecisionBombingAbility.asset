@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c94b13d7a7f02cb4a834fcd6ad387abf, type: 3}
   m_Name: PrecisionBombingAbility
   m_EditorClassIdentifier: 
-  time: 120
+  time: 10
   spawnObject: 
   waitTime: 3
   damage: 10

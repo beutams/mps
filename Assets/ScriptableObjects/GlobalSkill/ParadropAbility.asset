@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90525c3343d877e4c8a4e02b03f1a8ec, type: 3}
   m_Name: ParadropAbility
   m_EditorClassIdentifier: 
-  time: 120
+  time: 10
   spawnObjects:
   - UnitPrefab
   - UnitPrefab

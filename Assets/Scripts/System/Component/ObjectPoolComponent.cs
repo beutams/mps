@@ -38,6 +38,7 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
                 result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
                 isNew = true;
             }
+
             result.name = keyName;
             result.SetActive(true);
 

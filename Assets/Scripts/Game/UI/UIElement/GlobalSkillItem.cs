@@ -31,7 +31,7 @@ public class GlobalSkillItem : MonoBehaviour
     {
         if (ability.CanDo())
             ability.Do();
-        else if (ability.CanDo(obj))
+        else if (obj != null && ability.CanDo(obj))
             ability.Do(obj);
         else if (ability.CanDo(targetPosition))
             ability.Do(targetPosition);

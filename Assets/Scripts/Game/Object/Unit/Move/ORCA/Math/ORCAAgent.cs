@@ -76,6 +76,7 @@ public class ORCAAgent
     }
     public void ComputeNewVelocity()
     {
+        #region 障碍
         orcaLines.Clear();
         float rangeScalingAgent = 1 / agentTimeHorizon; //距离缩放比例
         float rangeScalingObstacle = 1 / obstacleTimeHorizon;
@@ -230,6 +231,9 @@ public class ORCAAgent
             }
             #endregion
         }
+        #endregion
+
+        #region 单位
         int numObstLines = orcaLines.Count;
         for (int i = 0; i < neighborAgents.Count; i++)
         {
@@ -285,6 +289,7 @@ public class ORCAAgent
         int lineFail = AdjustSpeed(orcaLines, maxSpeed, preVelocity, false, ref newVelocity);
         if (lineFail < orcaLines.Count)
             FailedAdjust(orcaLines, numObstLines, lineFail, maxSpeed, ref newVelocity);
+        #endregion
     }
     private int AdjustSpeed(List<Line> lines, float radius, Vector2 preVelocity ,bool shouldAdjust, ref Vector2 result)
     {

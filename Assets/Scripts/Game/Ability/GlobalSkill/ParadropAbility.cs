@@ -16,6 +16,10 @@ public class ParadropAbility : CoverAbility
         waitTimer.Init(waitTime, OnTimerComplete, false, false);
         TimerManager.instance.AddTimer(waitTimer);
     }
+    public override bool CanDo(Vector3 target)
+    {
+        return isReady;
+    }
     public override void Do(Vector3 target)
     {
         base.Do(target);

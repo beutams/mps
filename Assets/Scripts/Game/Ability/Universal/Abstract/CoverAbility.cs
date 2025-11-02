@@ -15,15 +15,15 @@ public class CoverAbility : Ability
     }
     public override bool CanDo()
     {
-        return isReady;
+        return false;
     }
     public override bool CanDo(GameObjectController target)
     {
-        return isReady;
+        return false;
     }
     public override bool CanDo(Vector3 target)
     {
-        return isReady;
+        return false;
     }
     public override void OnAbilityDestroy()
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cbcadcae173a764dae4b20d632ac98e, type: 3}
   m_Name: SpearBullet
   m_EditorClassIdentifier: 
-  liveTime: 5
+  liveTime: 1
   startSpeed: 10
   accelerateSpeed: 0
   turnSpeed: 0
