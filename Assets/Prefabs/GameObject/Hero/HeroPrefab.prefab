@@ -389,8 +389,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   modelAnchor: {fileID: 5438245019122712210}
-  directionAngle: -135
-  includedAngle: 210
+  directionAngle: 0
+  includedAngle: 0
 --- !u!114 &6711213691186943847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,8 +474,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   modelAnchor: {fileID: 5210740251951861674}
-  directionAngle: 135
-  includedAngle: 210
+  directionAngle: 0
+  includedAngle: 0
 --- !u!114 &2604809542334952170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,8 +559,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   modelAnchor: {fileID: 5210740251951861674}
-  directionAngle: 45
-  includedAngle: 270
+  directionAngle: 0
+  includedAngle: 0
 --- !u!114 &2294700059103610046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,8 +644,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   modelAnchor: {fileID: 5438245019122712210}
-  directionAngle: -45
-  includedAngle: 270
+  directionAngle: 0
+  includedAngle: 0
 --- !u!114 &766911135406620099
 MonoBehaviour:
   m_ObjectHideFlags: 0

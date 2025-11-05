@@ -30,8 +30,6 @@ public class OfflineRoomController : RoomController, ID
     {
         if (scene.name == "GameScene")
         {
-            InitNoCamp();
-            InitLocalPlayer();
             OnGameStart();
             GameEntry.ObjectPoolComponent.Clear();
         }

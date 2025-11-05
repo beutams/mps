@@ -21,6 +21,7 @@ public abstract class Bullet : NetworkBehaviour
     public UnityAction onStart;
 
     protected Quaternion startRotation;
+    protected bool netStart;
     
     #region Init
     private void Awake()
@@ -36,6 +37,7 @@ public abstract class Bullet : NetworkBehaviour
     [ClientRpc]
     public virtual void InitClient(Vector3 position, Quaternion rotation, QuadTreeStat target, Player player, bool model)
     {
+        Debug.Log("Bullet : OnBullet Init");
         if (data.isEntity)
         {
             quadStat.radius = 0.1f;
@@ -56,20 +58,19 @@ public abstract class Bullet : NetworkBehaviour
         curTime = 0;
         speed = data.startSpeed;
         StartCoroutine(DoEffectCorotine());
+        netStart = true;
     }
     public IEnumerator DoEffectCorotine()
     {
         Debug.Log($"DoEffectCorotine started, enabled={enabled}, activeSelf={gameObject.activeSelf}, activeInHierarchy={gameObject.activeInHierarchy}");
         yield return null;
-        Debug.Log($"After yield return null, enabled={enabled}, activeSelf={gameObject.activeSelf}, activeInHierarchy={gameObject.activeInHierarchy}");
-        Debug.Log("Bullet OnStart");
         onStart?.Invoke();
     }
     #endregion
     
     public virtual void Update()
     {
-        if (!RoomController.instance.gameReady) return;
+        if (!RoomController.instance.gameReady || !netStart) return;
         CanDestory();
         Move();
     }
@@ -82,6 +83,8 @@ public abstract class Bullet : NetworkBehaviour
             curTime += Time.deltaTime;
         else
         {
+            Debug.Log("Bullet : On Bullet Timer Release");
+            netStart = false;
             GameEntry.ObjectPoolComponent.Release(gameObject);
             if (data.isEntity)
                 QuadTreeManager.instance.Delete(QuadTreeType.Bullet, quadStat);
@@ -95,7 +98,9 @@ public abstract class Bullet : NetworkBehaviour
             if (controller.player == player)
                 return;
         }
+        Debug.Log("Bullet : On Bullet Trigger Release");
         onTrigger?.Invoke(other);
+        netStart = false;
         GameEntry.ObjectPoolComponent.Release(gameObject);
         if (data.isEntity)
             QuadTreeManager.instance.Delete(QuadTreeType.Bullet, quadStat);

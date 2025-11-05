@@ -56,6 +56,7 @@ public abstract class WeapenBase : ScriptableObject, ID
     public void FireInner(QuadTreeStat target, Vector3 targetPosition, WeapenModel model)
     {
         Bullet obj = GameEntry.ObjectPoolComponent.Get(bullet).GetComponent<Bullet>();
+        Debug.Log($"Bullet : Weapen Get Bullet {obj.name} and {obj.transform.position}, activeSelf is {obj.gameObject.activeSelf}");
         obj.InitServer(model.firePoint.position, model.transform.rotation, target, player,true);
         model.OnFireServer();
     }

@@ -25,11 +25,15 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
             if (poolDic.ContainsKey(keyName))
             {
                 if (poolDic[keyName].Count > 0)
+                {
                     result = poolDic[keyName].Dequeue();
+                    Debug.Log($"ObjectPool : Get a old Object {result.name}");
+                }
                 else
                 {
                     result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
                     isNew = true;
+                    Debug.Log($"ObjectPool : Get a new Object {result.name}, Pool is old");
                 }
             }
             else
@@ -37,6 +41,7 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
                 poolDic.Add(keyName, new Queue<GameObject>());
                 result = Instantiate(GameEntry.ResourceComponent.GetPrefabResource(key, name));
                 isNew = true;
+                Debug.Log($"ObjectPool : Get a new Object {result.name}, Pool is New");
             }
 
             result.name = keyName;
@@ -45,8 +50,11 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
             if (result.TryGetComponent<NetworkObject>(out var pooled))
             {
                 if (isNew)
+                {
                     NetworkServer.Spawn(result);
-                pooled.CommandSetPoolKey(keyName);
+                    pooled.CommandSetPoolKey(keyName);
+                }
+
             }
             //networkTools.SetStat(result.transform,keyName);
             return result;
@@ -111,6 +119,7 @@ public class ObjectPoolComponent : BaseComponent<ObjectPoolComponent>
         {
             gameObjectController.events?.onDead?.Invoke();
         }
+        Debug.Log($"Object Pool : {obj.name} is return to the pool");
         if (poolDic.ContainsKey(obj.name))
         {
             obj.SetActive(false);

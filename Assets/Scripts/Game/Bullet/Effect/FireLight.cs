@@ -10,6 +10,7 @@ public class FireLight : BulletEffect
     protected override void OnBulletStart()
     {
         base.OnBulletStart();
+        Debug.Log("Effect : OnFireLight Play");
         GameObject obj = GameEntry.ObjectPoolComponent.Get(effectName);
         obj.transform.position = transform.position;
         obj.transform.GetChild(0).GetComponent<ParticleSystem>().Play();

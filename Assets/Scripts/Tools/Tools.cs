@@ -37,7 +37,7 @@ public static class Tools
     {
         return new Vector2(-input.y, input.x);
     }
-    public static float Det(Vector2 form,Vector2 to)
+    public static float Det(Vector2 form,Vector2 to) //
     {
         float det = form.x * to.y - form.y * to.x;
         return form.x * to.y - form.y * to.x;
@@ -63,7 +63,7 @@ public static class Tools
 
         Vector2 ad = d - a;
         float abXad = Det(ab, ad);
-        if (abXac * abXad >= 0)
+        if (abXac * abXad >= 0) 
         {
             return Vector2.zero;
         }
@@ -88,27 +88,41 @@ public static class Tools
     {
         Vector2 v1 = linePoint1 - point;
         Vector2 v2 = linePoint2 - linePoint1;
-        //Vector3 p = Vector2.Dot(v1, v2.normalized) * v2.normalized;
-        return Mathf.Sqrt(Pow2(Vector2.Dot(v1, v2)) + Pow2(v1));
-        //float distance = Mathf.Sqrt(Pow2(v1) - Pow2(p));
-        //return distance;
+        Vector3 p = Vector2.Dot(v1, v2.normalized) * v2.normalized;
+        //return Mathf.Sqrt(Pow2(Vector2.Dot(v1, v2)) + Pow2(v1));
+        float distance = Mathf.Sqrt(Pow2(v1) - Pow2(p));
+        return distance;
     }
-    public static MonoBehaviour GetNearestGameObject(MonoBehaviour[] objs,MonoBehaviour self)
+    
+    /// <summary>
+    /// 获取线段 AB 上距离点 P 最近的点
+    /// </summary>
+    /// <param name="pointP">点 P</param>
+    /// <param name="pointA">线段起点 A</param>
+    /// <param name="pointB">线段终点 B</param>
+    /// <returns>线段 AB 上距离点 P 最近的点</returns>
+    public static Vector2 GetClosestPointOnLineSegment(Vector2 pointP, Vector2 pointA, Vector2 pointB)
     {
-        MonoBehaviour result = null;
-        float distance = float.MaxValue;
-        float curDistance = 0;
-        foreach (var obj in objs)
+        Vector2 ab = pointB - pointA;
+        Vector2 ap = pointP - pointA;
+        
+        // 如果线段长度为 0，返回起点
+        float abSqrMagnitude = ab.sqrMagnitude;
+        if (abSqrMagnitude < 0.0001f)
         {
-            curDistance = GetDistance(obj.transform.position, self.transform.position);
-            if (curDistance < distance)
-            {
-                distance = curDistance;
-                result = obj;
-            }
+            return pointA;
         }
-        return result;
+        
+        // 计算 AP 在 AB 上的投影参数 t
+        float t = Vector2.Dot(ap, ab) / abSqrMagnitude;
+        
+        // 限制 t 在 [0, 1] 范围内，确保在线段上
+        t = Mathf.Clamp01(t);
+        
+        // 返回最近点
+        return pointA + t * ab;
     }
+
     public static bool IsPointerOverUI()
     {
         if (EventSystem.current == null) return false;

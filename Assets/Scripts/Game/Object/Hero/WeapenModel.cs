@@ -14,7 +14,7 @@ public class WeapenModel : NetworkBehaviour
 
     protected Quaternion startQuaternion;
     protected Vector3 startPosition;
-    protected Vector3 startAnchorPosition;
+    protected Vector3 startAnchorOffset;
     protected Vector3 targetVector;
     public int group { get; set; }
 
@@ -24,7 +24,18 @@ public class WeapenModel : NetworkBehaviour
     private void Awake()
     {
         startQuaternion = transform.localRotation;
-        startAnchorPosition = modelAnchor.position;
+        
+        // 计算相对于 modelAnchor 的初始偏移（在 modelAnchor 的本地坐标系）
+        // 这样当 modelAnchor 旋转时，偏移也会跟着旋转，保持相对位置
+        if (modelAnchor != null)
+        {
+            startAnchorOffset = modelAnchor.InverseTransformPoint(transform.position);
+        }
+        else
+        {
+            startAnchorOffset = Vector3.zero;
+        }
+        
         startPosition = transform.position;
         parentModel = GetParentModel();
     }
@@ -47,8 +58,11 @@ public class WeapenModel : NetworkBehaviour
     }
     public void UpdatePosition()
     {
-        Vector3 offset = modelAnchor.position - startAnchorPosition;
-        transform.position = startPosition + offset;
+        if (modelAnchor == null) return;
+        
+        // 将本地空间的偏移转换回世界空间，跟随 modelAnchor 的位置和旋转
+        // 这样 transform 会始终与 modelAnchor 保持相对位置
+        transform.position = modelAnchor.TransformPoint(startAnchorOffset);
     }
     public void TurnTowardsMouse(Vector3 pos = default)
     {

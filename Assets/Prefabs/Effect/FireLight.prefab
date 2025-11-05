@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5773426314942801553}
   - component: {fileID: 4571206126956986358}
-  - component: {fileID: -1803780630682276138}
   m_Layer: 0
   m_Name: FireLight
   m_TagString: Untagged
@@ -46,19 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299bbc9945c58e24389b116c59a5205f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-1803780630682276138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4182841067129578249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 013d1a5edf842c747963fa6fcb9a1e83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 1
 --- !u!1001 &2784821742240167848
 PrefabInstance:
   m_ObjectHideFlags: 0

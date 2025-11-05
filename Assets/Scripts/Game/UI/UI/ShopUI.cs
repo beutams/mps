@@ -111,8 +111,9 @@ public class ShopUI : UIBase, IBeginDragHandler, IEndDragHandler, IDragHandler,I
         if(eventData.button == PointerEventData.InputButton.Right)
         {
             WeapenSoltItem result = RaycastItem<WeapenSoltItem>();
-            if (result != null)
-                result.Sell();
+            if (result == null) return;
+            result.Sell();
+            groupDic[result].ChangeGroup(groupList[0]);
             Refresh();
         }
     }

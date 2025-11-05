@@ -27,6 +27,7 @@ public class NetworkObject : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CommandReturnToPool()
     {
+        Debug.Log($"Object Pool Net: {gameObject.name} is return to the pool command");
         RpcReturnToPool();
     }
     [ClientRpc]
@@ -34,6 +35,7 @@ public class NetworkObject : NetworkBehaviour
     {
         if (!string.IsNullOrEmpty(poolKey))
         {
+            Debug.Log($"Object Pool Net: {gameObject.name} is return to the pool");
             GameEntry.ObjectPoolComponent.Release(gameObject,false,false);
         }
     }

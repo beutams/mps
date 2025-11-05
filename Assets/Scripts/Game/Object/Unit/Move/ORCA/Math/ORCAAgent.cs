@@ -60,7 +60,9 @@ public class ORCAAgent
         neighborObstacles.Clear();
         foreach (var obs in ORCAManager.instance.allObstacles)
         {
-            if (Tools.GetIntersectionPoint(position, position + velocity, obs.point, obs.next.point) != Vector2.zero || Tools.PointToLineDistance(position, obs.point, obs.next.point) < 2f)
+/*            if (Tools.GetIntersectionPoint(position, position + velocity * (1 + radius), obs.point, obs.next.point) != Vector2.zero && 
+                Tools.PointToLineDistance(position, obs.point, obs.next.point) < 2f)*/
+            if((Tools.GetClosestPointOnLineSegment(position,obs.point,obs.next.point) - position).magnitude < radius + velocity.magnitude)
                 neighborObstacles.Add(obs);
         }
         neighborAgents.Clear();
@@ -170,12 +172,12 @@ public class ORCAAgent
             Obstacle leftNeighbor = obs1.previous;
             bool isLeftLegForeign = false;
             bool isRightLegForeign = false;
-            if(obs1.convex && Tools.Det(leftLegDirection,-leftNeighbor.direction) >= 0f)//如果leg在临边内部，则必须向外投射到临边的切线上
+            if(obs1.convex && Tools.Det(leftLegDirection,-leftNeighbor.direction) <= 0f)//如果leg在临边内部，则必须向外投射到临边的切线上
             {
                 leftLegDirection = -leftNeighbor.direction;
                 isLeftLegForeign = true;
             }
-            if (obs2.convex && Tools.Det(rightLegDirection, obs2.direction) <= 0.0f) //同理
+            if (obs2.convex && Tools.Det(rightLegDirection, obs2.direction) >= 0.0f) //同理
             {
                 rightLegDirection = obs2.direction;
                 isRightLegForeign = true;
