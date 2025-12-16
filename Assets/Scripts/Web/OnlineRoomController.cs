@@ -22,6 +22,7 @@ public class OnlineRoomController : RoomController, ID
             OnGameStart();
             InitPlayerData();
             GameEntry.ObjectPoolComponent.Clear();
+            gameReady = true;
         });
     }
     [ClientCallback]

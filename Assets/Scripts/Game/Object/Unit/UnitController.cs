@@ -220,6 +220,7 @@ public class UnitController : GameObjectController
     }
     private void ORCAInit()
     {
+        Debug.Log($"Unit Controller : {name} is Init ORCAAgent");
         orcaAgent = new ORCAAgent(player, this);
         orcaAgent.Init(UnitStats.timeHorizon, UnitStats.obsTimeHorizon, unitStats.radius, unitStats.speed);
     }

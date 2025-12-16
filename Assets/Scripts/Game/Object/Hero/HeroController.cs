@@ -92,7 +92,7 @@ public class HeroController : UnitController
     }
     protected void UpdateORCA()
     {
-        orcaAgent.Step(position, velocity, Vector3.zero, !isMove && unitStats.canAutoMove);
+        orcaAgent?.Step(position, velocity, Vector3.zero, !isMove && unitStats.canAutoMove);
     }
     public void ReceiveMove(Vector2 dir)
     {

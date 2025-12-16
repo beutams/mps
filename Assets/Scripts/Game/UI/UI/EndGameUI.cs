@@ -16,6 +16,6 @@ public class EndGameUI : MonoBehaviour
     }
     public void Back()
     {
-        GameEntry.ProcedureComponent.Change<EndGameProcedure>();
+        //GameEntry.ProcedureComponent.Change<EndGameProcedure>();
     }
 }

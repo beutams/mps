@@ -42,7 +42,7 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
                     cur = obj;
                     foreach (var gobj in obj.objList)
                     {
-                        if (!gobj.gameObject.activeSelf) continue;
+                        //if (!gobj.gameObject.activeSelf) continue;
                         gobj.events.onSpawn?.Invoke(player.Value);
                         if(isServer)
                         {
@@ -73,12 +73,11 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
     }
     public virtual void Ready()
     {
-        gameReady = true;
         GameEntry.EventComponent.Notify(GameEvent.ClientChangeSceneSuccessEvent);
     }
     private void Update()
     {
-        if (gameReady)
+/*        if (gameReady)
         {
             if (noCampPlayer.constructionList.Count == 0)
             {
@@ -97,7 +96,7 @@ public abstract class RoomController : SingletonNetBehaviour<RoomController>
                 else
                     NetworkManager.singleton.StopClient();
             }
-        }
+        }*/
     }
     public override void OnStopClient()
     {
